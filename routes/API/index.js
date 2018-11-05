@@ -1,7 +1,11 @@
 const router = require('express').Router();
-const exampleRoutes = require('./examples');
+const trainingRoutes = require('./trainings');
+const authRoutes = require('./auth');
 
-// Example routes ('/api/example'
-router.use('/examples', exampleRoutes);
+// Training routes ('/api/trainings')
+router.use('/trainings', trainingRoutes);
+
+//	Auth routes ('api/auth')
+router.use('/auth', authRoutes);
 
 module.exports = router;
