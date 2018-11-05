@@ -1,4 +1,7 @@
-export Examples from './Examples';
-//	export Whatever from './Whatever';
+import trainings from './trainings';
+import auth from './auth';
 
-//	import { Examples, Whatever } from '../path/to/file.js';
+export default {
+	trainings,
+	auth
+};

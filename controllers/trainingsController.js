@@ -2,34 +2,35 @@ const db = require('../models');
 
 module.exports = {
 	findAll: function(req, res) {
-		db.Example
+		const user = req.user
+		db.Training
 			.find(req.query)
 			.sort({ date: -1 })
-			.then(examples => res.json(examples))
+			.then(trainings => res.json({ trainings: trainings, user: user }))
 			.catch(err => res.status(422).json(err));
 	},
 	findById: function(req, res) {
-		db.Example
+		db.Training
 			.findById(req.params.id)
-			.then(example => res.json(example))
+			.then(training => res.json(training))
 			.catch(err => res.status(422).json(err));
 	},
 	create: function(req, res) {
-		db.Example
+		db.Training
 			.create(req.body)
-			.then(example => res.json(example))
+			.then(training => res.json(training))
 			.catch(err => res.status(422).json(err));
 	},
 	update: function(req, res) {
-		db.Example
+		db.Training
 		  .findOneAndUpdate({ _id: req.params.id }, req.body)
-		  .then(example => res.json(example))
+		  .then(training => res.json(training))
 		  .catch(err => res.status(422).json(err));
 	},
 	remove: function(req, res) {
-		db.Example
+		db.Training
 			.findById({ _id: req.params.id })
-			.then(example => example.remove())
+			.then(training => training.remove())
 			.then(dbModel => res.json(dbModel))
 			.catch(err => res.status(422).json(err));
 	}

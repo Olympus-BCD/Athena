@@ -1,11 +1,11 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
-const exampleSchema = new Schema({
+const TrainingSchema = new Schema({
 	name: { type: String, required: true },
 	date: { type: Date, default: Date.now }
 });
 
-const Example = mongoose.model('Example', exampleSchema);
+const Training = mongoose.model('Training', TrainingSchema);
 
-module.exports = Example;
+module.exports = Training;
