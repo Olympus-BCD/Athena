@@ -12,9 +12,31 @@ let UserSchema = new Schema({
 		type: String,
 		required: true
 	},
+	__organization: {
+		type: mongoose.Schema.Types.ObjectId,
+		ref: 'Organization',
+		required: true
+	},
 	role: {
 		type: Number,
 		default: 1
+	},
+	active: {
+		type: Boolean,
+		default: true
+	},
+	fname: {
+		type: String
+	},
+	lname: {
+		type: String
+	},
+	imageURL: {
+		type: String
+	},
+	date: {
+		type: Date,
+		default: Date.now
 	}
 });
 
@@ -40,5 +62,9 @@ UserSchema.methods.comparePassword = function(password, cb) {
 		cb(null, isMatch);
 	});
 };
+
+UserSchema.methods.fullName = function() {
+	return `${this.fname} ${this.lname}`;
+}
 
 module.exports = mongoose.model('User', UserSchema);
