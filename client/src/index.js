@@ -11,7 +11,7 @@ ReactDOM.render(
 	<Router>
 		<div>
 			<Route path='/' component={SiteRouter} />
-			<Route path='/app' component={App} />
+			<Route path='/organization' component={App} />
 		</div>
 	</Router>
 	, document.getElementById('root')

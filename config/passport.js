@@ -11,7 +11,19 @@ module.exports = passport => {
 	opts.secretOrKey = secret;
 	passport.use(new JwtStrategy(opts, (jwt_payload, done) => {
 		console.log('JWT Payload:', jwt_payload._id, jwt_payload.id);
-		User.findOne({_id: jwt_payload._id}, (err, user) => {
+		User.findOne({_id: jwt_payload._id}).populate('__organization')
+			.then(user => {
+				if(user) {
+					done(null, user);
+				} else {
+					done(null, false);
+				}
+			})
+			.catch(err => {
+				return done(err, false);
+			});
+/*
+			, (err, user) => {
 			if(err) return done(err, false);
 			if(user) {
 				done(null, user);
@@ -19,5 +31,6 @@ module.exports = passport => {
 				done(null, false);
 			}
 		});
+*/
 	}));
 };

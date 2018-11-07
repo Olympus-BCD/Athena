@@ -35,12 +35,13 @@ class Login extends Component {
 			.then(result => {
 				localStorage.setItem('jwtToken', result.data.token);
 				this.setState({ message: '' });
+				console.log(result.data);
 // 				this.props.history.push('/app')
-				window.location.href='/app';
+				window.location.href=`/organization/${result.data.user.__organization.name.replace(' ', '')}`;
 			})
 			.catch(err => {
 				if(err) console.log(err);
-				if(err.response.status === 401) {
+				if(err.response && err.response.status === 401) {
 					this.setState({ message: 'Login failed. Username or password do not match.' });
 				}
 			});			
