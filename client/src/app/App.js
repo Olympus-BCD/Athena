@@ -4,7 +4,7 @@ import API from '../utils/API';
 
 import './App.css';
 
-import { MemberDisplay, AdminDisplay } from './displays';
+import { MemberView, AdminView } from './views';
 
 class App extends Component {
 	
@@ -12,6 +12,7 @@ class App extends Component {
 		super(props);
 		this.state = {
 			user: {},
+			display: 'dashboard',
 			trainings: []
 		};
 	}
@@ -45,24 +46,36 @@ class App extends Component {
 		window.location.href='/login';
 	}
 	
+	changeDisplayState = display => {
+		this.setState({ display: display });
+	}
+	
+	getTrainings = () => {
+		this.setState({ display: 'trainings' });
+	};
+	
+	addTraining = () => {
+		
+	}
+	
 	render() {
-		/*
-			If the page is rendered with a JWT Token, include a Logout button
-		*/
 		return (
 			<div>
 			{(localStorage.getItem('jwtToken') && this.state.user.role > 1)
 				?
-					<AdminDisplay
+					<AdminView
 						user={this.state.user}
 						organization={this.state.user.__organization}
+						display={this.state.display}
 						logout={this.logout}
+						changeDisplayState={this.changeDisplayState}
+						getTrainings={this.getTrainings}
 					/>
 				: (localStorage.getItem('jwtToken') && this.state.user.role == 1)
 				?
-					<MemberDisplay />
+					<MemberView />
 				:
-// 				Insert Loading Image Here if wanted
+// 				Insert Loading Image Here if wanted (get rid of null value if you do)
 				null
 			}
 			</div>
