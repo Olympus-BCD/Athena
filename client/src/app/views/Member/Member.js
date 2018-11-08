@@ -1,7 +1,7 @@
 import React from "react";
 import "./Member.css";
 
-class MemberDisplay extends React.Component {
+class MemberView extends React.Component {
 	
 	render() {
 		return (
@@ -10,4 +10,4 @@ class MemberDisplay extends React.Component {
 	}
 }
 
-export default MemberDisplay;
+export default MemberView;
