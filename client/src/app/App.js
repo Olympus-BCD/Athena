@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
 import API from '../utils/API';
 
 import './App.css';
@@ -13,6 +13,7 @@ class App extends Component {
 		this.state = {
 			user: {},
 			display: 'dashboard',
+			trainingsDisplay: 'default',
 			trainings: []
 		};
 	}
@@ -39,16 +40,24 @@ class App extends Component {
 		}
 	}
 	
+/*
 	logout = () => {
 // 		this.state.user = {};
 		localStorage.removeItem('jwtToken');
 // 		window.location.reload();
 		window.location.href='/login';
-	}
+	};
 	
-	changeDisplayState = display => {
-		this.setState({ display: display });
-	}
+	changeDisplayState = (display, displayState) => {
+		const state = this.state;
+		state[display] = displayState;
+		state.trainingsDisplay = 'default';
+		this.setState(state);
+	};
+	
+	changeSubDisplayState = (subDisplay, state) => {
+		this.setState({ [subDisplay]: state });
+	};
 	
 	getTrainings = () => {
 		this.setState({ display: 'trainings' });
@@ -56,8 +65,27 @@ class App extends Component {
 	
 	addTraining = () => {
 		
+	};
+*/
+	
+	render() {
+		return (
+			<div>
+			{(localStorage.getItem('jwtToken') && this.state.user.role > 1)
+				?
+					<AdminView user={this.state.user} organization={this.state.user.__organization} />
+				: (localStorage.getItem('jwtToken') && this.state.user.role == 1)
+				?
+					<MemberView />
+				:
+// 				Insert Loading Image Here if wanted (get rid of null value if you do)
+				null
+			}
+			</div>
+		);
 	}
 	
+/*
 	render() {
 		return (
 			<div>
@@ -67,8 +95,10 @@ class App extends Component {
 						user={this.state.user}
 						organization={this.state.user.__organization}
 						display={this.state.display}
+						trainingsDisplay={this.state.trainingsDisplay}
 						logout={this.logout}
 						changeDisplayState={this.changeDisplayState}
+						changeSubDisplayState={this.changeSubDisplayState}
 						getTrainings={this.getTrainings}
 					/>
 				: (localStorage.getItem('jwtToken') && this.state.user.role == 1)
@@ -81,6 +111,7 @@ class App extends Component {
 			</div>
 		);
 	}
+*/
 }
 
 export default App;

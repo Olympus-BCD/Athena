@@ -12,8 +12,8 @@ class SiteRouter extends React.Component {
 			<Router>
 				<div>
 					<Route exact path='/' component={Site} />
-					<Route path='/login' component={Login} />
-					<Route path='/register' component={Register} />
+					<Route exact path='/login' component={Login} />
+					<Route exact path='/register' component={Register} />
 				</div>
 			</Router>
 		);

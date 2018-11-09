@@ -5,13 +5,22 @@ import { TrainingsDisplay, EmployeesDisplay, DashboardDisplay, ReportsDisplay, N
 
 class AdminView extends React.Component {
 	
+	state = {
+		user: {},
+		display: 'dashboard',
+		trainingsDisplay: 'default',
+		trainings: []
+	};
+	
 	switchDisplay = display => {
 		switch(display) {
 			case 'dashboard':
 				return <DashboardDisplay />
 			case 'trainings':
 				return <TrainingsDisplay
-							addTrainings={this.props.addTraining}
+							changeSubDisplayState={this.changeSubDisplayState}
+							addTrainings={this.addTraining}
+							trainingsDisplay={this.state.trainingsDisplay}
 						/>
 			case 'employees':
 				return <EmployeesDisplay />
@@ -25,13 +34,78 @@ class AdminView extends React.Component {
 	};
 	
 	dashboardDisplay = () => {
-		this.props.getDashboard();
+// 		this.props.getDashboard();
 	}
 	
 	trainingsDisplay = () => {
-		this.props.changeDisplayState('trainings');
+		this.changeDisplayState('display', 'trainings');
 	}
 	
+	
+	
+	/* =========== Moved from App =========== */
+	
+	logout = () => {
+// 		this.state.user = {};
+		localStorage.removeItem('jwtToken');
+// 		window.location.reload();
+		window.location.href='/login';
+	};
+	
+	changeDisplayState = (display, displayState) => {
+		const state = this.state;
+		state[display] = displayState;
+		state.trainingsDisplay = 'default';
+		this.setState(state);
+	};
+	
+	changeSubDisplayState = (subDisplay, state) => {
+		this.setState({ [subDisplay]: state });
+	};
+	
+	getTrainings = () => {
+		this.setState({ display: 'trainings' });
+	};
+	
+	addTraining = () => {
+		
+	};
+	
+	/* ===================================== */
+	
+	
+	
+	
+	render() {
+		return(
+			<div className=''>
+				<header className=''>
+					<h3>Admin Display</h3>
+					{
+						(this.props.user && this.props.organization) &&
+						<div>
+							<h1>{this.props.organization.name}</h1>
+							<h2>Hello, {this.props.user.username}</h2>
+						</div>
+					}
+						<span className='' onClick={this.logout}>Logout</span>
+				</header>
+				<br />
+				<nav>
+					<div onClick={() => this.changeDisplayState('display', 'dashboard')}>Dashboard</div>
+					<div onClick={this.trainingsDisplay}>Trainings</div>
+					<div onClick={() => this.changeDisplayState('display', 'employees')}>Employees</div>
+					<div onClick={() => this.changeDisplayState('display', 'reports')}>Reports</div>
+					<div onClick={() => this.changeDisplayState('display', 'network')}>Network</div>
+				</nav>
+				<div>
+					{ this.switchDisplay(this.state.display) }
+				</div>
+			</div>
+		);
+	}
+	
+/*
 	render() {
 		return (
 			<div className=''>
@@ -48,11 +122,11 @@ class AdminView extends React.Component {
 				</header>
 				<br />
 				<nav>
-					<div onClick={() => this.props.changeDisplayState('dashboard')}>Dashboard</div>
+					<div onClick={() => this.props.changeDisplayState('display', 'dashboard')}>Dashboard</div>
 					<div onClick={this.trainingsDisplay}>Trainings</div>
-					<div onClick={() => this.props.changeDisplayState('employees')}>Employees</div>
-					<div onClick={() => this.props.changeDisplayState('reports')}>Reports</div>
-					<div onClick={() => this.props.changeDisplayState('network')}>Network</div>
+					<div onClick={() => this.props.changeDisplayState('display', 'employees')}>Employees</div>
+					<div onClick={() => this.props.changeDisplayState('display', 'reports')}>Reports</div>
+					<div onClick={() => this.props.changeDisplayState('display', 'network')}>Network</div>
 				</nav>
 				<div>
 					{ this.switchDisplay(this.props.display) }
@@ -60,6 +134,7 @@ class AdminView extends React.Component {
 			</div>
 		);
 	}
+*/
 }
 
 export default AdminView;
