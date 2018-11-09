@@ -12,6 +12,7 @@ ReactDOM.render(
 		<div>
 			<Route path='/' component={SiteRouter} />
 			<Route path='/organization' component={App} />
+			<Route component={SiteRouter} />
 		</div>
 	</Router>
 	, document.getElementById('root')

@@ -3,6 +3,7 @@ import "./Trainings.css";
 
 class TrainingsDisplay extends React.Component {
 	
+/*
 	constructor(props) {
 		super(props);
 		this.state = {
@@ -10,9 +11,15 @@ class TrainingsDisplay extends React.Component {
 			trainings: []
 		};
 	}
+*/
+	
+	state = {
+		display: 'default',
+		trainings: []
+	};
 	
 	switchTrainingDisplay = () => {
-		switch(this.state.display) {
+		switch(this.props.trainingsDisplay) {
 			case 'addTraining':
 				return 	<form>
 							<input type='text' name='newTraining' onChange={this.onChange} value={this.state.newTraining} />
@@ -29,7 +36,8 @@ class TrainingsDisplay extends React.Component {
 	};
 	
 	addTrainingForm = () => {
-		this.setState({ display: 'addTraining' });
+		this.props.changeSubDisplayState('trainingsDisplay', 'addTraining');
+// 		this.setState({ display: 'addTraining' });
 	};
 	
 	addTraining = (e) => {
