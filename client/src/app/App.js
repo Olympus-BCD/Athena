@@ -1,22 +1,26 @@
 import React, { Component } from 'react';
-import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Link, Switch } from 'react-router-dom';
 import API from '../utils/API';
 
 import './App.css';
 
-import { MemberView, AdminView } from './views';
+// import { UserView, AdminView } from './views';
+import UserView from './views/User/User.js';
+import AdminView from './views/Admin/Admins.js';
 
 class App extends Component {
 	
+/*
 	constructor(props) {
 		super(props);
 		this.state = {
 			user: {},
-			display: 'dashboard',
-			trainingsDisplay: 'default',
-			trainings: []
 		};
 	}
+*/
+	state = {
+		user: {}
+	};
 	
 	componentDidMount() {
 		/*
@@ -39,6 +43,11 @@ class App extends Component {
 			window.location.href='/login';
 		}
 	}
+	
+	logout = () => {
+		localStorage.removeItem('jwtToken');
+		window.location.href='/login';
+	};
 	
 /*
 	logout = () => {
@@ -73,16 +82,26 @@ class App extends Component {
 			<div>
 			{(localStorage.getItem('jwtToken') && this.state.user.role > 1)
 				?
-					<AdminView user={this.state.user} organization={this.state.user.__organization} />
+					<AdminView user={this.state.user} organization={this.state.user.__organization} logout={this.logout} />
 				: (localStorage.getItem('jwtToken') && this.state.user.role == 1)
 				?
-					<MemberView />
+					<UserView logout={this.logout} />
 				:
 // 				Insert Loading Image Here if wanted (get rid of null value if you do)
 				null
 			}
 			</div>
 		);
+/*
+		return(
+			<Router>
+				<Switch>
+					<Route path='/:org' component={() => <AdminView user={this.state.user} organization={this.state.user.__organization} logout={this.logout} />} />
+					<Route path='/user' componenet={() => <UserView logout={this.logout} />} />
+				</Switch>
+			</Router>
+		);
+*/
 	}
 	
 /*
@@ -103,7 +122,7 @@ class App extends Component {
 					/>
 				: (localStorage.getItem('jwtToken') && this.state.user.role == 1)
 				?
-					<MemberView />
+					<UserView />
 				:
 // 				Insert Loading Image Here if wanted (get rid of null value if you do)
 				null

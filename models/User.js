@@ -5,7 +5,6 @@ const bcrypt = require('bcrypt-nodejs');
 let UserSchema = new Schema({
 	username: {
 		type: String,
-		unique: true,
 		required: true
 	},
 	password: {
@@ -25,13 +24,23 @@ let UserSchema = new Schema({
 		type: Boolean,
 		default: true
 	},
+	trainings: [{
+		type: mongoose.Schema.Types.ObjectId,
+		ref: 'Training'
+	}],
+	employeeID: {
+		type: String
+	},
+	title: {
+		type: String
+	},
 	fname: {
 		type: String
 	},
 	lname: {
 		type: String
 	},
-	imageURL: {
+	image: {
 		type: String
 	},
 	date: {

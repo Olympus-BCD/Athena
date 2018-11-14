@@ -15,7 +15,15 @@ let OrganizationSchema = new Schema({
 		type: mongoose.Schema.Types.ObjectId,
 		ref: 'User'
 	}],
-	imageURL: {
+	usernamePrefix: {
+		type: String,
+		default: null
+	},
+	passwordDefault: {
+		type: String,
+		default: null
+	},
+	image: {
 		type: String,
 	},
 	date: {

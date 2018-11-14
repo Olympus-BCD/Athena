@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { BrowserRouter as Router, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import './index.css';
 import * as serviceWorker from './serviceWorker';
 
@@ -10,8 +10,12 @@ import App from './app';
 ReactDOM.render(
 	<Router>
 		<div>
-			<Route path='/' component={SiteRouter} />
-			<Route path='/organization' component={App} />
+			<Switch>
+				<Route exact path='/' component={SiteRouter} />
+				<Route exact path='/login' component={SiteRouter} />
+				<Route exact path='/register' component={SiteRouter} />
+				<Route component={App} />
+			</Switch>
 		</div>
 	</Router>
 	, document.getElementById('root')

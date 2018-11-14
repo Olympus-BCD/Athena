@@ -9,13 +9,11 @@ import Register from './Register';
 class SiteRouter extends React.Component {
 	render() {
 		return (
-			<Router>
-				<div>
-					<Route exact path='/' component={Site} />
-					<Route exact path='/login' component={Login} />
-					<Route exact path='/register' component={Register} />
-				</div>
-			</Router>
+			<div>
+				<Route exact path='/' component={Site} />
+				<Route exact path='/login' component={Login} />
+				<Route exact path='/register' component={Register} />
+			</div>
 		);
 	}
 }

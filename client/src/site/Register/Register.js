@@ -29,7 +29,8 @@ class Register extends Component {
 		e.preventDefault();
 		
 		const { organization, username, password } = this.state;
-		
+		//	TODO:	Create an API call that just performs validations for all 3, so that an organization does not get created if a user doesn't and vice versa
+		//	e.g.,	API.organization.checkValidations(organization, username, password) or two separate calls API.organization.validations() and API.auth.validations()
 		API.organization.register(organization)
 			.then(res => {
 				if(res.data.success) {
@@ -52,8 +53,8 @@ class Register extends Component {
 													if(result.data.success) {
 														localStorage.setItem('jwtToken', result.data.token);
 														this.setState({ message: '' });
-			// 											this.props.history.push('/app')
-														window.location.href=`/organization/${res.data.organization.name}`;
+// 														this.props.history.push('/app')
+														window.location.href=`/${res.data.organization.name.replace(' ', '')}}`;
 													} else {
 														this.setState({ message: result.data.msg });
 													}
@@ -62,7 +63,7 @@ class Register extends Component {
 													if(err) console.log(err);
 													if(err.response.status === 401) {
 														this.setState({ message: 'Error logging in user.' });
-			// 											this.setState({ message: 'Registration failed.' });
+// 														this.setState({ message: 'Registration failed.' });
 													}
 												});
 											//

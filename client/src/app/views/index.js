@@ -1,4 +1,4 @@
-import MemberView from './Member';
+import UserView from './User';
 import AdminView from './Admin';
 
-export { MemberView, AdminView };
+export { UserView, AdminView };

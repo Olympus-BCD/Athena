@@ -1,5 +1,6 @@
 module.exports = {
- 	Training: require('./Training'),
- 	User: require('./User'),
- 	Organization: require('./Organization')
+	User: require('./User'),
+	Organization: require('./Organization'),
+	Training: require('./Training'),
+	Employee: require('./Employee')
 };

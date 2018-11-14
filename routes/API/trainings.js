@@ -10,7 +10,11 @@ router.route('/')
 		requireLogin(req, res, controller.findAll);
 	})
 	.post(passport.authenticate('jwt', { session: false }), (req, res) => {
-		requireLogin(req, res, controller.create);
+		if(req.user.role > 1) {
+			requireLogin(req, res, controller.create);
+		} else {
+			return res.status(403).send({ success: false, msg: 'Unauthorized.' });
+		}
 	});
 
 //	('/api/trainings/:id')

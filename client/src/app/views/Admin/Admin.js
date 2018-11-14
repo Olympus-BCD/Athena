@@ -3,27 +3,37 @@ import "./Admin.css";
 
 import { TrainingsDisplay, EmployeesDisplay, DashboardDisplay, ReportsDisplay, NetworkDisplay } from './displays';
 
+import AdminHeader from '../components/AdminHeader';
+
 class AdminView extends React.Component {
 	
 	state = {
 		user: {},
 		display: 'dashboard',
 		trainingsDisplay: 'default',
+		employeesDisplay: 'default',
 		trainings: []
 	};
 	
-	switchDisplay = display => {
-		switch(display) {
+	switchDisplay = () => {
+		switch(this.state.display) {
 			case 'dashboard':
 				return <DashboardDisplay />
 			case 'trainings':
 				return <TrainingsDisplay
 							changeSubDisplayState={this.changeSubDisplayState}
-							addTrainings={this.addTraining}
+							addTraining={this.addTraining}
 							trainingsDisplay={this.state.trainingsDisplay}
+							user = {this.props.user}
+							organization = {this.props.organization}
 						/>
 			case 'employees':
-				return <EmployeesDisplay />
+				return <EmployeesDisplay
+							changeSubDisplayState={this.changeSubDisplayState}
+							employeesDisplay={this.state.employeesDisplay}
+							user = {this.props.user}
+							organization = {this.props.organization}
+						/>
 			case 'reports':
 				return <ReportsDisplay />
 			case 'network':
@@ -38,7 +48,7 @@ class AdminView extends React.Component {
 	}
 	
 	trainingsDisplay = () => {
-		this.changeDisplayState('display', 'trainings');
+		this.changeDisplayState('trainings');
 	}
 	
 	
@@ -46,27 +56,32 @@ class AdminView extends React.Component {
 	/* =========== Moved from App =========== */
 	
 	logout = () => {
-// 		this.state.user = {};
 		localStorage.removeItem('jwtToken');
-// 		window.location.reload();
 		window.location.href='/login';
 	};
 	
-	changeDisplayState = (display, displayState) => {
+	changeDisplayState = (display) => {
 		const state = this.state;
-		state[display] = displayState;
+		state.display = display;
 		state.trainingsDisplay = 'default';
+		state.employeesDisplay = 'default';
 		this.setState(state);
 	};
 	
-	changeSubDisplayState = (subDisplay, state) => {
-		this.setState({ [subDisplay]: state });
+	//	Passed into Sub Displays
+	changeSubDisplayState = (subDisplay, subDisplayState) => {
+		const state = this.state;
+		state[subDisplay] = subDisplayState;
+// 		this.setState({ [subDisplay]: state });
+		this.setState(state);
 	};
 	
+/*
 	getTrainings = () => {
 		this.setState({ display: 'trainings' });
 	};
-	
+*/
+	//	Passed into Trainings Prop
 	addTraining = () => {
 		
 	};
@@ -80,26 +95,25 @@ class AdminView extends React.Component {
 		return(
 			<div className=''>
 				<header className=''>
-					<h3>Admin Display</h3>
 					{
 						(this.props.user && this.props.organization) &&
-						<div>
-							<h1>{this.props.organization.name}</h1>
-							<h2>Hello, {this.props.user.username}</h2>
-						</div>
+						<AdminHeader
+							user={this.props.user}
+							organization={this.props.organization}
+							logout={this.logout}
+						/>
 					}
-						<span className='' onClick={this.logout}>Logout</span>
 				</header>
 				<br />
 				<nav>
-					<div onClick={() => this.changeDisplayState('display', 'dashboard')}>Dashboard</div>
-					<div onClick={this.trainingsDisplay}>Trainings</div>
-					<div onClick={() => this.changeDisplayState('display', 'employees')}>Employees</div>
-					<div onClick={() => this.changeDisplayState('display', 'reports')}>Reports</div>
-					<div onClick={() => this.changeDisplayState('display', 'network')}>Network</div>
+					<div onClick={() => this.changeDisplayState('dashboard')}>Dashboard</div>
+					<div onClick={() => this.changeDisplayState('trainings')}>Trainings</div>
+					<div onClick={() => this.changeDisplayState('employees')}>Employees</div>
+					<div onClick={() => this.changeDisplayState('reports')}>Reports</div>
+					<div onClick={() => this.changeDisplayState('network')}>Network</div>
 				</nav>
 				<div>
-					{ this.switchDisplay(this.state.display) }
+					{ this.switchDisplay() }
 				</div>
 			</div>
 		);
