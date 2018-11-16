@@ -7,28 +7,28 @@ class AddTraining extends React.Component {
 	
 	state = {
 		message: '',
-		training: ''
+		training: {}
 	};
 	
 	onChange = e => {
 		const { name, value } = e.target;
-		this.setState({ [name]: value });
+		const state = this.state;
+		state.training[name] = value;
+		this.setState(state);
 	};
 	
 	addTraining = (e) => {
 		e.preventDefault();
-		const newTraining = {
-			name: this.state.training,
-			__creator: this.props.user._id,
-			__organization: this.props.organization._id
-		};
-		API.trainings.addTraining(newTraining).then(results => {
-			const training = results.data;
+		const { training } = this.state;
+		training.__creator = this.props.user._id;
+		training.__organization = this.props.organization._id;
+		API.trainings.addTraining(training).then(results => {
+// 			const training = results.data;
 // 			this.setState({ message: 'Training Added!' });
 			this.props.history.push(`/${this.props.organization.name.replace(/\s/g, '')}/trainings`);
 		}).catch(err => {
 			console.log(err);
-			this.setState({ message: 'Uh oh! Something went wrong!' });
+			this.setState({ message: 'Uh Oh! Something went wrong!' });
 		});
 	};
 
@@ -42,7 +42,7 @@ class AddTraining extends React.Component {
 					<div>{this.state.message}</div>
 				}
 				<form>
-					<input type='text' name='training' onChange={this.onChange} value={this.state.training} />
+					<input type='text' name='name' onChange={this.onChange} value={this.state.training.name} />
 					<button onClick={this.addTraining}>Add Training</button>
 				</form>
 			</div>

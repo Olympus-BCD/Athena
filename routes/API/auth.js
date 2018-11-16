@@ -16,6 +16,46 @@ router.route('/users')
 		requireLogin(req, res, controller.findAll);
 	});
 	
+//	('api/auth/user')
+router.route('/user')
+	.get(passport.authenticate('jwt', { session: false }), (req, res) => {
+		requireLogin(req, res, controller.findById);
+	})
+	.put(passport.authenticate('jwt', { session: false }), (req, res) => {
+/*
+		console.log('Role:', req.body);
+		return res.json({ success: false, msg: 'tehehe' });
+*/
+		const putUserIsOwner = req.body.role > 1 ? true : false;
+		if(putUserIsOwner && !isOwner(req)) return res.json({ success: false, msg: 'You do not have permission to edit the Owner' });
+		if(isAdmin(req)) {
+			controller.findOneAndUpdate(req, res);
+		} else {
+			res.json({ success: false, msg: 'You do not have permission to edit this user' });
+		}
+	});
+	
+requireAdmin = (req, res, next) => {
+	const token = getToken(req.headers);
+	if(token && req.user.role > 1) {
+		next(req, res);
+	} else if(token) {
+		res.json({ success: false, msg: '' });
+	}
+};
+
+isOwner = (req) => {
+	const token = getToken(req.headers);
+	if(token && req.user.role > 2) return true;
+	return false;
+}
+
+isAdmin = (req) => {
+	const token = getToken(req.headers);
+	if(token && req.user.role > 1) return true;
+	return false;
+}
+
 requireLogin = (req, res, next) => {
 	const token = getToken(req.headers);
 	if(token) {

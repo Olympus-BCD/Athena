@@ -4,20 +4,10 @@ import API from '../utils/API';
 
 import './App.css';
 
-// import { UserView, AdminView } from './views';
-import UserView from './views/User/User.js';
-import AdminView from './views/Admin/Admins.js';
+import { UserView, AdminView } from './views';
 
 class App extends Component {
 	
-/*
-	constructor(props) {
-		super(props);
-		this.state = {
-			user: {},
-		};
-	}
-*/
 	state = {
 		user: {}
 	};
@@ -49,34 +39,6 @@ class App extends Component {
 		window.location.href='/login';
 	};
 	
-/*
-	logout = () => {
-// 		this.state.user = {};
-		localStorage.removeItem('jwtToken');
-// 		window.location.reload();
-		window.location.href='/login';
-	};
-	
-	changeDisplayState = (display, displayState) => {
-		const state = this.state;
-		state[display] = displayState;
-		state.trainingsDisplay = 'default';
-		this.setState(state);
-	};
-	
-	changeSubDisplayState = (subDisplay, state) => {
-		this.setState({ [subDisplay]: state });
-	};
-	
-	getTrainings = () => {
-		this.setState({ display: 'trainings' });
-	};
-	
-	addTraining = () => {
-		
-	};
-*/
-	
 	render() {
 		return (
 			<div>
@@ -92,45 +54,7 @@ class App extends Component {
 			}
 			</div>
 		);
-/*
-		return(
-			<Router>
-				<Switch>
-					<Route path='/:org' component={() => <AdminView user={this.state.user} organization={this.state.user.__organization} logout={this.logout} />} />
-					<Route path='/user' componenet={() => <UserView logout={this.logout} />} />
-				</Switch>
-			</Router>
-		);
-*/
 	}
-	
-/*
-	render() {
-		return (
-			<div>
-			{(localStorage.getItem('jwtToken') && this.state.user.role > 1)
-				?
-					<AdminView
-						user={this.state.user}
-						organization={this.state.user.__organization}
-						display={this.state.display}
-						trainingsDisplay={this.state.trainingsDisplay}
-						logout={this.logout}
-						changeDisplayState={this.changeDisplayState}
-						changeSubDisplayState={this.changeSubDisplayState}
-						getTrainings={this.getTrainings}
-					/>
-				: (localStorage.getItem('jwtToken') && this.state.user.role == 1)
-				?
-					<UserView />
-				:
-// 				Insert Loading Image Here if wanted (get rid of null value if you do)
-				null
-			}
-			</div>
-		);
-	}
-*/
 }
 
 export default App;

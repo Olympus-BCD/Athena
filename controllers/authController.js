@@ -179,5 +179,17 @@ module.exports = {
 			.sort({ username: 1 })
 			.then(users => res.json({ success: true, users: users }))
 			.catch(err => res.status(422).json({ success: false, msg: 'Failed to retrieve users' }));
+	},
+	findById: (req, res) => {
+		User
+			.findById(req.query.id)
+			.then(user => res.json({ success: true, user: user }))
+			.catch(err => res.status(422).json({ success: false, msg: 'Failed to find user' }));
+	},
+	findOneAndUpdate: (req, res) => {
+		User
+			.findOneAndUpdate({ _id: req.body._id }, req.body, { new: true })
+			.then(user => res.json({ success: true, user: user }))
+			.catch(err => res.status(422).json({ success: false, msg: 'Failed to update user' }));
 	}
 };

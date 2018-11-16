@@ -13,6 +13,7 @@ class AddEmployee extends React.Component {
 			fname: '',
 			lname: '',
 			employeeID: '',
+			title: '',
 			username: this.props.organization.usernamePrefix
 				? this.props.organization.usernamePrefix + '_' + crypto.randomBytes(2).toString('hex')
 				: crypto.randomBytes(3).toString('hex'),
@@ -23,7 +24,7 @@ class AddEmployee extends React.Component {
 	onChange = e => {
 		const { name, value } = e.target;
 		const state = this.state;
-		state.newEmployee[name] = value;
+		state.employee[name] = value;
 		this.setState(state);
 	};
 	
@@ -60,6 +61,9 @@ class AddEmployee extends React.Component {
 					
 					<label htmlFor='employeeIDInput' className=''>Employee ID</label>
 					<input type='text' name='employeeID' onChange={this.onChange} value={this.state.employee.employeeID} />
+					
+					<label htmlFor='titleInput' className=''>Title</label>
+					<input type='text' name='title' onChange={this.onChange} value={this.state.employee.title} />
 					
 					<label htmlFor='usernameInput' className=''>Username</label>
 					<input type='text' name='username' onChange={this.onChange} value={this.state.employee.username} />
