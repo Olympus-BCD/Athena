@@ -13,24 +13,20 @@ class MainNav extends React.Component {
 	
 	render() {
 		return (
-			<div>
+			<div className='codytest'>
                 <SideNav
                 trigger={<div data-target="slide-out" className="sidenav-trigger"><i className="material-icons">menu</i></div>}
                 fixed={true}
-                // options={{
-
-                // }}
                 >
                     <SideNavItem userView id='userProfile'
                         user={{
                         background: 'black',
                         image: '',
-                        name: 'John Doe',
                         email: 'jdandturk@gmail.com'
                         }}
                     />
                     <SideNavItem href='#!icon' icon='cloud'>First Link With Icon</SideNavItem>
-                    <SideNavItem href='#!second'>Second Link</SideNavItem>
+                    <SideNavItem href='#!second' className='' id=''>Second Link</SideNavItem>
                     <SideNavItem divider />
                     <SideNavItem subheader>Subheader</SideNavItem>
                     <SideNavItem waves href='#!third'>Third Link With Waves</SideNavItem>
