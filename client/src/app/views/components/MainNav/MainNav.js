@@ -59,15 +59,13 @@ class MainNav extends React.Component {
 					</Link>
 					
                     <SideNavItem divider />
-                    <SideNavItem subheader className="mainNav-header">User</SideNavItem>
+                    <SideNavItem subheader className="mainNav-header">{this.props.user.username.toUpperCase()}</SideNavItem>
                     <SideNavItem href='#!icon' icon='dashboard'>My Dashboard</SideNavItem>
                     <SideNavItem href='#!second' icon='event_note'>My Trainings</SideNavItem>
                     <SideNavItem href='#!second' icon='folder'>My Documents</SideNavItem>
                     <SideNavItem href='#!second' icon='people'>Contacts</SideNavItem> 
                     <SideNavItem divider />
-                    <SideNavItem
-                    copyrights= "Athena"
-                    className="mainNav-footer">Athena <GoMarkGithub /> </SideNavItem>
+                    <SideNavItem copyrights= "Athena" className="mainNav-footer">Athena <GoMarkGithub /></SideNavItem>
                </SideNav>
             </div>
 		);
