@@ -1,1 +1,1 @@
-export { default } from './Template.js';
+export { default } from './ProfileCard.js';
