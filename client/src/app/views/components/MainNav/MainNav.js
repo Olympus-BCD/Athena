@@ -10,21 +10,17 @@ import { GoMarkGithub } from "react-icons/go";
 
 // CSS Imports
 import "./MainNav.css";
-
 import AvatarPlaceholder from "./AvatarPlaceholder.png";
-
-
-
 
 class MainNav extends React.Component {
 	
 	render() {
 		return (
-			<div className=''>
+			<div>
                 <SideNav
-                trigger={<div data-target="slide-out" className="sidenav-trigger"><i className="material-icons">menu</i></div>}
-                fixed={true}
-                className="mainNav-bg"
+	                trigger={<div data-target="slide-out" className="sidenav-trigger"><i className="material-icons">menu</i></div>}
+	                fixed={true}
+	                className="mainNav-bg"
                 >
                 	<h3>{this.props.organization.name}</h3>
                     <SideNavItem
@@ -33,8 +29,15 @@ class MainNav extends React.Component {
                         user={{
 	                        background: '',
 	                        image: AvatarPlaceholder,
-	                        name: <span className='blk'></span>,
-	                        email: <span className='blk'></span>
+	                        name: <span className='blk'>
+	                        	{this.props.user.fname
+			                        ? this.props.user.fname.toUpperCase()
+			                        : null}
+		                        {this.props.user.lname
+			                        ? this.props.user.lname.toUpperCase()
+			                        : null}
+			                    </span>,
+	                        email: <span className='blk'>{this.props.user.username}</span>
                         }}
                     />
                     
@@ -56,19 +59,17 @@ class MainNav extends React.Component {
 					</Link>
 					
                     <SideNavItem divider />
-                    <SideNavItem subheader className="mainNav-header">User</SideNavItem>
+                    <SideNavItem subheader className="mainNav-header">{this.props.user.username.toUpperCase()}</SideNavItem>
                     <SideNavItem href='#!icon' icon='dashboard'>My Dashboard</SideNavItem>
                     <SideNavItem href='#!second' icon='event_note'>My Trainings</SideNavItem>
                     <SideNavItem href='#!second' icon='folder'>My Documents</SideNavItem>
                     <SideNavItem href='#!second' icon='people'>Contacts</SideNavItem> 
                     <SideNavItem divider />
-                    <SideNavItem
-                    copyrights= "Athena"
-                    className="mainNav-footer">Athena <GoMarkGithub /> </SideNavItem>
+                    <SideNavItem copyrights= "Athena" className="mainNav-footer">Athena <GoMarkGithub /></SideNavItem>
                </SideNav>
-            </div>    
-    );
-  }
+            </div>
+		);
+	}
 }
 
 export default MainNav;
