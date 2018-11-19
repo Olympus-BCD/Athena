@@ -1,7 +1,11 @@
-/*Header Font*/
+/* ============ Dustin's Design Notes ============*/
+
+/*Header Font from Google Font*/
 /* font-family: 'Cinzel Decorative', cursive; */
-/*Body Font*/
+/*Body Font from Google Font*/
 /* font-family: 'Raleway', sans-serif; */
+
+/* =============================================*/
 
 /* .mainNav-bg {
     
@@ -13,6 +17,9 @@
 
 .mainNav-footer {
     text-align: center;
+    background: lavender;
+    font-family: 'Cinzel Decorative', cursive;
+
 }
 
 .blk {

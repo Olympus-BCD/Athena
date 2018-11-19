@@ -1,13 +1,16 @@
 import React from "react";
-import "./Template.css";
+import "./PageHeader.css";
 
-class Template extends React.Component {
-	
-	render() {
-		return (
-			<div></div>
-		);
-	}
+class PageHeader extends React.Component {
+  render() {
+    return (
+        <nav>
+            <div href="#" className="brand-logo right page-header">
+              Logo
+            </div>
+        </nav>
+    );
+  }
 }
 
-export default Template;
+export default PageHeader;
