@@ -6,19 +6,24 @@ const secret = require('../config/settings').secret;
 
 module.exports = {
 	register: (req, res) => {
-		console.log('New User: ', req.body);
 		if(!req.body.username || !req.body.password) {
 			res.json({ success: false, msg: 'Username and password are required.' });
 		} else if(!req.body.__organization) {
 			res.json({ success: false, msg: 'Organization not found' })
 		} else {
-			
 			function registerUser() {
-				User.findOne({ username: req.body.username, __oganization: `ObjectId(${req.body.__oganization})` }).then(user => {
+				console.log(`Register user: ${req.body.username}.`);
+				console.log(`Searching for username and organization combo (${req.body.username}, ${req.body.__organization}).`);
+				console.log(`Object Type Organization: ${require('mongoose').Types.ObjectId(req.body.__organization)}`, req.body.__organization);
+// 				User.findOne({ username: req.body.username, role: 3 }).then(user => {
+				User.findOne({ $and: [{ username: req.body.username }, { __organization: require('mongoose').Types.ObjectId(req.body.__organization) }]}).then(user => {
+					console.log('Search finished.');
 					if(user) {
 						console.log('User exists:', user, req.body);
 						res.json({ success: false, msg: 'Username must be unique to the oganization' });
 					} else {
+						console.log(`No matches found for organization ${req.body.__organization}.`);
+						console.log('Creating new user.');
 						//	As is, if a user tries to register with the same username and password as an existing account, they will simply be logged in
 						//	Can keep or change this, but need to update front end error message receiving to identify why registration failed
 						//	TODO add both front-end and server-side validations (TIP: use same error reporting objects on both ends to easily display errors)
@@ -37,8 +42,10 @@ module.exports = {
 				});	
 			}
 			
+			console.log('Searching for users:', req.body.username);
 			User.find({ username: req.body.username }).then(users => {
 				if(users) {
+					console.log(`${users.length} users found`);
 					var count = 0;
 					var matchFound = false;
 					var json = {};
@@ -63,18 +70,21 @@ module.exports = {
 									}
 								});
 							} else {
+								console.log(`Match previously found. Finishing iterations`);
 								count++;
 								comparePasswords();
 							}
 						} else if(!matchFound) {
+							console.log('Finished all iterations. No match found.');
 							registerUser();
 						} else {
-							console.log(`Outcome: End of the line, sending JSON (match found)`);
+							console.log(`Outcome: End of the line, sending JSON (match found, ${req.body.username} and password combo already exist)`);
 							res.json(json);
 						}
 					}
 					comparePasswords();
 				} else {
+					console.log(`No users with the username ${req.body.username} found.`);
 					registerUser();
 				}
 			});
