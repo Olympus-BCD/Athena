@@ -1,7 +1,22 @@
-body {
-    background-color: lightslategray;
+/*Header Font*/
+/* font-family: 'Cinzel Decorative', cursive; */
+/*Body Font*/
+/* font-family: 'Raleway', sans-serif; */
+
+/* .mainNav-bg {
+    
+} */
+
+.mainNav-header {
+    font-family: 'Cinzel Decorative', cursive;
 }
 
-#userProfile {
-    color: black;
+.mainNav-footer {
+    text-align: center;
 }
+
+.blk {
+    color: black;
+    font-family: 'Raleway', sans-serif;
+}
+
