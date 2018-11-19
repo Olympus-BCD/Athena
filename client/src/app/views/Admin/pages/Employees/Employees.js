@@ -19,6 +19,7 @@ class EmployeesPage extends React.Component {
 	render() {
 		return (
 			<div>
+				<h2>Employees</h2>
 				<ul>
 					<li><Link to={`/${this.props.organization.name.replace(/\s/g, '')}/employees/add`}>Add Employee</Link></li>
 				</ul>
