@@ -24,7 +24,7 @@ class AdminView extends React.Component {
 					organization={this.props.organization}
 					logout={this.props.logout}
 				/>
-				<div>
+				<div className='pageContainer'>
 					<Switch>
 						<Route path='/:org/dashboard' component={DashboardPage} />
 						<Route path='/:org/trainings' render={(props) => <TrainingsPage {...props} organization={this.props.organization} user={this.props.user} />} />	
