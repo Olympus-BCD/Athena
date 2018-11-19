@@ -18,6 +18,7 @@ class EmployeesPage extends React.Component {
 	
 	render() {
 		return (
+			//<h2></h2> is placeholder for pageheader componenet
 			<div>
 				<h2>Employees</h2>
 				<ul>
