@@ -2,7 +2,7 @@ import React from "react";
 import "./Admin.css";
 
 import { BrowserRouter as Router, Route, Link, Switch } from 'react-router-dom';
-import SideNav from '../components/SideNav';
+import MainNav from '../components/MainNav';
 import { DashboardPage, EmployeesPage, TrainingsPage, ReportsPage, NetworkPage } from './pages';
 /*
 import EmployeesPage from './pages/Employees/Employeess';
@@ -18,7 +18,8 @@ class AdminView extends React.Component {
 	render() {
 		return(
 			<div className=''>
-				<SideNav
+
+				<MainNav
 					user={this.props.user}
 					organization={this.props.organization}
 					logout={this.props.logout}
