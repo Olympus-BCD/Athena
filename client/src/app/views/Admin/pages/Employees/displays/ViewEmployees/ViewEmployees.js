@@ -33,14 +33,15 @@ class ViewEmployees extends React.Component {
 	render() {
 		return (
 			<div>
-				<h3>Employees</h3>
 				{
 					this.state.message !== '' &&
 					<div>{this.state.message}</div>
 				}
-				{this.state.employees.map(employee =>
-					<div key={employee._id}><Link to={`/${this.props.organization.name.replace(/\s/g, '')}/employees?id=${employee._id}`} >{employee.username}</Link></div>
-				)}
+				<div>
+					{this.state.employees.map(employee =>
+						<div key={employee._id}><Link to={`/${this.props.organization.name.replace(/\s/g, '')}/employees?id=${employee._id}`} >{employee.username}</Link></div>
+					)}
+				</div>
 			</div>
 		);
 	}

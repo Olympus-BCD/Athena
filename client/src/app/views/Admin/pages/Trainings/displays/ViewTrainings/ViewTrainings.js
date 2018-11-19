@@ -29,7 +29,6 @@ class ViewTrainings extends React.Component {
 	render() {
 		return (
 			<div>
-				<h3>Trainings Page</h3>
 				{
 					this.state.message !== '' &&
 					<div>{this.state.message}</div>

@@ -24,7 +24,7 @@ class EmployeesPage extends React.Component {
 	render() {
 		return (
 			//<h2></h2> is placeholder for pageheader componenet
-			<div>
+			<div className='employeesPage'>
 				<h2>Employees</h2>
 				<ul>
 					<li><Link to={`/${this.props.organization.name.replace(/\s/g, '')}/employees/add`}>Add Employee</Link></li>
