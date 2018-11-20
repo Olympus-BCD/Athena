@@ -1,8 +1,13 @@
+// React Imports
 import React from "react";
 import { BrowserRouter as Router, Route, Link, Switch } from 'react-router-dom';
 import queryString from 'query-string';
-import "./Trainings.css";
 
+// Materialize Imports
+
+// CSS & Local Component Import
+import "./Trainings.css";
+import PageHeader from "../../../components/PageHeader";
 import { ViewTrainings, AddTraining, ViewTraining } from './displays';
 
 class TrainingsPage extends React.Component {
@@ -19,6 +24,7 @@ class TrainingsPage extends React.Component {
 	render() {
 		return (
 			<div>
+				<PageHeader />
 				<ul>
 					<li><Link to={`/${this.props.organization.name.replace(/\s/g, '')}/trainings/add`}>Add Training</Link></li>
 				</ul>

@@ -1,11 +1,18 @@
+// React Imports
 import React from "react";
+
+// Materialize Imports
+
+// CSS & Local Component Import
 import "./Network.css";
+import PageHeader from "../../../components/PageHeader";
+
 
 class NetworkPage extends React.Component {
 	
 	render() {
 		return (
-			<h3>Network Page</h3>
+			<PageHeader />
 		);
 	}
 }

@@ -3,6 +3,8 @@ import { Link } from 'react-router-dom';
 import "./AddTraining.css";
 import API from '../../../../../../../utils/API';
 
+import TrainingsForm from '../../../../../components/TrainingsForm';
+
 class AddTraining extends React.Component {
 	
 	state = {
@@ -35,6 +37,7 @@ class AddTraining extends React.Component {
 	render() {
 		return (
 			<div>
+			<TrainingsForm />
 				<Link to={`/${this.props.organization.name.replace(/\s/g, '')}/trainings`}>X</Link>
 				<h3>Add Training</h3>
 				{
