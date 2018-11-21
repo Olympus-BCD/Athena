@@ -1,3 +1,4 @@
+const ObjectId = require('mongoose').Types.ObjectId;
 const db = require('../models');
 
 module.exports = {
@@ -40,5 +41,29 @@ module.exports = {
 			.then(training => training.remove())
 			.then(dbModel => res.json(dbModel))
 			.catch(err => res.status(422).json(err));
+	},
+	pagination: function(req, res) {
+		console.log('Pagination Request:', req.query);
+		db.Training
+			.find({ __organization: ObjectId(req.query.organization) })
+			.limit(parseInt(req.query.limit))
+			.skip(parseInt(req.query.offset))
+			.sort({ name: 'asc' })
+			.then(trainings => {
+				db.Training.count({ __organization: ObjectId(req.query.organization) })
+					.then(count => {
+						console.log(`Looked for Organization ID ${req.query.organization}.  Found: ${count}`);
+						res.json({
+							success: true,
+							message: 'Trainings found.',
+							trainings: trainings,
+							count: count
+						});
+					})
+			})
+			.catch(err => {
+				console.log(err);
+				res.status(422).json({ success: false, message: 'Trainings not found.', error: err })
+				});
 	}
 };

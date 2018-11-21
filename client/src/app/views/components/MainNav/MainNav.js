@@ -33,6 +33,7 @@ class MainNav extends React.Component {
 	                        	{this.props.user.fname
 			                        ? this.props.user.fname.toUpperCase()
 			                        : null}
+			                    &nbsp;
 		                        {this.props.user.lname
 			                        ? this.props.user.lname.toUpperCase()
 			                        : null}

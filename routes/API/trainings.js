@@ -17,6 +17,10 @@ router.route('/')
 		}
 	});
 
+//	('/api/trainings/pagination')
+router.route('/pagination')
+	.get(controller.pagination);
+	
 //	('/api/trainings/:id')
 router.route('/:id')
 	.get(controller.findById)
@@ -39,6 +43,11 @@ getToken = headers => {
 		return null;
 	}
 	return null;
+};
+
+test = (req, res, next) => {
+	console.log('Pagination Request:', req.body);
+	next(req, res);
 };
 
 module.exports = router;
