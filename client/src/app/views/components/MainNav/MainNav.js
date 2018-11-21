@@ -3,10 +3,7 @@ import React from "react";
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 
 // Materialize Imports
-import { SideNav, SideNavItem, Footer } from "react-materialize";
-
-// React Icons Imports
-import { GoMarkGithub } from "react-icons/go";
+import { SideNav, SideNavItem } from "react-materialize";
 
 // CSS Imports
 import "./MainNav.css";
@@ -22,7 +19,7 @@ class MainNav extends React.Component {
 	                fixed={true}
 	                className="mainNav-bg"
                 >
-                	<h3>{this.props.organization.name}</h3>
+                	<div className='userprofile-organization-header'>{this.props.organization.name}</div>
                     <SideNavItem
                         userView 
                         id='userProfile'
@@ -66,7 +63,7 @@ class MainNav extends React.Component {
                     <SideNavItem href='#!second' icon='folder'>My Documents</SideNavItem>
                     <SideNavItem href='#!second' icon='people'>Contacts</SideNavItem> 
                     <SideNavItem divider />
-                    <SideNavItem copyrights= "Athena" className="mainNav-footer">Athena <GoMarkGithub /></SideNavItem>
+                    <SideNavItem copyrights= "Athena" className="mainNav-footer">Athena</SideNavItem>
                </SideNav>
             </div>
 		);

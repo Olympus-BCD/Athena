@@ -10,6 +10,14 @@
 /* .mainNav-bg {
     
 } */
+.userprofile-organization-header {
+    font-family: 'Cinzel Decorative', cursive;
+    text-align: center;
+}
+
+/* #userProfile {
+    text-align: center;
+} */
 
 .mainNav-header {
     font-family: 'Cinzel Decorative', cursive;
@@ -19,8 +27,8 @@
     text-align: center;
     background: lavender;
     font-family: 'Cinzel Decorative', cursive;
-
 }
+
 
 .blk {
     color: black;
