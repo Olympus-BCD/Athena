@@ -193,6 +193,7 @@ module.exports = {
 	findById: (req, res) => {
 		User
 			.findById(req.query.id)
+			.populate('trainings')
 			.then(user => res.json({ success: true, user: user }))
 			.catch(err => res.status(422).json({ success: false, msg: 'Failed to find user' }));
 	},
