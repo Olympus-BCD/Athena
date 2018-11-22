@@ -1,3 +1,7 @@
 .addTrainingOption {
 	border-top: 2px dashed black;
 }
+
+.emp {
+	margin: 1em 0;
+}
