@@ -50,7 +50,7 @@ class EmployeesPage extends React.Component {
     return (
       <div className="employeesPage">
         <PageHeader />
-		<EmployeesCollection />
+		<EmployeesCollection organization={this.props.organization} user={this.props.user}/>
         <ul>
           <li>
             <Link
