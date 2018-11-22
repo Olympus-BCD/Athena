@@ -7,8 +7,7 @@ import queryString from "query-string";
 
 // CSS & Local Component Import
 import "./Employees.css";
-import PageHeader from "../../../components/PageHeader";
-import EmployeesCollection from '../../../components/EmployeesCollection';
+import EmployeesPageHeader from './EmployeesPageHeader/EmployeesPageHeader.js';
 import { ViewEmployees, AddEmployee, ViewEmployee } from "./displays";
 
 class EmployeesPage extends React.Component {
@@ -31,8 +30,8 @@ class EmployeesPage extends React.Component {
 	render() {
 		return (
 			<div className="employeesPage">
+				<EmployeesPageHeader />
 			
-				<PageHeader />
 				<Link to={`/${this.props.organization.name.replace(/\s/g, "")}/employees/add`}>Add Employee</Link>
 				
 				<Switch>
