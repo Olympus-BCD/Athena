@@ -27,13 +27,13 @@ class AddEmployee extends React.Component {
 		trainings: [],
 		pagination: {
 			currentPage: 1,
-			perPage: 5,
+			perPage: 10,
 			count: 0,
 			pages: 1
 		},
 		employeePagination: {
 			currentPage: 1,
-			perPage: 5,
+			perPage: 10,
 			count: 0,
 			pages: 1,
 			IDs: [],
@@ -135,7 +135,8 @@ class AddEmployee extends React.Component {
 		const pagination = this.state.employeePagination;
 		
 		let length = [];
-		if(pagination.count > 5) length.push({ showPagination: true });
+// 		if(pagination.count > 5) length.push({ showPagination: true });
+		length.push('wth is this???');
 		
 		const offset = pagination.perPage * (pagination.currentPage - 1);
 		const limit = parseInt(offset) + parseInt(pagination.perPage);
@@ -170,7 +171,7 @@ class AddEmployee extends React.Component {
 						<CollectionItem key={i} style={{listStyle: 'none'}}>&nbsp;</CollectionItem>
 					)}
 					{length.map((l, k) => 
-						<Pagination key={k} items={pagination.pages} activePage={pagination.currentPage} maxButtons={5} onSelect={this.changeEmployeePagination} />
+						<Pagination className='emp' key={k} items={pagination.pages} activePage={pagination.currentPage} maxButtons={5} onSelect={this.changeEmployeePagination} />
 					)}
 				</Collection>
 			);
@@ -188,7 +189,7 @@ class AddEmployee extends React.Component {
 						</CollectionItem>
 					)}
 					{length.map(l => 
-						<Pagination key={l} items={pagination.pages} activePage={pagination.currentPage} maxButtons={5} onSelect={this.changeEmployeePagination} />
+						<Pagination className='emp' key={l} items={pagination.pages} activePage={pagination.currentPage} maxButtons={5} onSelect={this.changeEmployeePagination} />
 					)}
 				</Collection>
 			);
@@ -244,6 +245,7 @@ class AddEmployee extends React.Component {
 		e.preventDefault();
 		const { employee } = this.state;
 		employee.__organization = this.props.organization._id;
+		employee.trainings = this.state.newTrainings;
 		API.auth.register(employee).then(res => {
 			if(res.data.success) {
 				this.props.history.push(`/${this.props.organization.name.replace(/\s/g, '')}/employees`);
@@ -268,7 +270,7 @@ class AddEmployee extends React.Component {
 			employee.trainings.push(training);
 			employeePagination.count++;
 			
-			if(employeePagination.count % 5 == 1 && employeePagination.count > 5) employeePagination.currentPage++;
+			if(employeePagination.count % employeePagination.perPage == 1 && employeePagination.count > employeePagination.perPage) employeePagination.currentPage++;
 			
 			employeePagination.pages = Math.ceil(employeePagination.count / employeePagination.perPage);
 			employeePagination.extraItems = employeePagination.count % employeePagination.perPage;
@@ -375,16 +377,16 @@ class AddEmployee extends React.Component {
 						<h4>Employee Info</h4>	
 					</Row>
 					<Row>
-						<Input s={6} label='First Name' defaultValue={employee.fname} />
-						<Input s={6} label='Last Name' defaultValue={employee.lname} />
+						<Input s={6} label='First Name' defaultValue={employee.fname} onChange={this.onChange} name='fname' />
+						<Input s={6} label='Last Name' defaultValue={employee.lname} onChange={this.onChange} name='lname' />
 					</Row>
 					<Row>
-						<Input s={6} label='Employee ID' defaultValue={employee.employeeID} />
-						<Input s={6} label='Title' defaultValue={employee.title} />
+						<Input s={6} label='Employee ID' defaultValue={employee.employeeID} onChange={this.onChange} name='employeeID' />
+						<Input s={6} label='Title' defaultValue={employee.title} onChange={this.onChange} name='title' />
 					</Row>
 					<Row>
-						<Input s={6} label='Account Username' defaultValue={employee.username} />
-						<Input s={6} label='Default Password' defaultValue={employee.password} />
+						<Input s={6} label='Account Username' defaultValue={employee.username} onChange={this.onChange} name='username' />
+						<Input s={6} label='Default Password' defaultValue={employee.password} onChange={this.onChange} name='password' />
 					</Row>
 					<Row>
 						<h4>Add Trainings</h4>	
@@ -393,6 +395,7 @@ class AddEmployee extends React.Component {
 						{this.renderOrganizationCollection(trainings, `${organization.name}'s Trainings`)}
 						{this.renderEmployeeCollection()}
 					</Row>
+					<Button onClick={this.addEmployee}>Add Employee</Button>
 				</form>
 			</div>
 		);

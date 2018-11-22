@@ -7,7 +7,7 @@ class ViewEmployee extends React.Component {
 	
 	state = {
 		message: '',
-		employee: {},
+		employee: { trainings: [] },
 		editEmployee: {},
 		editName: false,
 		editUsername: false,
@@ -67,8 +67,9 @@ class ViewEmployee extends React.Component {
 		};
 		API.auth.findById(query).then(results => {
 			if(results.data.success) {
-				const user = results.data.user
-				this.setState({ employee: user, editEmployee: Object.assign({}, user) });
+				const employee = results.data.user
+				console.log('Employee: ', employee);
+				this.setState({ employee: employee, editEmployee: Object.assign({}, employee) });
 			} else {
 				this.setState({ message: results.data.msg });
 			}
@@ -152,6 +153,19 @@ class ViewEmployee extends React.Component {
 						</div>	
 				}
 				<div>Role: {this.employeeRole()}</div>
+				
+				{employee.trainings.length > 0
+					?
+						<ul>Trainings:
+							{employee.trainings.map((training, i) => 
+								<li>
+									<div>{training.name}</div>
+								</li>
+							)}
+						</ul>
+					:
+						<div>No Trainings Assigned :(</div>
+				}
 			</div>
 		);
 	}
