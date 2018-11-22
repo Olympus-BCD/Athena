@@ -267,7 +267,9 @@ class AddEmployee extends React.Component {
 			newTrainings.push(training._id);
 			employee.trainings.push(training);
 			employeePagination.count++;
+			
 			if(employeePagination.count % 5 == 1 && employeePagination.count > 5) employeePagination.currentPage++;
+			
 			employeePagination.pages = Math.ceil(employeePagination.count / employeePagination.perPage);
 			employeePagination.extraItems = employeePagination.count % employeePagination.perPage;
 		}
@@ -284,7 +286,10 @@ class AddEmployee extends React.Component {
 		newTrainings = newTrainings.filter(id => id != training._id);
 		employee.trainings = employee.trainings.filter(t => t._id != training._id);
 		employeePagination.count--;
+		
 		if(employeePagination.count % 5 == 0 && employeePagination.currentPage > 0) employeePagination.currentPage--;
+		employeePagination.currentPage = employeePagination.currentPage == 0 ? 1 : employeePagination.currentPage;
+		
 		employeePagination.pages = Math.ceil(employeePagination.count / employeePagination.perPage);
 		employeePagination.extraItems = employeePagination.count % employeePagination.perPage;
 // 		console.log('Post-filter:', employeePagination);
@@ -387,20 +392,6 @@ class AddEmployee extends React.Component {
 					<Row>
 						{this.renderOrganizationCollection(trainings, `${organization.name}'s Trainings`)}
 						{this.renderEmployeeCollection()}
-						<Collection className='col s6'>
-							<h5>{employee.fname !='' ? `${employee.fname}'s Trainings` : `New Employee's Trainings`}</h5>
-						{
-							employee.trainings.map(training => 
-								<CollectionItem
-									href='#!'
-									key={training._id}
-									onClick={e => { this.removeTraining(e, training) }}
-								>
-									{training.name} <Badge>Remove This Training</Badge>
-								</CollectionItem>
-							)
-						}
-						</Collection>
 					</Row>
 				</form>
 			</div>
@@ -466,6 +457,21 @@ class AddEmployee extends React.Component {
 						{/ *this.addBlankCollectionItems(trainings.length)* /}
 						
 						<Collection className='col s6'>
+						{
+							employee.trainings.map(training => 
+								<CollectionItem
+									href='#!'
+									key={training._id}
+									onClick={e => { this.removeTraining(e, training) }}
+								>
+									{training.name} <Badge>Remove This Training</Badge>
+								</CollectionItem>
+							)
+						}
+						</Collection>
+						
+						<Collection className='col s6'>
+							<h5>{employee.fname !='' ? `${employee.fname}'s Trainings` : `New Employee's Trainings`}</h5>
 						{
 							employee.trainings.map(training => 
 								<CollectionItem
