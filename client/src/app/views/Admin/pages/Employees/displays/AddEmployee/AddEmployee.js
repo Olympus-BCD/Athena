@@ -4,6 +4,7 @@ import "./AddEmployee.css";
 
 //	Dependencies
 import crypto from 'crypto';
+import moment from 'moment';
 import API from '../../../../../../../utils/API';
 
 // Materialize Imports
@@ -18,10 +19,15 @@ class AddEmployee extends React.Component {
 			lname: '',
 			employeeID: '',
 			title: '',
+			department: '',
+			hireDate: moment().format('YYYY-MM-DD'),
 			username: this.props.organization.usernamePrefix
 				? this.props.organization.usernamePrefix + '_' + crypto.randomBytes(2).toString('hex')
 				: crypto.randomBytes(3).toString('hex'),
 			password: this.props.organization.passwordDefault || crypto.randomBytes(4).toString('hex'),
+			trackHours: false,
+			hours: 0,
+			trackingDate: '',
 			trainings: []
 		},
 		trainings: [],
@@ -40,7 +46,10 @@ class AddEmployee extends React.Component {
 			extraItems: 0
 		},
 		newTrainings: [],
-		step: 1
+		step: 1,
+		isAdmin: false,
+		active: true,
+		trackHours: false
 	};
 	
 	componentDidMount() {
@@ -219,8 +228,16 @@ class AddEmployee extends React.Component {
 	
 	onChange = e => {
 		const { name, value } = e.target;
+		const { employee } = this.state;
+		employee[name] = value;
+		employee.hours = employee.hours < 0 ? 0 : employee.hours;
+		this.setState({ employee: employee });
+	};
+	
+	toggleCheckbox = e => {
+		const { name } = e.target;
 		const state = this.state;
-		state.employee[name] = value;
+		state[name] = !state[name];
 		this.setState(state);
 	};
 	
@@ -242,11 +259,43 @@ class AddEmployee extends React.Component {
 		this.setState({ addTraining: true });
 	};
 	
+	changeDate = (e, val) => {
+		e.preventDefault();
+		const { employee } = this.state;
+		const value = val == '' ? employee[e.target.name] : val;
+		employee[e.target.name] = moment(value).format('YYYY-MM-DD');
+		this.setState({ employee: employee });
+	};
+	
+	previousStep = e => {
+		e.preventDefault();
+		console.log(e);
+		let { step } = this.state;
+		step--;
+		this.setState({ step: step});
+	};
+	
+	nextStep = e => {
+		e.preventDefault();
+		let { step, employee } = this.state;
+		step++;
+		employee.username = employee.fname.toLowerCase() + employee.lname.toLowerCase();
+		employee.trackingDate = employee.trackingDate === '' ? employee.hireDate : employee.trackingDate;
+		this.setState({ step: step, employee: employee });
+	};
+	
 	addEmployee = (e) => {
 		e.preventDefault();
 		const { employee } = this.state;
 		employee.__organization = this.props.organization._id;
 		employee.trainings = this.state.newTrainings;
+		employee.role = this.state.isAdmin ? 2 : 1;
+		employee.trackHours = this.state.trackHours;
+		if(!this.state.active) {
+			employee.role = 1;
+			employee.active = false;
+		}
+		return console.log(employee);
 		API.auth.register(employee).then(res => {
 			if(res.data.success) {
 				this.props.history.push(`/${this.props.organization.name.replace(/\s/g, '')}/employees`);
@@ -365,7 +414,7 @@ class AddEmployee extends React.Component {
 
 	render() {
 		const { user, organization } = this.props;
-		const { employee, trainings, pagination } = this.state;
+		const { employee, trainings, pagination, step } = this.state;
 		return (
 			<div>
 				<Link to={`/${this.props.organization.name.replace(/\s/g, '')}/employees`}>X</Link>
@@ -374,29 +423,77 @@ class AddEmployee extends React.Component {
 					<div>{this.state.message}</div>
 				}
 				<form className='center-align'>
-					<Row>
-						<h4>Employee Info</h4>	
-					</Row>
-					<Row>
-						<Input s={6} label='First Name' defaultValue={employee.fname} onChange={this.onChange} name='fname' />
-						<Input s={6} label='Last Name' defaultValue={employee.lname} onChange={this.onChange} name='lname' />
-					</Row>
-					<Row>
-						<Input s={6} label='Employee ID' defaultValue={employee.employeeID} onChange={this.onChange} name='employeeID' />
-						<Input s={6} label='Title' defaultValue={employee.title} onChange={this.onChange} name='title' />
-					</Row>
-					<Row>
-						<Input s={6} label='Account Username' defaultValue={employee.username} onChange={this.onChange} name='username' />
-						<Input s={6} label='Default Password' defaultValue={employee.password} onChange={this.onChange} name='password' />
-					</Row>
-					<Row>
-						<h4>Add Trainings</h4>	
-					</Row>					
-					<Row>
-						{this.renderOrganizationCollection(trainings, `${organization.name}'s Trainings`)}
-						{this.renderEmployeeCollection()}
-					</Row>
-					<Button onClick={this.addEmployee}>Add Employee</Button>
+					{
+						step === 1 &&
+					<div>
+						<Row>
+							<h4>Step One: Employee Info</h4>	
+						</Row>
+						<Row>
+							<Input s={6} label='First Name' defaultValue={employee.fname} onChange={this.onChange} name='fname' />
+							<Input s={6} label='Last Name' defaultValue={employee.lname} onChange={this.onChange} name='lname' />
+						</Row>
+						<Row>
+							<Input s={6} label='Employee ID' defaultValue={employee.employeeID} onChange={this.onChange} name='employeeID' />
+							<Input s={6} name='hireDate' label='Hire Date' type='date' dateFormat='YYYY-MM-DD' value={employee.hireDate}  onChange={this.changeDate} />
+						</Row>
+						<Row>
+							<Input s={6} label='Position' defaultValue={employee.title} onChange={this.onChange} name='title' />
+							<Input s={6} label='Department' defaultValue={employee.department} onChange={this.onChange} name='department' />
+						</Row>
+					</div>
+					}
+					{
+						step === 2 &&
+					<div>
+						<Row>
+						 <h4>Step Two: Account Info</h4>
+						</Row>
+						<Row>
+							<Input s={6} label='Account Username' defaultValue={employee.username} onChange={this.onChange} name='username' />
+							<Input s={6} label='Default Password' defaultValue={employee.password} onChange={this.onChange} name='password' />
+						</Row>
+						<Row>
+							<Input name='isAdmin' type='checkbox' value={this.state.isAdmin} checked={this.state.isAdmin ? 'checked' : null} label='Create this user with Admin privileges' onClick={this.toggleCheckbox} />
+						</Row>
+						<Row>
+							<Input name='active' type='checkbox' value={this.state.active} checked={!this.state.active ? 'checked' : null} label='Do not create an account for this user' onClick={this.toggleCheckbox} />
+						</Row>
+					</div>
+					}
+					{
+						step == 3 &&
+					<div>
+						<Row>
+							<h4>Step Three: Training Info</h4>	
+						</Row>
+						<Row>
+							<Input name='trackHours' type='checkbox' value={this.state.trackHours} checked={this.state.trackHours ? 'checked' : null} label='Track training hours for this employee' onClick={this.toggleCheckbox} />
+						</Row>
+						{
+							this.state.trackHours &&
+						<Row>
+							<Input name='hours' type='number' value={employee.hours} onChange={this.onChange} />
+							<Input name='trackingDate' type='date' label='Start tracking hours on:' dateFormat='YYYY-MM-DD' value={employee.trackingDate} onChange={this.changeDate} />
+						</Row>
+						}
+						<Row>
+							{this.renderOrganizationCollection(trainings, `${organization.name}'s Trainings`)}
+							{this.renderEmployeeCollection()}
+						</Row>
+					</div>
+					}
+						<Row>
+						{ (step === 2 || step === 3) &&
+								<Button onClick={this.previousStep}>Back</Button>
+						}
+						{ (step === 1 || step === 2) &&
+							<Button onClick={this.nextStep}>Next</Button>
+						}
+						{ (step === 3) &&
+							<Button onClick={this.addEmployee}>Add Employee</Button>
+						}
+						</Row>
 				</form>
 			</div>
 		);
