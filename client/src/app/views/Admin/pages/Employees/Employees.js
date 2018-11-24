@@ -30,9 +30,11 @@ class EmployeesPage extends React.Component {
 	render() {
 		return (
 			<div className="employeesPage">
-				<EmployeesPageHeader />
+				<EmployeesPageHeader 
+        organization={ this.props.organization }
+        />
 			
-				<Link to={`/${this.props.organization.name.replace(/\s/g, "")}/employees/add`}>Add Employee</Link>
+				
 				
 				<Switch>
 					{this.parseQueryString()}
