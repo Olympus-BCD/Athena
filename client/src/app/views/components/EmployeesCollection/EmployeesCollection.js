@@ -45,11 +45,7 @@ class EmployeesCollection extends React.Component {
                          </p>
                         </div>                       
                         <div className="col s3">
-                          <a className="btn-floating btn-small right waves-effect waves-light red">
-                          <i id="add-button-icon" className="large material-icons">
-                          remove_circle_outline
-                          </i>
-                          </a>
+                        <Link class="waves-effect waves-teal btn-flat">Remove</Link>
                         </div>
                     </div>
                   </li>                 

@@ -1,14 +1,18 @@
+// React Imports
 import React from "react";
+import { Link } from "react-router-dom";
+
+// CSS Imports
 import "./PageHeader.css";
 
 class PageHeader extends React.Component {
   render() {
     return (
-        <nav>
-            <div href="#" className="brand-logo right page-header">
-              Logo
-            </div>
-        </nav>
+      <nav className="transparent z-depth-0">
+      <div class="nav-wrapper">
+        <Link to="#" target="_blank" class="brand-logo center"><span>Welcome to Your Organization</span></Link>
+      </div>
+    </nav>
     );
   }
 }

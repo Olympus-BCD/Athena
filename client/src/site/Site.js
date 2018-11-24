@@ -24,7 +24,7 @@ class Site extends Component {
 	
 	render() {
 		return (
-			<div className=''>
+			<div className='site-bg'>
 				<h1><Link to='/'>Athena</Link></h1>
 				<h2>Welcome to Athena</h2>
 				<p>Training management made easy...</p>

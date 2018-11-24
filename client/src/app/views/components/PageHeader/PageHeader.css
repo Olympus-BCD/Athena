@@ -9,6 +9,7 @@
 
 .page-header {
   font-family: 'Cinzel Decorative', cursive;
+  background: #CAC7D7;
 }
 
 @media only screen and (max-width : 992px) {

@@ -14,7 +14,7 @@ class DashboardPage extends React.Component {
         <PageHeader />
         <div className="row">
           <div className="col s12">
-            <div className="card-panel teal z-depth-5">
+            <div className="card-panel z-depth-5">
               <div className="row">
                 <div className="col s6">
                   <div className="card blue-grey darken-1 z-depth-3">

@@ -41,7 +41,7 @@ class App extends Component {
 	
 	render() {
 		return (
-			<div>
+			<div className="app-wrapper">
 			{(localStorage.getItem('jwtToken') && this.state.user.role > 1)
 				?
 					<AdminView user={this.state.user} organization={this.state.user.__organization} logout={this.logout} />
