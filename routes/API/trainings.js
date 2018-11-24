@@ -15,6 +15,13 @@ router.route('/')
 		} else {
 			return res.status(403).send({ success: false, msg: 'Unauthorized.' });
 		}
+	})
+	.put(passport.authenticate('jwt', { session: false }), (req, res) => {
+		if(req.user.role > 1) {
+			requireLogin(req, res, controller.update);
+		} else {
+			return res.status(403).send({ success: false, msg: 'Unauthorized.' });
+		}
 	});
 
 //	('/api/trainings/pagination')
@@ -23,7 +30,10 @@ router.route('/pagination')
 	
 //	('/api/trainings/:id')
 router.route('/:id')
-	.get(controller.findById)
+	.get(passport.authenticate('jwt', { session: false }), (req, res) => {
+// 		console.log('params:', req.query);
+		requireLogin(req, res, controller.findById);
+	})
 	.put(controller.update)
 	.delete(controller.remove);
 

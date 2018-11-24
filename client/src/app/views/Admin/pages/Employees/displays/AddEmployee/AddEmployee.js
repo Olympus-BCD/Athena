@@ -39,7 +39,8 @@ class AddEmployee extends React.Component {
 			IDs: [],
 			extraItems: 0
 		},
-		newTrainings: []
+		newTrainings: [],
+		step: 1
 	};
 	
 	componentDidMount() {

@@ -40,6 +40,7 @@ class Login extends Component {
 	// 				this.props.history.push('/app')
 					window.location.href=`/${result.data.user.__organization.name.replace(' ', '')}`;
 				} else {
+					console.log('uh oh!');
 					this.setState({ message: result.data.msg });
 				}
 			})
