@@ -8,7 +8,8 @@ module.exports = {
 		} else {
 			const name = req.body.organization;
 			const organization = new Organization({
-				name: name
+				name: name,
+				passwordDefault: `${name.replace(/\s/g, '').trim().toLowerCase()}123`
 			});
 // 			console.log(models);
 			organization.save((err, results) => {
