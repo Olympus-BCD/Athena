@@ -1,0 +1,16 @@
+/* ============ Dustin's Design Notes ============*/
+
+/*Header Font from Google Font*/
+/* font-family: 'Cinzel Decorative', cursive; */
+/*Body Font from Google Font*/
+/* font-family: 'Raleway', sans-serif; */
+
+/* =============================================*/
+
+.athena-header {
+    font-family: 'Cinzel Decorative', cursive;
+}
+
+#login-card {
+    padding: 1em;
+}

@@ -6,6 +6,11 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  background-image: url("./clouds_pink_hue.jpg");
+  background-position: center;
+  background-size: cover;
+  min-width: 100vw;
+  min-height: 100vh;
 }
 
 code {

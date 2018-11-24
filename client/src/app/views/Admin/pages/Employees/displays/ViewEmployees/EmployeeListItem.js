@@ -53,9 +53,7 @@ class EmployeeListItem extends React.Component {
 						</div>
 						
 						<div className='col s3'>
-							<a className='btn-floating btn-small right waves-effect waves-light red'>
-								<i id='add-button-icon' className='large material-icons'>remove_circle_outline</i>
-							</a>
+						<span class="waves-effect waves-teal btn-flat right">Remove</span>
 						</div>
 					</div>
 				</li>

@@ -8,11 +8,18 @@
 /* =============================================*/
 
 /* .mainNav-bg {
-    
+    background: linear-gradient(to right top, #cac7d77c, #a39eaf88, #7d788888, #595363, #383140),transparent;
+
 } */
 .userprofile-organization-header {
     font-family: 'Cinzel Decorative', cursive;
+    font-size: 2em;
     text-align: center;
+    padding-top: 1em;
+}
+
+.side-nav .userView>a {
+    padding-left: 6em;
 }
 
 /* #userProfile {
