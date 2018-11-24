@@ -17,17 +17,19 @@ module.exports = {
 */
 			.catch(err => res.status(422).json(err));
 	},
-	findById: function(req, res) {
+	findById: (req, res) => {
 		db.Training
-			.findById(req.params.id)
-			.then(training => res.json(training))
-			.catch(err => res.status(422).json(err));
+			.findById(req.query.id)
+			.then(training => res.json({ success: true, training: training }))
+			.catch(err => res.status(422).json({ success: false, msg: 'Failed to find training' }));
 	},
 	create: function(req, res) {
 		db.Training
 			.create(req.body)
-			.then(training => res.json(training))
-			.catch(err => res.status(422).json(err));
+			.then(training => {
+				res.json({ success: true, msg: '', training: training })
+			})
+			.catch(err => res.status(422).json({ success: false, msg: 'Failed to create training.', error: err }));
 	},
 	update: function(req, res) {
 		db.Training

@@ -98,7 +98,7 @@ class ViewEmployee extends React.Component {
 		return (
 			<div>
 				<Link to={`/${this.props.organization.name.replace(/\s/g, '')}/employees`}>X</Link>
-				<h3>Employee</h3>
+				<h3>{employee.fname}</h3>
 				{
 					message !== '' &&
 					<div>{message}</div>

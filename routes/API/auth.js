@@ -14,6 +14,13 @@ router.route('/register')
 router.route('/users')
 	.get(passport.authenticate('jwt', { session: false }), (req, res) => {
 		requireLogin(req, res, controller.findAll);
+	})
+	.put(passport.authenticate('jwt', { session: false }), (req, res) => {
+		if(isAdmin(req)) {
+			res.json({ success: false, msg: 'TODO: add this functionality!!!' });
+		} else {
+			res.json({ success: false, msg: 'You do not have permission to add trainings to users.' });
+		}
 	});
 	
 //	('api/auth/user')

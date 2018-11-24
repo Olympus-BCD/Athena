@@ -18,7 +18,30 @@ const TrainingSchema = new Schema({
 	date: {
 		type: Date,
 		default: Date.now
+	},
+	trainingCode: {
+		type: String
+	},
+	hours: {
+		type: Number,
+		default: 0
+	},
+	recurring: {
+		type: Boolean,
+		default: false
+	},
+	frequencyNumber: {
+		type: Number
+	},
+	frequencyPeriod: {
+		type: String
+	},
+/*
+	documents: {
+		type: mongoose.Schema.Types.ObjectId,
+		ref: 'Document',
 	}
+*/
 });
 
 const Training = mongoose.model('Training', TrainingSchema);
