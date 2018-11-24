@@ -138,12 +138,18 @@ module.exports = {
 						if(!responseSent) {
 							users[count].comparePassword(req.body.password, (err, isMatch) => {
 								if(isMatch &&!err) {
-									const token = jwt.sign(users[count].toJSON(), secret);
-									responseSent = true;
-									json = { success: true, token: 'JWT ' + token, msg: '', user: users[count] };
-									count++;
-									console.log(`Outcome: Successful login, recall`);
-									comparePasswords();
+									if(users[count].active) {
+										const token = jwt.sign(users[count].toJSON(), secret);
+										responseSent = true;
+										json = { success: true, token: 'JWT ' + token, msg: '', user: users[count] };
+										count++;
+										console.log(`Outcome: Successful login, recall`);
+										comparePasswords();
+									} else {
+										console.log(`Outcome: Account innactive, recall`);
+										count++
+										comparePasswords();
+									}
 								} else {
 									if(err) console.log('Error:', err);
 									count++;

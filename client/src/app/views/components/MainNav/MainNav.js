@@ -38,6 +38,7 @@ class MainNav extends React.Component {
 	                        email: <span className='blk'>{this.props.user.username}</span>
                         }}
                     />
+                    <div onClick={this.props.logout}>Logout</div>
                     
                     <SideNavItem divider />
                     
@@ -63,7 +64,7 @@ class MainNav extends React.Component {
                     <SideNavItem href='#!second' icon='event_note'>My Trainings</SideNavItem>
                     <SideNavItem href='#!second' icon='folder'>My Documents</SideNavItem>
                     <SideNavItem divider />
-                    <SideNavItem copyrights= "Athena" className="mainNav-footer">Athena</SideNavItem>
+                    <SideNavItem copyrights= "Athena" id='side-nav-footer' className="mainNav-footer"><Link to='/' target='_blank' >Athena</Link></SideNavItem>
                </SideNav>
             </div>
 		);

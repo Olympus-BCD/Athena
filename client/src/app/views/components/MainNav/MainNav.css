@@ -42,6 +42,10 @@
     font-family: 'Raleway', sans-serif;
 }
 
+#side-nav-footer a {
+	padding: 0;
+}
+
 /*
 .sidenav-trigger {
 	height: 0;

@@ -34,13 +34,30 @@ let UserSchema = new Schema({
 	title: {
 		type: String
 	},
+	department: {
+		type: String
+	},
 	fname: {
 		type: String
 	},
 	lname: {
 		type: String
 	},
-	image: {
+	imageURL: {
+		type: String
+	},
+	hireDate: {
+		type: String
+	},
+	trackHours: {
+		type: Boolean,
+		default: false
+	},
+	trainingHours: {
+		type: Number,
+		default: 0
+	},
+	trackingDate: {
 		type: String
 	},
 	date: {

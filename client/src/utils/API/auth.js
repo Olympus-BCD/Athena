@@ -16,6 +16,9 @@ export default {
 	update: user => {
 		return axios.put('/api/auth/user', user);
 	},
+	addTrainingToExistingUsers: training => {
+		return axios.put('/api/auth/users', training);
+	},
 	test: (newEmployee, cb) => {
 		cb(newEmployee);
 	}
