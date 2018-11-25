@@ -13,6 +13,10 @@
   background: linear-gradient(to right top, #cac7d77c, #a39eaf88, #7d788888, #595363, #383140),transparent;
 }
 
+.dashboard-card {
+  background: #CAC7D7;
+}
+
 header, main, footer {
     padding-left: 300px;
   }
