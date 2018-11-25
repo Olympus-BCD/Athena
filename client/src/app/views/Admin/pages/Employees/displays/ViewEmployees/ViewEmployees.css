@@ -9,3 +9,12 @@
 .collection .collection-item:last-child {
 	border-bottom: 1px solid #e0e0e0;
 }
+
+.admin-btn {
+	background: midnightblue;
+	padding: 0.5em 1em;
+	width: 175px;
+	border-radius: 5px;
+	font-size: 1.1em;
+	color: #FFF;
+}

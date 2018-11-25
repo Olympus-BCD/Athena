@@ -7,6 +7,8 @@ import crypto from 'crypto';
 import moment from 'moment';
 import API from '../../../../../../../utils/API';
 
+import EmployeesSubHeader from '../../EmployeesSubHeader';
+
 // Materialize Imports
 import { Row, Input, Autocomplete, Collection, CollectionItem, Badge, Button, Pagination } from "react-materialize";
 
@@ -26,7 +28,7 @@ class AddEmployee extends React.Component {
 				: crypto.randomBytes(3).toString('hex'),
 			password: this.props.organization.passwordDefault || crypto.randomBytes(4).toString('hex'),
 			trackHours: false,
-			hours: 0,
+			totalHours: 0,
 			trackingDate: '',
 			trainings: []
 		},
@@ -172,9 +174,20 @@ class AddEmployee extends React.Component {
 						<CollectionItem
 							href='#!'
 							key={training._id}
-							onClick={e => { this.removeTraining(e, training) }}
 						>
-							{training.name} <Badge>Remove This Training</Badge>
+							{training.name}
+							
+							<Badge onClick={e => { this.removeTraining(e, training) }}>Remove</Badge>
+							{ !this.state[training._id] &&
+								<Badge className='dateComplete' onClick={e => { this.markComplete(e, training) }}>Mark as Complete</Badge>
+							}
+							{ (this.state[training._id] && !this.state[training._id].completed) &&
+								<input id={training._id} className='dateComplete' type='date' name='dateCompleted' dateFormat='YYYY-MM-DD' label='Date Completed' value={this.state[training._id].dateCompleted} onChange={this.trainingCompletedDate} />
+							}
+							{ (this.state[training._id] && this.state[training._id].completed) &&
+								<span id={training._id} className='dateComplete' onClick={this.markIncomplete}>Completed ({this.state[training._id].dateCompleted})</span>
+							}
+							
 						</CollectionItem>
 					)}
 					{collectionItems.map((collectionItem, i) => 
@@ -195,7 +208,7 @@ class AddEmployee extends React.Component {
 							key={training._id}
 							onClick={e => { this.removeTraining(e, training) }}
 						>
-							{training.name} <Badge>Remove This Training</Badge>
+							{training.name} <Badge onClick={e => { this.removeTraining(e, training) }}>Remove</Badge> <Badge onClick={e => { this.markComplete(e, training) }}>Mark as Complete</Badge>
 						</CollectionItem>
 					)}
 					{length.map(l => 
@@ -230,7 +243,7 @@ class AddEmployee extends React.Component {
 		const { name, value } = e.target;
 		const { employee } = this.state;
 		employee[name] = value;
-		employee.hours = employee.hours < 0 ? 0 : employee.hours;
+		employee.totalHours = employee.totalHours < 0 ? 0 : employee.totalHours;
 		this.setState({ employee: employee });
 	};
 	
@@ -265,6 +278,23 @@ class AddEmployee extends React.Component {
 		const value = val == '' ? employee[e.target.name] : val;
 		employee[e.target.name] = moment(value).format('YYYY-MM-DD');
 		this.setState({ employee: employee });
+	};
+	
+	trainingCompletedDate = (e) => {
+		e.preventDefault();
+		const { id, value } = e.target;
+		const state = this.state;
+		state[id].dateCompleted = value;
+		state[id].completed = true;
+		this.setState(state);
+	};
+	
+	markIncomplete = e => {
+		e.preventDefault();
+		const { id } = e.target;
+		const state = this.state;
+		delete state[id];
+		this.setState(state);
 	};
 	
 	previousStep = e => {
@@ -342,12 +372,22 @@ class AddEmployee extends React.Component {
 		if(employeePagination.count % 5 == 0 && employeePagination.currentPage > 0) employeePagination.currentPage--;
 		employeePagination.currentPage = employeePagination.currentPage == 0 ? 1 : employeePagination.currentPage;
 		
+		if(this.state[training._id]) delete this.state[training._id];
+		
 		employeePagination.pages = Math.ceil(employeePagination.count / employeePagination.perPage);
 		employeePagination.extraItems = employeePagination.count % employeePagination.perPage;
 // 		console.log('Post-filter:', employeePagination);
 // 		if(trainings.indexOf(training)  < 0) trainings.push(training);
 // 		this.setState({ employee: employee, trainings: trainings });
 		this.setState({ employee: employee, newTrainings: newTrainings, employeePagination: employeePagination });
+	};
+	
+	markComplete = (e, training) => {
+		const state = this.state;
+		state[training._id] = {};
+		state[training._id].completed = false;
+// 		state[training._id].dateCompleted = moment().format('YYYY-MM-DD');
+		this.setState(state);
 	};
 
 /*
@@ -417,7 +457,7 @@ class AddEmployee extends React.Component {
 		const { employee, trainings, pagination, step } = this.state;
 		return (
 			<div>
-				<Link to={`/${this.props.organization.name.replace(/\s/g, '')}/employees`}>X</Link>
+				<EmployeesSubHeader organization={this.props.organization} />
 				{
 					this.state.message !== '' &&
 					<div>{this.state.message}</div>
@@ -473,7 +513,7 @@ class AddEmployee extends React.Component {
 						{
 							this.state.trackHours &&
 						<Row>
-							<Input name='hours' type='number' value={employee.hours} onChange={this.onChange} />
+							<Input name='totalHours' type='number' label='Total hours required:' value={employee.totalHours} onChange={this.onChange} />
 							<Input name='trackingDate' type='date' label='Start tracking hours on:' dateFormat='YYYY-MM-DD' value={employee.trackingDate} onChange={this.changeDate} />
 						</Row>
 						}

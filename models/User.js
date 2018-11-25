@@ -28,6 +28,10 @@ let UserSchema = new Schema({
 		type: mongoose.Schema.Types.ObjectId,
 		ref: 'Training'
 	}],
+	trainingInstances: [{
+		type: mongoose.Schema.Types.ObjectId,
+		ref: 'TrainingInstance'
+	}],
 	employeeID: {
 		type: String
 	},
@@ -53,9 +57,16 @@ let UserSchema = new Schema({
 		type: Boolean,
 		default: false
 	},
-	trainingHours: {
+	currentHours: {
 		type: Number,
 		default: 0
+	},
+	totalHours: {
+		type: Number,
+		default: 0
+	},
+	hoursResetDate: {
+		type: String
 	},
 	trackingDate: {
 		type: String

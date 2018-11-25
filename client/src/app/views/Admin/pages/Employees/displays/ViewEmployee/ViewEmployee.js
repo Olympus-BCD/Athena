@@ -2,6 +2,7 @@ import React from "react";
 import { Link } from 'react-router-dom';
 import "./ViewEmployee.css";
 import API from '../../../../../../../utils/API';
+import EmployeesSubHeader from '../../EmployeesSubHeader';
 
 class ViewEmployee extends React.Component {
 	
@@ -97,7 +98,7 @@ class ViewEmployee extends React.Component {
 		const { message, employee, editEmployee } = this.state;
 		return (
 			<div>
-				<Link to={`/${this.props.organization.name.replace(/\s/g, '')}/employees`}>X</Link>
+				<EmployeesSubHeader organization={this.props.organization} search={false} addEmployee={true} />
 				<h3>{employee.fname}</h3>
 				{
 					message !== '' &&
