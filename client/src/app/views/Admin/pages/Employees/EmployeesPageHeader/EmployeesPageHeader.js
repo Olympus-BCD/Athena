@@ -8,7 +8,7 @@ class EmployeesPageHeader extends React.Component {
   render() {
     return (
       <div>
-        <nav>
+        <nav id="employees-header" className="z-depth-0">
           <div className="nav-wrapper">
             <a href="#!" id="brand-logo" class="brand-logo">
               Employees
