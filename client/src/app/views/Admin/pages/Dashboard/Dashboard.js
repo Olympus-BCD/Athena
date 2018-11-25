@@ -14,10 +14,10 @@ class DashboardPage extends React.Component {
         <PageHeader />
         <div className="row">
           <div className="col s12">
-            <div className="card-panel z-depth-5">
+            {/* <div className="card-panel z-depth-5"> */}
               <div className="row">
                 <div className="col s6">
-                  <div className="card blue-grey darken-1 z-depth-3">
+                  <div className="card z-depth-3 dashboard-card">
                     <div className="card-content white-text">
                       <span className="card-title">Card Title</span>
                       <p>
@@ -33,7 +33,7 @@ class DashboardPage extends React.Component {
                   </div>
                 </div>
                 <div className="col s6">
-                  <div className="card blue-grey darken-1 z-depth-3">
+                  <div className="card z-depth-3 dashboard-card">
                     <div className="card-content white-text">
                       <span className="card-title">Card Title</span>
                       <p>
@@ -51,7 +51,7 @@ class DashboardPage extends React.Component {
               </div>
               <div className="row">
                 <div className="col s12">
-                  <div className="card blue-grey darken-1 z-depth-3">
+                  <div className="card z-depth-3 dashboard-card">
                     <div className="card-content white-text">
                       <span className="card-title">Card Title</span>
                       <p>
@@ -69,7 +69,7 @@ class DashboardPage extends React.Component {
               </div>
               <div className="row">
                 <div className="col s4">
-                  <div className="card blue-grey darken-1 z-depth-3">
+                  <div className="card z-depth-3 dashboard-card">
                     <div className="card-content white-text">
                       <span className="card-title">Card Title</span>
                       <p>
@@ -85,7 +85,7 @@ class DashboardPage extends React.Component {
                   </div>
                 </div>
                 <div className="col s4">
-                  <div className="card blue-grey darken-1 z-depth-3">
+                  <div className="card z-depth-3 dashboard-card">
                     <div className="card-content white-text">
                       <span className="card-title">Card Title</span>
                       <p>
@@ -101,7 +101,7 @@ class DashboardPage extends React.Component {
                   </div>
                 </div>
                 <div className="col s4">
-                  <div className="card blue-grey darken-1 z-depth-3">
+                  <div className="card z-depth-3 dashboard-card">
                     <div className="card-content white-text">
                       <span className="card-title">Card Title</span>
                       <p>
@@ -117,7 +117,7 @@ class DashboardPage extends React.Component {
                   </div>
                 </div>
               </div>
-            </div>
+            {/* </div> */}
           </div>
         </div>
       </div>
