@@ -11,6 +11,11 @@
     background: linear-gradient(to right top, #cac7d77c, #a39eaf88, #7d788888, #595363, #383140),transparent;
 
 } */
+.mainNav-bg {
+	max-height: 100vh;
+	overflow: auto;
+}
+
 .userprofile-organization-header {
     font-family: 'Cinzel Decorative', cursive;
     font-size: 2em;
@@ -19,7 +24,13 @@
 }
 
 .side-nav .userView>a {
-    padding-left: 6em;
+/*     padding-left: 6em; */
+}
+
+.side-nav .userView .circle {
+	height: 125px;
+	width: 125px;
+	margin: 0.65em 0;
 }
 
 /* #userProfile {
@@ -44,6 +55,32 @@
 
 #side-nav-footer a {
 	padding: 0;
+	position: absolute;
+	bottom: 0;
+	width: 100%;
+	background: lavender;
+}
+
+.userView {
+	display: flex;
+	justify-content: center;
+	flex-wrap: wrap;
+	width: 100%;
+	padding: 0 !important;
+	margin: 0;
+}
+
+.userView a {
+	width: 100%;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	text-align: center;
+}
+
+.userView a span {
+	padding: 0 !important;
+	margin: 0 !important;
 }
 
 /*

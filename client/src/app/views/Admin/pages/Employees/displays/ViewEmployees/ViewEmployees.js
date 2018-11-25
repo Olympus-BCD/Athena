@@ -4,6 +4,7 @@ import "./ViewEmployees.css";
 import API from '../../../../../../../utils/API';
 import AvatarPlaceholder from "./AvatarPlaceholder.png";
 import EmployeeListItem from './EmployeeListItem';
+import EmployeesSubHeader from '../../EmployeesSubHeader';
 
 class ViewEmployees extends React.Component {
 	
@@ -35,14 +36,14 @@ class ViewEmployees extends React.Component {
 	render() {
 		return (
 			<div>
-			
+				<EmployeesSubHeader search={true} addEmployee={true} organization={this.props.organization} user={this.props.user} />
 				{
 					this.state.message !== '' &&
 					<div>{this.state.message}</div>
 				}
 				
 				<div className="row">
-					<div className="col s12 m12">
+					<div className="col s12 m12 employee-padding">
 						<div className="card-panel teal z-depth-5">
 							<div className="">
 								<ul className="collection z-depth-3">
