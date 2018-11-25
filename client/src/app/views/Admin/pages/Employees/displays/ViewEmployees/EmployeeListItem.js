@@ -1,5 +1,6 @@
 import React from "react";
 import { Link } from 'react-router-dom';
+
 import "./ViewEmployees.css";
 
 import AvatarPlaceholder from "./AvatarPlaceholder.png";
@@ -8,9 +9,9 @@ class EmployeeListItem extends React.Component {
 	
 	render() {
 		
-		const { employee, organization } = this.props;
+		const { employee, organization, changeRole, deactivateEmployee, reactivateEmployee } = this.props;
 		
-		return (			
+		return (
 			<Link key={employee._id} to={`/${organization.name.replace(/\s/g, '')}/employees?id=${employee._id}`}>
 				<li className="collection-item avatar row valign-wrapper employeeCollectionItem">
 					<div className='avatar-wrapper flex-center'>
@@ -49,11 +50,15 @@ class EmployeeListItem extends React.Component {
 					</div>
 					
 					<div className=''>
-						<p className='admin-btn flex-center'>Admin</p>
+						<p className={employee.role > 1 ? 'role-btn flex-center role-admin' : 'role-btn flex-center role-user'} onClick={e => changeRole(e, employee)}>{employee.role === 3 ? 'Owner' : 'Admin' }</p>
 					</div>
 					
 					<div className=''>
-					<span class="waves-effect waves-teal btn-flat flex-center">Remove</span>
+					{
+						employee.employeeActive
+							? <span class="waves-effect waves-teal btn-flat flex-center" onClick={e => deactivateEmployee(e, employee)}>Deactivate</span>
+							: <span class="waves-effect waves-teal btn-flat flex-center" onClick={e => reactivateEmployee(e, employee)}>Reactivate</span>
+					}
 					</div>
 				</li>
 			</Link>
