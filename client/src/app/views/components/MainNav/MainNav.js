@@ -38,7 +38,7 @@ class MainNav extends React.Component {
 	                        email: <span className='blk'>{this.props.user.username}</span>
                         }}
                     />
-                    <div onClick={this.props.logout}>Logout</div>
+                    <div className="center-align" onClick={this.props.logout}>Logout</div>
                     
                     <SideNavItem divider />
                     
