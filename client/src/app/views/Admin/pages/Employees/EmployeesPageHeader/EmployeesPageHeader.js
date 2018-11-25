@@ -7,18 +7,16 @@ import moment from 'moment';
 class EmployeesPageHeader extends React.Component {
   render() {
     return (
-      <div>
         <nav id="employees-header" className="z-depth-0">
           <div className="nav-wrapper">
-            <a href="#!" id="brand-logo" class="brand-logo">
+            <span id="brand-logo" class="brand-logo">
               Employees
-            </a>
+            </span>
             <ul className="right hide-on-med-and-down">
               <li id="header-date">{moment().format('MMMM DD, YYYY')}</li>
             </ul>
           </div>
         </nav>
-      </div>
     );
   }
 }

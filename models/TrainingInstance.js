@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
-const TrainingSchema = new Schema({
+const TrainingInstanceSchema = new Schema({
 	name: {
 		type: String,
 		required: true
@@ -44,6 +44,6 @@ const TrainingSchema = new Schema({
 */
 });
 
-const Training = mongoose.model('Training', TrainingSchema);
+const TrainingInstance = mongoose.model('TrainingInstance', TrainingInstanceSchema);
 
-module.exports = Training;
+module.exports = TrainingInstance;

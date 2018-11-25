@@ -192,7 +192,8 @@ module.exports = {
 	findAll: (req, res) => {
 		User
 			.find(req.query)
-			.sort({ username: 1 })
+			.sort({ role: -1, employeeActive: 1, lname: 1, fname: 1})
+// 			.sort({ username: 1 })
 			.then(users => res.json({ success: true, users: users }))
 			.catch(err => res.status(422).json({ success: false, msg: 'Failed to retrieve users' }));
 	},

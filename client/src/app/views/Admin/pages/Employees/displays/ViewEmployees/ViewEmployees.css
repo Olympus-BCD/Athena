@@ -1,5 +1,29 @@
+.veiwEmployees-wrapper {
+	margin: 0;
+	padding: 0 2em;
+}
+
 .card-panel {
 	overflow: auto;
+}
+
+.employeesNav-wrapper {
+	width: 100%;
+	padding: 0 2em;
+	margin: 0.5em 0;
+	display: flex;
+	justify-content: flex-start
+}
+
+.employeesNav-wrapper span {
+	margin: 0 1em;
+	cursor: pointer;
+}
+
+.employeesNav-selected {
+/* 	font-weight: bold; */
+	color: white;
+	border-bottom: 2px solid white;
 }
 
 .defaultGray {
@@ -10,11 +34,57 @@
 	border-bottom: 1px solid #e0e0e0;
 }
 
-.admin-btn {
-	background: midnightblue;
+.role-btn {
 	padding: 0.5em 1em;
 	width: 175px;
 	border-radius: 5px;
 	font-size: 1.1em;
 	color: #FFF;
+}
+
+.role-admin {
+	background: purple;
+}
+
+.role-user {
+	background: lightgray;
+}
+
+.role-admin:hover {
+	background: #af0caf;
+}
+
+.role-user:hover {
+	background: purple;
+}
+
+.employeeCollectionItem {
+	padding: 0 !important;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	text-align: center;
+}
+
+.employeeCollectionItem div {
+	width: 16%;
+}
+
+.valign-wrapper .avatar-wrapper {
+	width: 7.5%;
+}
+
+.valign-wrapper .trainingStatus-wrapper {
+	width: 24.5%;
+}
+
+.valign-wrapper img {
+	position: static !important;
+	min-width: 65px;
+	min-height: 65px;
+}
+
+.flex-center {
+	display: flex;
+	justify-content: center;
 }

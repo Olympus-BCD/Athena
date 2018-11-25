@@ -9,6 +9,7 @@
 
 .app-wrapper {
   background-image: linear-gradient(to right top, #cac7d7, #a39eaf, #7d7888, #595363, #383140);
+  height: 100vh;
   max-height: 100vh;
   overflow: auto;
 }

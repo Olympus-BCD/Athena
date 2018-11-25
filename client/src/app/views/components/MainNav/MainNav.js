@@ -13,7 +13,6 @@ class MainNav extends React.Component {
 	
 	render() {
 		return (
-			<div>
                 <SideNav
 	                trigger={<div data-target="slide-out" className="sidenav-trigger"><i className="material-icons">menu</i></div>}
 	                fixed={true}
@@ -66,7 +65,6 @@ class MainNav extends React.Component {
                     <SideNavItem divider />
                     <SideNavItem copyrights= "Athena" id='side-nav-footer' className="mainNav-footer"><Link to='/' target='_blank' >Athena</Link></SideNavItem>
                </SideNav>
-            </div>
 		);
 	}
 }
