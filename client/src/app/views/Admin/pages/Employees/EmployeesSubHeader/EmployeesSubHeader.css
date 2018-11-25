@@ -7,8 +7,20 @@
 
 /* =============================================*/
 
-.app-wrapper {
-  background-image: linear-gradient(to right top, #cac7d7, #a39eaf, #7d7888, #595363, #383140);
-  max-height: 100vh;
-  overflow: auto;
+.subheader-wrapper {
+	min-height: 75px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.subheader-wrapper .valign-wrapper {
+	margin: 0;
+	padding: 0 1em;
+	height: 100%;
+	width: 100%;
+}
+
+.float-right {
+	float: right;
 }

@@ -49,7 +49,7 @@ class EmployeeListItem extends React.Component {
 						</div>
 						
 						<div className='col s2 center'>
-							<p className=''>Access Level</p>
+							<p className='admin-btn'>Admin</p>
 						</div>
 						
 						<div className='col s3'>
