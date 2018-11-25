@@ -7,8 +7,13 @@
 
 /* =============================================*/
 
-
+.adminViewWrapper,
 .pageContainer {
+	max-height: 100vh;
+	margin: 0;
+}
+.pageContainer {
+	padding: 0;
 	padding-left: 300px;
 }
 

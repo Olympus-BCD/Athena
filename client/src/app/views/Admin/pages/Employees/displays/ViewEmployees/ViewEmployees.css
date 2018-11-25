@@ -1,3 +1,8 @@
+.veiwEmployees-wrapper {
+	margin: 0;
+	padding: 0 2em;
+}
+
 .card-panel {
 	overflow: auto;
 }
@@ -17,4 +22,35 @@
 	border-radius: 5px;
 	font-size: 1.1em;
 	color: #FFF;
+}
+
+.employeeCollectionItem {
+	padding: 0 !important;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	text-align: center;
+}
+
+.employeeCollectionItem div {
+	width: 16%;
+}
+
+.valign-wrapper .avatar-wrapper {
+	width: 7.5%;
+}
+
+.valign-wrapper .trainingStatus-wrapper {
+	width: 24.5%;
+}
+
+.valign-wrapper img {
+	position: static !important;
+	min-width: 65px;
+	min-height: 65px;
+}
+
+.flex-center {
+	display: flex;
+	justify-content: center;
 }

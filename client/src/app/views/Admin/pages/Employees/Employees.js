@@ -30,11 +30,7 @@ class EmployeesPage extends React.Component {
 	render() {
 		return (
 			<div className="employeesPage">
-				<EmployeesPageHeader 
-        organization={ this.props.organization }
-        />
-			
-				
+				<EmployeesPageHeader organization={ this.props.organization } />
 				
 				<Switch>
 					{this.parseQueryString()}

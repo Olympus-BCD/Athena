@@ -42,17 +42,15 @@ class ViewEmployees extends React.Component {
 					<div>{this.state.message}</div>
 				}
 				
-				<div className="row">
+				<div className="row veiwEmployees-wrapper">
 					<div className="col s12 m12 employee-padding">
-						<div className="card-panel teal z-depth-5">
-							<div className="">
-								<ul className="collection z-depth-3">
-									{this.state.employees.map(employee =>
-										<EmployeeListItem employee={employee} organization={this.props.organization} />
-									)}
-								</ul>
-							</div>
-						</div>
+						{/*<div className="card-panel teal z-depth-5">*/}
+							<ul className="collection z-depth-3">
+								{this.state.employees.map(employee =>
+									<EmployeeListItem employee={employee} organization={this.props.organization} />
+								)}
+							</ul>
+						{/*</div>*/}
 					</div>
 				</div>
 			</div>
