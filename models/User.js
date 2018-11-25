@@ -24,6 +24,14 @@ let UserSchema = new Schema({
 		type: Boolean,
 		default: true
 	},
+	employeeActive: {
+		type: Boolean,
+		default: true
+	},
+	previousActivationStatus: {
+		type: Boolean,
+		default: true
+	},
 	trainings: [{
 		type: mongoose.Schema.Types.ObjectId,
 		ref: 'Training'

@@ -7,6 +7,25 @@
 	overflow: auto;
 }
 
+.employeesNav-wrapper {
+	width: 100%;
+	padding: 0 2em;
+	margin: 0.5em 0;
+	display: flex;
+	justify-content: flex-start
+}
+
+.employeesNav-wrapper span {
+	margin: 0 1em;
+	cursor: pointer;
+}
+
+.employeesNav-selected {
+/* 	font-weight: bold; */
+	color: white;
+	border-bottom: 2px solid white;
+}
+
 .defaultGray {
 	color: lightgray;
 }
@@ -15,13 +34,28 @@
 	border-bottom: 1px solid #e0e0e0;
 }
 
-.admin-btn {
-	background: midnightblue;
+.role-btn {
 	padding: 0.5em 1em;
 	width: 175px;
 	border-radius: 5px;
 	font-size: 1.1em;
 	color: #FFF;
+}
+
+.role-admin {
+	background: purple;
+}
+
+.role-user {
+	background: lightgray;
+}
+
+.role-admin:hover {
+	background: #af0caf;
+}
+
+.role-user:hover {
+	background: purple;
 }
 
 .employeeCollectionItem {
