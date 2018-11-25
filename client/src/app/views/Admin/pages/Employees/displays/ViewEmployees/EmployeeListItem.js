@@ -12,11 +12,61 @@ class EmployeeListItem extends React.Component {
 		
 		return (			
 			<Link key={employee._id} to={`/${organization.name.replace(/\s/g, '')}/employees?id=${employee._id}`}>
+				<li className="collection-item avatar row valign-wrapper employeeCollectionItem">
+					<div className='avatar-wrapper flex-center'>
+						<img id='avatar-img' src={AvatarPlaceholder} alt={employee.username} className="circle" />
+					</div>
+					<div className=''>
+						<span className="title">
+							{employee.fname
+						        ? employee.fname.toUpperCase()
+						        : <span className='defaultGray'>N/A</span>}
+						    &nbsp;
+						    {employee.lname
+						        ? employee.lname.toUpperCase()
+						        : null}
+						</span>
+						<p>
+						  {employee.title
+						    ? employee.title.toUpperCase()
+						    : <span className='defaultGray'>N/A</span>}
+						  <br />
+						  {employee.username}
+						</p>
+					</div>
+					
+					<div className=''>
+						<span>Employement Category</span>
+					</div>
+					
+					<div className='trainingStatus-wrapper'>
+						<span className='training-status'>0 Overdue</span>
+						<p>
+							<span>3</span> Upcoming
+							<br />
+							<span>12</span> Complete
+						</p>
+					</div>
+					
+					<div className=''>
+						<p className='admin-btn flex-center'>Admin</p>
+					</div>
+					
+					<div className=''>
+					<span class="waves-effect waves-teal btn-flat flex-center">Remove</span>
+					</div>
+				</li>
+			</Link>
+		);
+		
+/*
+		return (			
+			<Link key={employee._id} to={`/${organization.name.replace(/\s/g, '')}/employees?id=${employee._id}`}>
 				<li className="collection-item avatar">
 				
 					<div className='row valign-wrapper'>
+						<img src={AvatarPlaceholder} alt={employee.username} className="circle" />
 						<div className='col s2'>
-							<img src={AvatarPlaceholder} alt="{employee.username}" className="circle" />
 							<span className="title">
 								{employee.fname
 							        ? employee.fname.toUpperCase()
@@ -59,6 +109,7 @@ class EmployeeListItem extends React.Component {
 				</li>
 			</Link>
 		);
+*/
 	}
 }
 

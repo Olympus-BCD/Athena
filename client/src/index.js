@@ -9,14 +9,12 @@ import App from './app';
 
 ReactDOM.render(
 	<Router>
-		<div>
-			<Switch>
-				<Route exact path='/' component={SiteRouter} />
-				<Route exact path='/login' component={SiteRouter} />
-				<Route exact path='/register' component={SiteRouter} />
-				<Route component={App} />
-			</Switch>
-		</div>
+		<Switch>
+			<Route exact path='/' component={SiteRouter} />
+			<Route exact path='/login' component={SiteRouter} />
+			<Route exact path='/register' component={SiteRouter} />
+			<Route component={App} />
+		</Switch>
 	</Router>
 	, document.getElementById('root')
 );

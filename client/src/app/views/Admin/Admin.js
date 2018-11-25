@@ -18,7 +18,7 @@ class AdminView extends React.Component {
 	
 	render() {
 		return(
-			<div className=''>
+			<div className='adminView-wrapper'>
 
 				<MainNav
 					user={this.props.user}
