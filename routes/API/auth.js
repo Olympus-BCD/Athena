@@ -33,7 +33,7 @@ router.route('/user')
 		console.log('Role:', req.body);
 		return res.json({ success: false, msg: 'tehehe' });
 */
-		const putUserIsOwner = req.body.role > 1 ? true : false;
+		const putUserIsOwner = req.body.role > 2 ? true : false;
 		if(putUserIsOwner && !isOwner(req)) return res.json({ success: false, msg: 'You do not have permission to edit the Owner' });
 		if(isAdmin(req)) {
 			controller.findOneAndUpdate(req, res);

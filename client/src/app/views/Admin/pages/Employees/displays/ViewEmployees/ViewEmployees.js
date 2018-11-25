@@ -54,6 +54,7 @@ class ViewEmployees extends React.Component {
 			API.auth.update(employee).then(response => {
 				if(response.data.success) {
 	// 				alert(response.data.user.role);
+					if(this.props.user._id == employee._id && employee.role == 1) return this.logout();
 					this.getEmployees();
 				} else {
 					this.setState({ message: response.data.msg });
@@ -76,6 +77,7 @@ class ViewEmployees extends React.Component {
 		employee.employeeActive = false;
 		API.auth.update(employee).then(response => {
 			if(response.data.success) {
+				if(this.props.user._id == employee._id) return this.logout();
 				this.getEmployees();
 			} else {
 				this.setState({ message: response.data.msg });
@@ -100,6 +102,12 @@ class ViewEmployees extends React.Component {
 			console.log(err);
 			this.setState({ message: 'Uh Oh! Something went wrong!' });
 		});
+	};
+	
+	logout = () => {
+		localStorage.removeItem('jwtToken');
+// 		window.location.href='/login';
+		this.props.history.push(`/login`);
 	};
 	
 	render() {
