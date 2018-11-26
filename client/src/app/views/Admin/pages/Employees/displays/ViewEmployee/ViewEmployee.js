@@ -3,6 +3,8 @@ import { Link } from 'react-router-dom';
 import "./ViewEmployee.css";
 import API from '../../../../../../../utils/API';
 import EmployeesSubHeader from '../../EmployeesSubHeader';
+import EmployeeImage from "./me.jpg"
+
 
 class ViewEmployee extends React.Component {
 	
@@ -94,16 +96,68 @@ class ViewEmployee extends React.Component {
 		}
 	};
 
+
 	render() {
 		const { message, employee, editEmployee } = this.state;
 		return (
 			<div>
 				<EmployeesSubHeader organization={this.props.organization} search={false} addEmployee={true} />
-				<h3>{employee.fname}</h3>
+				{/* <h3>{employee.fname}</h3> */}
 				{
 					message !== '' &&
 					<div>{message}</div>
 				}
+				<br/>
+		{/* Employee Card */}
+			<div className = "container">
+			  <div class="card">
+				<div className = "row">
+				  <div className = "col s4 card-image waves-effect waves-block waves-light">
+    		          <img className = "activator" src ={ EmployeeImage } alt = "employeePic"/>
+    		     </div>
+				  <div id = "" className="col s7">
+				     <h5 id = "employeeView"><strong>{employee.fname} {employee.lname}</strong></h5>
+					 <h5 id = "roleView"><strong>{ this.employeeRole() }</strong></h5>
+				  </div>
+			  </div>
+			   
+				<div className = "row">
+				<div className = "col s12">
+    		      <div className = "card-content">
+				  <span className ="card-title activator grey-text text-darken-4">
+				  <i className = "material-icons right">more_vert</i></span>
+			      </div>
+			    
+				{
+					 this.state.editName
+					 ?	<form onSubmit={this.onSubmit}>
+							<div id = "fname" className = "input-field col s1">
+							<input type='text' name='fname' value={editEmployee.fname} onChange={this.onChange} />
+							</div>
+							<div id="lname" className="input-field col s1">
+							<input type='text' name='lname' value={editEmployee.lname} onChange={this.onChange} />
+							</div>
+							{/* <div className = "col-s5">
+							<span onClick={this.cancel}> X </span>
+							<button type='submit'>Save</button>
+							</div> */}
+						</form>
+					:	<div>
+							<h5><strong>{(employee.fname && employee.lname) ? `${employee.fname} ${employee.lname}` : 'unknown'}
+							<span onClick={() => this.setState({ editName: true })}><i id="editIcon" className = "material-icons left">edit</i></span>
+							</strong></h5>
+						</div>
+				}
+
+				</div>
+				   </div>
+				 
+    		<div className ="card-reveal">
+      		   <span className ="card-title grey-text text-darken-4">Card Title<i className = "material-icons right">close</i></span>
+      		   <p>Here is some more information about this product that is only revealed once clicked on.</p>
+    		</div>
+ 		</div>
+    		</div>
 				{
 					this.state.editName
 					?	<form onSubmit={this.onSubmit}>
