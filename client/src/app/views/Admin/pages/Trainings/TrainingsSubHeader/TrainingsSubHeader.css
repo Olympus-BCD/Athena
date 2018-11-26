@@ -7,20 +7,20 @@
 
 /* =============================================*/
 
-#employees-header{
-    background: transparent;
+.subheader-wrapper {
+	min-height: 75px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
 }
 
-#brand-logo{
-    padding-left: 1em;
-    font-family: 'Raleway', sans-serif; 
+.subheader-wrapper .valign-wrapper {
+	margin: 0;
+	padding: 0 2em;
+	height: 100%;
+	width: 100%;
 }
 
-#header-date{
-    padding-right: 3em;
-    font-family: 'Raleway', sans-serif; 
-}
-
-.employee-padding {
-	padding: 0 1em;
+.float-right {
+	float: right;
 }
