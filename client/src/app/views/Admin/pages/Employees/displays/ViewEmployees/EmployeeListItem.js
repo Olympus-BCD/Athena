@@ -20,24 +20,23 @@ class EmployeeListItem extends React.Component {
 					<div className=''>
 						<span className="title">
 							{employee.fname
-						        ? employee.fname.toUpperCase()
+						        ? employee.fname
 						        : <span className='defaultGray'>N/A</span>}
 						    &nbsp;
 						    {employee.lname
-						        ? employee.lname.toUpperCase()
+						        ? employee.lname
 						        : null}
 						</span>
 						<p>
-						  {employee.title
-						    ? employee.title.toUpperCase()
-						    : <span className='defaultGray'>N/A</span>}
-						  <br />
 						  {employee.username}
 						</p>
 					</div>
 					
 					<div className=''>
-						<span>Employement Category</span>
+						{employee.title
+						    ? employee.title
+						    : <span className='defaultGray'>Position not on file</span>
+						}
 					</div>
 					
 					<div className='trainingStatus-wrapper'>
