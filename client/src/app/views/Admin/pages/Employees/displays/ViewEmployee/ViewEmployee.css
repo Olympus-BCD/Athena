@@ -1,0 +1,28 @@
+
+.card-image{
+    padding-top:50px;
+}
+.card{
+    padding:10px; 
+}
+#employeeView{
+    margin-top:40px;
+    text-align:center;
+    font-size:35px;
+}
+#titleView{
+    text-align:center;
+    font-size:30px;
+}
+#roleView {
+    text-align: center;
+    font-size:30px;
+}
+
+
+#editIcon{
+    cursor: pointer;
+}
+#fname #lname{
+    font-size: 10px;
+}
