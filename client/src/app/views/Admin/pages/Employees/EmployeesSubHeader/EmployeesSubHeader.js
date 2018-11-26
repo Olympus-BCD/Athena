@@ -13,7 +13,7 @@ class EmployeesSubHeader extends React.Component {
           <div className="col s4">
             <form>
               <div className="input-field">
-                <input id="search" type="search" required />
+                <input id="search" type="search" required onChange={this.props.searchEmployees} />
                 <label className="label-icon" for="search">
                   <i className="material-icons">search</i>
                 </label>

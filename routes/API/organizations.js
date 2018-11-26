@@ -5,6 +5,10 @@ const controller = require('../../controllers/organizationsController');
 router.route('/register')
 	.post(controller.register);
 	
+//	('api/organizations/validate')
+router.route('/validate')
+	.post(controller.validate);
+	
 //	('api/organizations/owner')
 router.route('/owner')
 	.post(controller.addOwner);
