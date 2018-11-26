@@ -38,25 +38,22 @@ class TrainingListItem extends React.Component {
 					
 					<div className='trainingStatus-wrapper'>
 						<span className='training-status'>{training.hours}</span>
-						{/* <p>
-							<span>3</span> Upcoming
-							<br />
-							<span>12</span> Complete
-						</p> */}
 					</div>
 					
 					<div className=''>
 						<p className="">
-							{training.frequencyNumber}
+						{training.frequencyNumber
+							? training.frequencyNumber
+						: <span className="defaultGray">N/A</span>}
 						</p>
 					</div>
 					
 					<div className=''>
-					{/* {
-						employee.employeeActive
-							? <span class="waves-effect waves-teal btn-flat flex-center" onClick={e => deactivateEmployee(e, employee)}>Deactivate</span>
-							: <span class="waves-effect waves-teal btn-flat flex-center" onClick={e => reactivateEmployee(e, employee)}>Reactivate</span>
-					} */}
+					<p className="">
+							{training.frequencyPeriod
+							? training.frequencyPeriod
+						: <span className="defaultGray">N/A</span>}
+						</p>
 					</div>
 				</li>
 			</Link>
