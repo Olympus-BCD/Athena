@@ -1,15 +1,15 @@
 import React from "react";
-import "./EmployeesPageHeader.css";
+import "./TrainingsPageHeader.css";
 
 import moment from 'moment';
 
-class EmployeesPageHeader extends React.Component {
+class TrainingsPageHeader extends React.Component {
   render() {
     return (
-        <nav id="employees-header" className="z-depth-0">
+        <nav id="trainings-header" className="z-depth-0">
           <div className="nav-wrapper">
             <span id="brand-logo" class="brand-logo">
-              Employees
+              Trainings
             </span>
             <ul className="right hide-on-med-and-down">
               <li id="header-date">{moment().format('MMMM DD, YYYY')}</li>
@@ -20,4 +20,4 @@ class EmployeesPageHeader extends React.Component {
   }
 }
 
-export default EmployeesPageHeader;
+export default TrainingsPageHeader;

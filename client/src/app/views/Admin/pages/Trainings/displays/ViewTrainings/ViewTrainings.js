@@ -1,5 +1,9 @@
+// React Imports
 import React from "react";
 import { Link } from 'react-router-dom';
+
+// CSS & Local Imports
+import TrainingsSubHeader from "../../TrainingsSubHeader";
 import "./ViewTrainings.css";
 import API from '../../../../../../../utils/API';
 
@@ -29,6 +33,7 @@ class ViewTrainings extends React.Component {
 	render() {
 		return (
 			<div>
+				<TrainingsSubHeader search={true} addTraining={true} organization={this.props.organization} />
 				{
 					this.state.message !== '' &&
 					<div>{this.state.message}</div>

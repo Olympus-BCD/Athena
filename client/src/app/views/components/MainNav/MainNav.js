@@ -52,8 +52,11 @@ class MainNav extends React.Component {
 					<Link className='no-padding' to={`/${this.props.organization.name.replace(' ', '')}/employees`}>
 						<SideNavItem href='#!second' icon='face'>Employees</SideNavItem>
 					</Link>
+					<Link className='no-padding' to={`/${this.props.organization.name.replace(' ', '')}/reports`}>
+						<SideNavItem href='#!second' icon='assessment'>Reports</SideNavItem>
+					</Link>
 					<Link className='no-padding' to={`/${this.props.organization.name.replace(' ', '')}/network`}>
-						<SideNavItem href='#!second' icon='network_cell'>Network</SideNavItem>
+						<SideNavItem href='#!second' icon='settings'>Network Setting</SideNavItem>
 					</Link>
 					
                     <SideNavItem divider />
