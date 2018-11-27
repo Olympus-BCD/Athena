@@ -109,6 +109,7 @@ class ViewEmployee extends React.Component {
 					<div>{message}</div>
 				}
 				<br/>
+
 			{/* Employee Card */}
 			<div className = "container">
 			  <div class="card">
@@ -137,10 +138,10 @@ class ViewEmployee extends React.Component {
 				   {
 					 this.state.editName
 					 ?	<form onSubmit={this.onSubmit}>
-						  <div id = "fname" className = "input-field col s1">
+						  <div id = "fname" className = "input-field col s3">
 							<input type='text' name='fname' value={editEmployee.fname} onChange={this.onChange} />
 						  </div>
-						  <div id="lname" className="input-field col s1">
+						  <div id="lname" className="input-field col s3">
 							<input type='text' name='lname' value={editEmployee.lname} onChange={this.onChange} />
 						  </div>
 							<div className = "col-s5">
