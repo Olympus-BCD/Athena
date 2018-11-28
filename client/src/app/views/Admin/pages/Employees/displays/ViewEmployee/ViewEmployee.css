@@ -1,9 +1,8 @@
-
-.card-image{
-    padding-top:50px;
-}
 .card{
     padding:10px; 
+}
+.card-title{
+    text-align: center;
 }
 #employeeView{
     margin-top:40px;
@@ -18,11 +17,15 @@
     text-align: center;
     font-size:30px;
 }
-
-
 #editIcon{
     cursor: pointer;
 }
 #fname #lname{
     font-size: 10px;
+}
+#text{
+    font-size:20px;
+}
+#dots{
+    margin-left:38%;
 }
