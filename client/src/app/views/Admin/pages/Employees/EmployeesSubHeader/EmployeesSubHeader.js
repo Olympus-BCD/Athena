@@ -17,7 +17,7 @@ class EmployeesSubHeader extends React.Component {
                 <label className="label-icon" for="search">
                   <i className="material-icons">search</i>
                 </label>
-                <i className="material-icons">close</i>
+                <i id='search-close-icon' className="material-icons">close</i>
               </div>
             </form>
           </div>

@@ -1,5 +1,9 @@
 // React Imports
 import React from "react";
+import { Link } from 'react-router-dom';
+
+// NPM Imports
+import moment from 'moment';
 
 // Materialize Imports
 import { Collapsible } from "react-materialize";
@@ -12,8 +16,129 @@ import { Icon } from "react-materialize";
 import PageHeader from "./../../../components/PageHeader/PageHeader";
 import "./Dashboard.css";
 
+import API from '../../../../../utils/API';
+
 class DashboardPage extends React.Component {
+	
+	state = {
+		message: '',
+		trainings: [],
+		newsfeedItems: []
+	};
+	
+	componentDidMount() {
+		this.getNewsfeedItems();
+	}
+	
+	getNewsfeedItems = () => {
+		const query = {
+			__organization: this.props.organization._id
+		};
+		API.newsfeed.getNewsfeedItems(query).then(results => {
+			if(results.data.success) {
+				console.log('Newsfeed Items:', results.data.newsfeedItems)
+				results.data.newsfeedItems.forEach(item => {
+					if(item.activityType == 'hybrid') console.log('Hybrid:', item);
+				});
+				this.setState({ newsfeedItems: results.data.newsfeedItems, message: '' });
+			} else {
+				this.setState({ message: results.data.msg });
+			}
+			
+		}).catch(err => {
+			console.log(err);
+			this.setState({ message: 'Uh oh! Something went wrong!' });
+		});
+	};
+	
+	renderNewsfeedItem = item => {
+		const { activityType } = item;
+		console.log(activityType, item);
+		let header;
+		let body;
+/*
+		if (activityType == 'newUser') { console.log('aioejfoajwofaew'); return (
+			<CollapsibleItem header = {`Welcome, ${item.userFirstName}!`} icon = 'announcement'>
+      			<div className='white-text'>
+					<h4>{`${item.userFirstName} ${item.userLastName}`}</h4>
+					<p>Has joined {this.props.organization.name}!</p>
+					<p>{moment(item.date).format('MMMM DD, YYYY')}</p>
+				</div>
+			</CollapsibleItem>
+		); }
+*/
+		switch(activityType) {
+			case 'newUser':
+				console.log('NEEEW UUUSERRRR');
+				header = `Welcome, ${item.userFirstName}!`;
+				return (
+					<CollapsibleItem header = {header} icon = 'announcement'>
+		      			<div className='white-text'>
+		      				<Link className='white-text' to={`/${this.props.organization.name.replace(/\s/g, '')}/employees?id=${item.__user}`}>
+								<h5>{`${item.userFirstName} ${item.userLastName}`}</h5>
+							</Link>
+							<p>Has joined {this.props.organization.name}!</p>
+							<p>{moment(item.date).format('MMMM DD, YYYY')}</p>
+						</div>
+					</CollapsibleItem>
+				);
+				
+/*
+				body = (
+					<div className='white-text'>
+						<h5>{`${item.userFirstName} ${item.userLastName}`}</h5>
+						<p>Has joined {this.props.organization.name}!</p>
+						<p>{moment(item.date, 'X').format('MMMM DD, YYYY')}</p>
+					</div>
+				);
+*/
+				break;
+			case 'hybrid':
+				header = `Welcome, ${item.userFirstName}!`;
+				return (
+					<CollapsibleItem header = {header} icon = 'announcement'>
+		      			<div className='white-text'>
+							<Link className='white-text' to={`/${this.props.organization.name.replace(/\s/g, '')}/employees?id=${item.__user}`}>
+								<h5>{`${item.userFirstName} ${item.userLastName}`}</h5>
+							</Link>
+							<p>Has joined {this.props.organization.name} and has completed {item.numberOfCompletedTrainings} trainings!</p>
+							<p>{moment(item.date).format('MMMM DD, YYYY')}</p>
+						</div>
+					</CollapsibleItem>
+				);
+/*
+				body = (
+					<div className='white-text'>
+						<h4>{`${item.userFirstName} ${item.userLastName}`}</h4>
+						<p>Has joined {this.props.organization.name} and has completed {item.numberOfCompletedTrainings} trainings!</p>
+						<p>{moment(item.date).format('MMMM DD, YYYY')}</p>
+					</div>
+				);
+*/
+				break;
+			case 'traningCompleted':
+			
+				break;
+			default:
+			
+				break;
+		}
+		console.log(header, body);
+		return (
+			<CollapsibleItem header = {header} icon = 'announcement'>
+	      		
+	      	</CollapsibleItem>
+		);
+	};
+	
   render() {
+	  
+	  const { newsfeedItems } = this.state;
+	  
+	  const filteredNewsfeedItems = newsfeedItems.slice(0, 5);
+	  
+	  console.log(filteredNewsfeedItems);
+	  
     return (
       <div>
         <PageHeader />
@@ -104,7 +229,7 @@ class DashboardPage extends React.Component {
               <div class="card-content">
                 <span class="card-title center-align white-text">Announcements</span>
                 <Collapsible popout defaultActiveKey={1}>
-                  <CollapsibleItem header="Add Announcement" icon="add_comment">
+                  <CollapsibleItem id='add-announcement' header="Add Announcement" icon="add_comment">
                     <Input s={6} label="Title" id="announcement-title-input" className="white-text"/>
                     <Input type="textarea" label="Announcement" />
                     <Button id="announcement-button" waves="purple" >
@@ -117,6 +242,11 @@ class DashboardPage extends React.Component {
                   <CollapsibleItem header="New Hire" icon="announcement">
                     Please welcome our new Front End Developer, Tony Stark, to the team.
                   </CollapsibleItem>
+                  {
+	                  filteredNewsfeedItems.map(item =>
+	                  	this.renderNewsfeedItem(item)
+	                  )
+                  }
                 </Collapsible>
               </div>
             </div>
