@@ -15,7 +15,7 @@ class MainNav extends React.Component {
 		return (
                 <SideNav
 	                trigger={<div data-target="slide-out" className="sidenav-trigger"><i className="material-icons">menu</i></div>}
-	                fixed={true}
+					fixed={true}
 	                className="mainNav-bg"
                 >
                 	<div className='userprofile-organization-header'>{this.props.organization.name}</div>
@@ -37,25 +37,26 @@ class MainNav extends React.Component {
 	                        email: <span className='blk'>{this.props.user.username}</span>
                         }}
                     />
-                    <div className="center-align" onClick={this.props.logout}>Logout</div>
-                    
+					<span className="logout-wrapper">
+                    	<div id="logout-button" className="btn-flat center" onClick={this.props.logout}>Logout</div>
+                    </span>
                     <SideNavItem divider />
                     
                     <SideNavItem subheader className="mainNav-header">Administration</SideNavItem>
                     
-                    <Link className='no-padding' to={`/${this.props.organization.name.replace(' ', '')}/dashboard`}>
-                    	<SideNavItem  component={Link} icon='developer_board'>Dashboard</SideNavItem>
+                    <Link className='no-padding mainNav-link' to={`/${this.props.organization.name.replace(' ', '')}/dashboard`}>
+                    	<SideNavItem  className="" component={Link} icon='developer_board' >Dashboard</SideNavItem>
                     </Link>
-                    <Link className='no-padding' to={`/${this.props.organization.name.replace(' ', '')}/trainings`}>
+                    <Link className='no-padding mainNav-link' to={`/${this.props.organization.name.replace(' ', '')}/trainings`}>
                     	<SideNavItem icon='event'>Trainings</SideNavItem>
                     </Link>
-					<Link className='no-padding' to={`/${this.props.organization.name.replace(' ', '')}/employees`}>
+					<Link className='no-padding mainNav-link' to={`/${this.props.organization.name.replace(' ', '')}/employees`}>
 						<SideNavItem href='#!second' icon='face'>Employees</SideNavItem>
 					</Link>
-					<Link className='no-padding' to={`/${this.props.organization.name.replace(' ', '')}/reports`}>
+					<Link className='no-padding mainNav-link' to={`/${this.props.organization.name.replace(' ', '')}/reports`}>
 						<SideNavItem href='#!second' icon='assessment'>Reports</SideNavItem>
 					</Link>
-					<Link className='no-padding' to={`/${this.props.organization.name.replace(' ', '')}/network`}>
+					<Link className='no-padding mainNav-link' to={`/${this.props.organization.name.replace(' ', '')}/network`}>
 						<SideNavItem href='#!second' icon='settings'>Network Setting</SideNavItem>
 					</Link>
 					

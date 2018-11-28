@@ -1,17 +1,23 @@
 /* ============ Dustin's Design Notes ============*/
 
-/*Header Font from Google Font*/
+/*Athena Font from Google Font*/
 /* font-family: 'Cinzel Decorative', cursive; */
+
+/*Header Font from Google Font*/
+/*font-family: 'Raleway', sans-serif;
+	font-weight: 500; */
+
 /*Body Font from Google Font*/
 /* font-family: 'Raleway', sans-serif; */
 
 /* =============================================*/
 
-/* .mainNav-bg {
-    background: linear-gradient(to right top, #cac7d77c, #a39eaf88, #7d788888, #595363, #383140),transparent;
-
-} */
 .mainNav-bg {
+	background: #CAC7D7;
+	/* background: rgba(97, 70, 97, 0.644); */
+	/* background: rgba;(255, 255, 0, 0.288); */
+    /* background: linear-gradient(to right top, #cac7d77c, #a39eaf88, #7d788888, #595363, #383140),transparent; */
+	/* background: linear-gradient(to right top, #cac7d77c, #a39eaf88, #7d788888, #595363, #383140),transparent; */
 	max-height: 100vh;
 	margin: 0;
 	padding: 0;
@@ -19,10 +25,20 @@
 }
 
 .userprofile-organization-header {
-    font-family: 'Cinzel Decorative', cursive;
+	font-family: 'Raleway', sans-serif;
+	font-weight: 500;
     font-size: 2em;
     text-align: center;
     padding-top: 1em;
+}
+
+.logout-wrapper {
+	display: flex;
+	justify-content: center;
+	flex-wrap: wrap;
+	width: 100%;
+	padding: 0 !important;
+	margin: 0;
 }
 
 .side-nav .userView>a {
@@ -35,20 +51,14 @@
 	margin: 0.65em 0;
 }
 
-/* #userProfile {
-    text-align: center;
-} */
-
 .mainNav-header {
-    font-family: 'Cinzel Decorative', cursive;
+    font-family: 'Raleway', sans-serif;
+	font-weight: 500;
 }
 
-.mainNav-footer {
-    text-align: center;
-    background: lavender;
-    font-family: 'Cinzel Decorative', cursive;
+.mainNav-link {
+	font-family: 'Raleway', sans-serif;
 }
-
 
 .blk {
     color: black;
@@ -56,11 +66,14 @@
 }
 
 #side-nav-footer a {
+	text-align: center;
+	font-family: 'Cinzel Decorative', cursive;
+	font-weight: bold;
 	padding: 0;
 	position: absolute;
 	bottom: 0;
 	width: 100%;
-	background: lavender;
+	background: rgba(255, 255, 0, 0);
 }
 
 .userView {

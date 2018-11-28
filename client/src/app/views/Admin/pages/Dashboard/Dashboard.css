@@ -6,15 +6,93 @@
 /* font-family: 'Raleway', sans-serif; */
 
 /* =============================================*/
-.card-panel {
+.container-fluid {
+  height: 100vh;
+}
+
+.dashboard-card-container,
+#snapshot-card,
+#calendar-card {
+  min-height: 50vh !important;
+}
+
+.collection {
+  border-radius: 15px;
+  font-family: 'Raleway', sans-serif;
+}
+
+.dashboard-wrapper {
+  height: 100vh;
+  display: grid;
+  grid:
+    "snapshot calendar announcements" 60%
+    "newsfeed newsfeed announcements" 40%
+    / 40% 40% 20%;
+}
+
+.snapshot-wrapper {
+  grid-area: snapshot;
+  height: 100%;
+  width: 100%;
+  padding: 10px;
+  /* background: yellow; */
+}
+
+.calendar-wrapper {
+  grid-area: calendar;
+  height: 100%;
+  width: 100%;
+  padding: 10px;
+
+  /* background: green; */
+}
+
+.announcements-wrapper {
+  grid-area: announcements;
+  height: 100%;
+  width: 100%;
+  padding: 10px;
+  /* background: blue; */
+}
+
+input.label {
+  color: white;
+}
+
+.newsfeed-wrapper {
+  grid-area: newsfeed;
+  height: 100%;
+  width: 100%;
+  padding: 10px;
+  /* background:purple; */
+}
+
+#announcement-button {
+  background: purple;
+}
+
+/* #company-news-card {
+  height: 25vh;
+} */
+
+/* #announcement-column {
+  height: 75vh;
+} */
+
+/* #announcement-card {
+  height: 76vh;
+} */
+
+/* .card-panel {
   height: 85vh;
   margin: 1.5%;
   position: relative;
   background: linear-gradient(to right top, #cac7d77c, #a39eaf88, #7d788888, #595363, #383140),transparent;
-}
+} */
 
 .dashboard-card {
-  background: #CAC7D7;
+  background: rgba(202, 199, 215, 0.658);
+  border-radius: 15px;
 }
 
 header, main, footer {
