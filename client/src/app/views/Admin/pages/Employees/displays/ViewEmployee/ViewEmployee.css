@@ -26,10 +26,23 @@
 #text{
     font-size:20px;
 }
-#dots{
-    margin-left:38%;
+#dots-container {
+	display: flex;
+	justify-content: center;
+	align-items: center;
 }
-#hours{
-    border-style:solid;
-    border-color:teal;
+#dots{
+/*     margin-left:38%; */
+	margin-right: 7.5px;
+}
+.employee-card {
+	min-width: 85%;
+}
+#infoContainer {
+	min-width: 85%;
+}
+#closeIcon {
+	position: absolute;
+	top: 2.5%;
+	right: 2.5%;
 }

@@ -29,6 +29,7 @@ class ViewEmployees extends React.Component {
 		};
 		API.auth.getUsers(query).then(res => {
 			if(res.data.success) {
+				console.log('Employees:', res.data.users);
 				this.setState({ employees: res.data.users, message: '' });
 			} else {
 				this.setState({ message: res.data.msg });
@@ -44,6 +45,11 @@ class ViewEmployees extends React.Component {
 		selected.all = selected.active = selected.inactive = false;
 		selected[e.target.id] = true;
 		this.setState({ selected: selected, message: '' });
+	};
+	
+	searchEmployees = e => {
+		e.preventDefault();
+		console.log(e.target);
 	};
 	
 	changeRole = (e, employee) => {
@@ -119,7 +125,7 @@ class ViewEmployees extends React.Component {
 		if(selected.inactive) filteredEmployees = employees.filter(employee => !employee.employeeActive);
 		return (
 			<div>
-				<EmployeesSubHeader search={true} addEmployee={true} organization={this.props.organization} user={this.props.user} />
+				<EmployeesSubHeader search={true} searchEmployees={this.searchEmployees} addEmployee={true} organization={this.props.organization} user={this.props.user} />
 				{
 					this.state.message !== '' &&
 					<div>{this.state.message}</div>
@@ -127,8 +133,10 @@ class ViewEmployees extends React.Component {
 				<div className='employeesNav-wrapper'>
 					<span className={selected.all && 'employeesNav-selected'} id='all' onClick={this.switchTab}>All </span>| 
 					<span className={selected.active && 'employeesNav-selected'} id='active' onClick={this.switchTab}>Active </span>| 
-					<span className={selected.inactive && 'employeesNav-selected'} id='inactive' onClick={this.switchTab}>Inactive</span></div>
-				<div className="row viewEmployees-wrapper">
+					<span className={selected.inactive && 'employeesNav-selected'} id='inactive' onClick={this.switchTab}>Inactive</span>
+					<div className='employeeCount'>{filteredEmployees.length}</div>
+				</div>
+				<div className="row veiwEmployees-wrapper">
 					<div className="col s12 m12 employee-padding">
 							<ul className="collection z-depth-3">
 								{filteredEmployees.map(employee =>

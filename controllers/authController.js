@@ -32,7 +32,7 @@ module.exports = {
 						const user = new User(req.body);
 						user.save((err, results) => {
 	// 						if(err) return res.json({ success: false, msg: 'Username already exists.' });
-							if(err) return res.json({ success: false, msg: err });
+							if(err) return res.json({ success: false, msg: 'Unable to save user info.', error: err });
 							console.log('User created:', results);
 							res.json({ success: true, msg: 'New user created.', user: results });
 						});
@@ -192,6 +192,7 @@ module.exports = {
 	findAll: (req, res) => {
 		User
 			.find(req.query)
+			.populate('trainingInstances')
 			.sort({ role: -1, employeeActive: 1, lname: 1, fname: 1})
 // 			.sort({ username: 1 })
 			.then(users => res.json({ success: true, users: users }))
@@ -200,14 +201,50 @@ module.exports = {
 	findById: (req, res) => {
 		User
 			.findById(req.query.id)
-			.populate('trainings')
+			.populate('trainingInstances')
 			.then(user => res.json({ success: true, user: user }))
 			.catch(err => res.status(422).json({ success: false, msg: 'Failed to find user' }));
 	},
 	findOneAndUpdate: (req, res) => {
 		User
 			.findOneAndUpdate({ _id: req.body._id }, req.body, { new: true })
+			.populate('trainingInstances')
 			.then(user => res.json({ success: true, user: user }))
 			.catch(err => res.status(422).json({ success: false, msg: 'Failed to update user' }));
+	},
+	addTrainingInstances: (req, res) => {
+		console.log(3);
+		User
+			.update({ _id: req.body.userID}, { $push: { trainingInstances: { $each: req.body.trainingInstances }}}, { new: true })
+			.then(user => {
+				console.log(4);
+				if(!user) return res.json({ success: false, msg: 'User not found.', error: false });
+				res.json({ success: true, user: user });
+			})
+			.catch(err => {
+				console.log('Error adding training Instances:', err);
+				res.json({ success: false, msg: 'Failed to add training instances to user.', error: err });
+			});
+	},
+	addHours: (req, res) => {
+		console.log('Attempting to add hours. Request body:', req.body);
+		User
+			.findById(req.body.userID)
+			.then(user => {
+				if(!user) return res.json({ success: false, msg: 'User not found.', error: false });
+				if( user && !user.trackHours) return res.json({ success: true, user: user });
+				console.log('User, ' + user.username + ', found. Adding ' + req.body.hours + ' hours.');
+				user.currentHours += req.body.hours;
+				user.save((err, results) => {
+					if(err) console.log('Error saving user\'s hours:', err);
+					if(err) return res.json({ success: false, msg: 'Unable to save user hours.', error: err });
+					console.log(`Added ${req.body.hours} hours to user. (${results.currentHours} / ${results.totalHours})`);
+					res.json({ success: true, msg: `Added ${req.body.hours} hours to user. (${results.currentHours} / ${results.totalHours})`, user: results });
+				});
+			})
+			.catch(err => {
+				console.log('Error adding training hours:', err);
+				res.json({ success: false, msg: 'Failed to update user\'s hours' })
+			});
 	}
 };

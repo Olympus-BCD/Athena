@@ -110,7 +110,7 @@ class ViewEmployee extends React.Component {
 				<br/>
 
 			{/* Employee Card */}
-			<div className = "container">
+			<div className = "container employee-card">
 			  <div class="card">
 				<div className = "row">
 				  <div className = "col s3 card-image waves-effect waves-block waves-light">
@@ -120,7 +120,7 @@ class ViewEmployee extends React.Component {
 				     <h5 id = "employeeView"><strong>{ employee.fname } { employee.lname }</strong></h5>
 					 <h5 id = "titleView"><strong>{ employee.title }</strong></h5>
 					 <h5 id = "roleView"><strong>{ this.employeeRole() }</strong></h5>
-				  <span className = "card-title activator grey-text text-darken-4">
+					 <span id = "dots-container" className = "card-title activator grey-text text-darken-4">
 				      <i id = "dots" className = "material-icons">event_note</i>  View Trainings</span>
 				  </div>
 			  </div>
@@ -252,7 +252,7 @@ class ViewEmployee extends React.Component {
     		<div className ="card-reveal">
 			  <div className = "row">
 			  <div className = "col s12">
-      		   <span className ="card-title grey-text text-darken-4"><h4>Trainings</h4><i className = "material-icons right">close</i></span>
+      		   <span className ="card-title grey-text text-darken-4"><h4>Trainings</h4><i id='closeIcon' className = "material-icons right">close</i></span>
 			  </div>
 			 
 			{/* Add Training Button */}

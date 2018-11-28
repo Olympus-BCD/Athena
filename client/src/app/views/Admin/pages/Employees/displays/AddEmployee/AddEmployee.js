@@ -23,13 +23,22 @@ class AddEmployee extends React.Component {
 			title: '',
 			department: '',
 			hireDate: moment().format('YYYY-MM-DD'),
+/*
 			username: this.props.organization.usernamePrefix
 				? this.props.organization.usernamePrefix + '_' + crypto.randomBytes(2).toString('hex')
 				: crypto.randomBytes(3).toString('hex'),
+*/
+			username: '',
 			password: this.props.organization.passwordDefault || crypto.randomBytes(4).toString('hex'),
 			trackHours: false,
 			totalHours: 0,
 			trackingDate: '',
+// 			trackingHoursDay: moment().format('DD'),
+// 			trackingHoursMonth: moment().format('MMMM'),
+			trackingHoursDay: false,
+			trackingHoursMonth: false,
+			trackingFrequencyNumber: 1,
+			trackingFrequencyPeriod: 'year',
 			trainings: []
 		},
 		trainings: [],
@@ -178,10 +187,10 @@ class AddEmployee extends React.Component {
 							{training.name}
 							
 							<Badge onClick={e => { this.removeTraining(e, training) }}>Remove</Badge>
-							{ !this.state[training._id] &&
+							{ (!this.state[training._id] || this.state[training._id].recreated) &&
 								<Badge className='dateComplete' onClick={e => { this.markComplete(e, training) }}>Mark as Complete</Badge>
 							}
-							{ (this.state[training._id] && !this.state[training._id].completed) &&
+							{ (this.state[training._id] && this.state[training._id].completed === false) &&
 								<input id={training._id} className='dateComplete' type='date' name='dateCompleted' dateFormat='YYYY-MM-DD' label='Date Completed' value={this.state[training._id].dateCompleted} onChange={this.trainingCompletedDate} />
 							}
 							{ (this.state[training._id] && this.state[training._id].completed) &&
@@ -225,6 +234,31 @@ class AddEmployee extends React.Component {
 		}
 	};
 	
+	renderTrackingHoursDays = () => {
+		const { trackingHoursMonth } = this.state.employee;
+		let numberOfDays = 0;
+		switch(trackingHoursMonth) {
+			case 'February':
+				numberOfDays = 28;
+				break;
+			default:
+				let currentYear = moment().format('YYYY');
+				numberOfDays = moment(`${currentYear}-${trackingHoursMonth}`, 'YYYY-MMMM').daysInMonth();
+				break;
+		}
+		let days = [];
+		for(let i = 1; i < numberOfDays + 1; i++) {
+			days.push(i);
+		}
+		return (
+			<Input name='trackingHoursDay' type='select' defaultValue={this.state.employee.trackingHoursDay} onChange={this.onChange}>
+				{days.map(day => 
+					<option value={day} key={day}>{day}</option>
+				)}
+			</Input>
+		);
+	};
+	
 /*
 	getTrainings = () => {
 		const query = {
@@ -244,6 +278,7 @@ class AddEmployee extends React.Component {
 		const { employee } = this.state;
 		employee[name] = value;
 		employee.totalHours = employee.totalHours < 0 ? 0 : employee.totalHours;
+		employee.trackingFrequencyNumber = employee.trackingFrequencyNumber < 0 ? 0 : employee.trackingFrequencyNumber;
 		this.setState({ employee: employee });
 	};
 	
@@ -267,17 +302,20 @@ class AddEmployee extends React.Component {
 		this.setState(state);
 	};
 	
-	toggleTrainings = e => {
-		e.preventDefault();
-		this.setState({ addTraining: true });
-	};
-	
 	changeDate = (e, val) => {
 		e.preventDefault();
 		const { employee } = this.state;
 		const value = val == '' ? employee[e.target.name] : val;
 		employee[e.target.name] = moment(value).format('YYYY-MM-DD');
 		this.setState({ employee: employee });
+	};
+	
+	markComplete = (e, training) => {
+		const state = this.state;
+		state[training._id] = {};
+		state[training._id].completed = false;
+// 		state[training._id].dateCompleted = moment().format('YYYY-MM-DD');
+		this.setState(state);
 	};
 	
 	trainingCompletedDate = (e) => {
@@ -293,7 +331,11 @@ class AddEmployee extends React.Component {
 		e.preventDefault();
 		const { id } = e.target;
 		const state = this.state;
-		delete state[id];
+// 		delete state[id];
+
+		state[id] = {};
+		state[id].recreated = true;
+		
 		this.setState(state);
 	};
 	
@@ -309,8 +351,10 @@ class AddEmployee extends React.Component {
 		e.preventDefault();
 		let { step, employee } = this.state;
 		step++;
-		employee.username = employee.fname.toLowerCase() + employee.lname.toLowerCase();
+		employee.username =  employee.username == '' ? employee.fname.replace(/\s/g, '').toLowerCase() + employee.lname.replace(/\s/g, '').toLowerCase() : employee.username;
 		employee.trackingDate = employee.trackingDate === '' ? employee.hireDate : employee.trackingDate;
+		employee.trackingHoursDay = employee.trackingHoursDay ? employee.trackingHoursDay : moment(employee.hireDate).format('DD');
+		employee.trackingHoursMonth = employee.trackingHoursMonth ? employee.trackingHoursMonth : moment(employee.hireDate).format('MMMM');
 		this.setState({ step: step, employee: employee });
 	};
 	
@@ -318,31 +362,225 @@ class AddEmployee extends React.Component {
 		e.preventDefault();
 		const { employee } = this.state;
 		employee.__organization = this.props.organization._id;
+		const trainingInstances = employee.trainings;
 		employee.trainings = this.state.newTrainings;
+// 		employee.trainingInstances = this.state.newTrainings;
 		employee.role = this.state.isAdmin ? 2 : 1;
 		employee.trackHours = this.state.trackHours;
+		employee.totalHours = employee.totalHours < 1 ? 1 : employee.totalHours;
+		employee.hireDate = moment(employee.hireDate).format('X');
+		employee.trackingDate = moment(employee.trackingDate).format('X');
+		employee.trackingFrequencyNumber = employee.trackingFrequencyNumber < 1 ? 1 : employee.trackingFrequencyNumber;
 		if(!this.state.active) {
 			employee.role = 1;
 			employee.active = false;
 		}
-		return console.log(employee);
+		const currentYear = moment().format('YYYY');
+		const trackingDateThisYear = parseInt(moment(`${currentYear}-${employee.trackingHoursMonth}-${employee.trackingHoursDay}`, 'YYYY-MMMM-DD').format('X'));
+// 		const oneYearAgo = parseInt(moment().subtract(1, 'year').format('X'));
+		const todayUnformated = moment().format('MM-DD-YYYY');
+		const today = parseInt(moment(todayUnformated, 'MM-DD-YYYY').format('X'));
+		const trackingDateHasPassed = trackingDateThisYear <= today;
+		
+		const trackingHoursYear = trackingDateHasPassed ? moment((moment().add(1, 'year'))).format('YYYY') : moment().format('YYYY');
+		employee.hoursResetDate = moment(`${trackingHoursYear}-${moment(employee.trackingHoursMonth, 'MMMM').format('MM')}-${employee.trackingHoursDay}`).format('X');	
+		
+/*
+		const day = employee.trackingHoursDay;
+		const month = employee.trackingHoursMonth;
+		const frequency = employee.trackingFrequencyNumber;
+		const period = employee.trackingFrequencyPeriod;
+		
+		const currentTrackingCycleStart = moment(today, 'X').subtract(frequency, period);
+		const trackingDateOutsideOfCurrentCycle = 
+*/
+
 		API.auth.register(employee).then(res => {
 			if(res.data.success) {
-				this.props.history.push(`/${this.props.organization.name.replace(/\s/g, '')}/employees`);
+				const user = res.data.user;
+				//	Use recursion to handle asynchronous creation of the training instances and newsfeed items
+				let count = 0;
+				let trainingsCompleted = [];
+				let trainingInstancesToAdd = [];
+				console.log('Total Starting Instances:', trainingInstances);
+				const createTrainingInstances = () => {
+					if(count < trainingInstances.length) {
+						const instance = trainingInstances[count];
+						const trainingID = instance._id;
+						delete instance._id;
+						instance.__user = user._id;
+						instance.completed = (this.state[trainingID] && this.state[trainingID].completed);
+						instance.dueDate = (this.state[trainingID] && this.state[trainingID].completed)
+							? moment(this.state[trainingID].dateCompleted).add(instance.frequencyNumber, instance.frequencyPeriod).startOf('day').format('X')
+							: moment(user.hireDate).add(instance.frequencyNumber, instance.frequencyPeriod).startOf('day').format('X');
+						if(instance.completed) {
+							instance.dateCompleted = moment().startOf('day').format('X');
+						}
+						instance.__training = trainingID;
+						console.log('Training Instance to be created:', instance);
+						API.trainingInstance.create(instance).then(res => {
+// 							return console.log('User:', user, 'Org:', this.props.organization, 'Data from training instance creation', res.data);
+							if(res.data.success) {
+								const newTrainingInstance = res.data.trainingInstance;
+								trainingInstancesToAdd.push(newTrainingInstance._id);
+								console.log('Training instance created:', newTrainingInstance);
+// 								console.log('Added to user Instances:', user);
+								if(this.state[trainingID] && this.state[trainingID].completed) {
+									
+									API.auth.addTrainingHours({ userID: user._id, hours: res.data.trainingInstance.hours}).then(res => {
+										if(res.data.success) {
+											console.log('User hours updated.', res.data.user);
+											
+											if(instance.recurring) {
+											
+												const recreatedTrainingInstance = instance;
+												delete recreatedTrainingInstance.dateCompleted;
+												recreatedTrainingInstance.completed = false;
+												recreatedTrainingInstance.dueDate = moment(instance.dateCompleted).add(instance.frequencyNumber, instance.frequencyPeriod).startOf('day').format('X');
+												console.log('Re-creating recurring instance:', recreatedTrainingInstance);
+												
+												API.trainingInstance.create(recreatedTrainingInstance).then(res => {
+													if(res.data.success) {
+														console.log('Re-created training instance:', res.data.trainingInstance);
+	
+														trainingInstancesToAdd.push(res.data.trainingInstance._id);
+														trainingsCompleted.push(newTrainingInstance._id);
+														
+// 														console.log('Added re-created instance to user (not saved to DB):', user);
+														count++;
+														createTrainingInstances();
+													} else {
+														console.log('Error re-creating training instance:', recreatedTrainingInstance);
+														console.log(res.data.msg);
+														count++;
+														createTrainingInstances();
+													}
+												}).catch(err => {
+													console.log('Error re-creating training instance:', recreatedTrainingInstance);
+													console.log(err);
+													count++;
+													createTrainingInstances();
+												});
+	/*
+												const trainingCompletedNewsfeedItem = {
+													__user: user._id,
+													__organization: this.props.organization._id,
+													__trainingInstance: newTrainingInstance._id,
+													trainingName: instance.name,
+													userFirstName: user.fname,
+													userLastName: user.lname,
+													activityType: 'trainingCompleted'
+												};
+	*/
+												
+	/*
+												API.newsfeed.create(trainingCompletedNewsfeedItem).then(res => {
+													if(res.data.success) {
+														console.log('Newsfeed Item created.', res.data.newsfeedItem);
+														count++;
+														createTrainingInstances();
+													} else {
+														console.log(res.data.msg);
+														count++;
+														createTrainingInstances();
+													}
+												}).catch(err => {
+													console.log('Error creating training completed newsfeed item:', err);
+													count++;
+													createTrainingInstances();
+												});
+											
+*/
+											} else {
+												count++;
+												createTrainingInstances();
+											}
+										} else {
+											console.log('Error updating training hours.');
+// 											res.data.msg is undefined
+											console.log('Ugh...', res.data);
+// 											console.log(res.data.msg);
+											count++;
+											createTrainingInstances();
+										}
+									}).catch(err => {
+										console.log('Error adding training hours.', err);
+										count++;
+										createTrainingInstances();
+									});
+								} else {
+									count++;
+									createTrainingInstances();
+								}
+							} else {
+								console.log('Error creating training instance:', instance);
+								console.log(res.data.msg);
+								count++;
+								createTrainingInstances();
+							}
+						}).catch(err => {
+							console.log('Error creating training instance:', instance);
+							console.log(err);
+							count++;
+							createTrainingInstances();
+						});
+					} else {
+						//	In all error cases during recursion, could add an error flag to check here before continuing
+						
+						API.auth.addTrainingInstances(user._id, trainingInstancesToAdd).then(res => {
+							if(res.data.success) {
+								console.log('Added training instances to user:', trainingInstancesToAdd, res.data.user);
+								const newUserNewsfeedItem = {
+									__user: user._id,
+									userFirstName: user.fname,
+									userLastName: user.lname,
+									__organization: this.props.organization,
+									activityType: 'newUser'
+								};
+								console.log('Trianings Completed:', trainingsCompleted);
+								if(trainingsCompleted.length > 0) {
+									newUserNewsfeedItem.activityType = 'hybrid';
+									newUserNewsfeedItem.completedTrainings = trainingsCompleted;
+									newUserNewsfeedItem.numberOfCompletedTrainings = trainingsCompleted.length;
+								}
+		
+								API.newsfeed.create(newUserNewsfeedItem).then(res => {
+									if(res.data.success) {
+										console.log('Newsfeed Item created.', res.data.newsfeedItem);
+										console.log('All instances created. What next?');
+										this.props.history.push(`/${this.props.organization.name.replace(/\s/g, '')}/employees?id=${user._id}`);
+									} else {
+										this.setState({ message: res.data.msg });
+									}
+									
+								}).catch(err => {
+									console.log('Error creating new user newsfeed item:', err);
+									this.setState({ message: 'Uh Oh! Something went wrong!' });
+								});
+							} else {
+								console.log('Error updating user with recreated training instance:', user);
+								if(res.data.error) console.log(res.data.error);
+								this.setState({ message: res.data.msg });
+							}
+						}).catch(err => {
+							console.log('Error updating user with training instance:', err);
+							this.setState({ message: 'Uh Oh! Something went wrong!' });
+						});
+					}
+				};
+				createTrainingInstances();
 			} else {
 				this.setState({ message: res.data.msg });
 			}
 		}).catch(err => {
+			console.log(err);
 			if(err) this.setState({ message: 'Uh Oh! Something went wrong!' });
 		});
 	};
 	
-	trainingSelected = e => {
-		console.log(e.target.value);
-	};
-	
 	addTraining = (e, training) => {
 		e.preventDefault();
+		
 		let { employee, newTrainings, employeePagination } = this.state;
 // 		const trainings = this.state.trainings.filter(t => t._id != training._id);
 		if(newTrainings.indexOf(training._id) < 0) {
@@ -380,14 +618,6 @@ class AddEmployee extends React.Component {
 // 		if(trainings.indexOf(training)  < 0) trainings.push(training);
 // 		this.setState({ employee: employee, trainings: trainings });
 		this.setState({ employee: employee, newTrainings: newTrainings, employeePagination: employeePagination });
-	};
-	
-	markComplete = (e, training) => {
-		const state = this.state;
-		state[training._id] = {};
-		state[training._id].completed = false;
-// 		state[training._id].dateCompleted = moment().format('YYYY-MM-DD');
-		this.setState(state);
 	};
 
 /*
@@ -512,11 +742,42 @@ class AddEmployee extends React.Component {
 						</Row>
 						{
 							this.state.trackHours &&
-						<Row>
-							<Input name='totalHours' type='number' label='Total hours required:' value={employee.totalHours} onChange={this.onChange} />
-							<Input name='trackingDate' type='date' label='Start tracking hours on:' dateFormat='YYYY-MM-DD' value={employee.trackingDate} onChange={this.changeDate} />
-						</Row>
+						<div>
+							<Row>How many total training hours does this employee require?</Row>
+							<Row>
+								<Input name='totalHours' type='number' value={employee.totalHours} onChange={this.onChange} />
+								{/*<Input name='trackingDate' type='date' label='Start tracking hours on:' dateFormat='YYYY-MM-DD' value={employee.trackingDate} onChange={this.changeDate} />*/}
+							</Row>
+							<Row>On what day should this {`employee's`} training hours reset?</Row>
+							<Row>
+								{ this.renderTrackingHoursDays() }
+								<Input name='trackingHoursMonth' type='select' defaultValue={employee.trackingHoursMonth} onChange={this.onChange}>
+									<option value='January'>January</option>
+									<option value='February'>February</option>
+									<option value='March'>March</option>
+									<option value='April'>April</option>
+									<option value='May'>May</option>
+									<option value='June'>June</option>
+									<option value='July'>July</option>
+									<option value='August'>August</option>
+									<option value='September'>September</option>
+									<option value='October'>October</option>
+									<option value='November'>November</option>
+									<option value='December'>December</option>
+								</Input>
+							</Row>
+							{/*<Row>How frequently should this {`employee's`} training hours reset?</Row>
+							<Row>Every&nbsp;
+								<Input name='trackingFrequencyNumber' type='number' value={employee.trackingFrequencyNumber} onChange={this.onChange} />
+								<Input name='trackingFrequencyPeriod' type='select' defaultValue={employee.trackingFrequencyPeriod} onChange={this.onChange}>
+									<option value='day'>{employee.trackingFrequencyNumber == 1 ? 'Day' : 'Days'}</option>
+									<option value='month'>{employee.trackingFrequencyNumber == 1 ? 'Month' : 'Months'}</option>
+									<option value='year'>{employee.trackingFrequencyNumber == 1 ? 'Year' : 'Years'}</option>
+								</Input>
+							</Row>*/}
+						</div>
 						}
+						<Row><h5>Select any additional trainings to add to this employee</h5></Row>
 						<Row>
 							{this.renderOrganizationCollection(trainings, `${organization.name}'s Trainings`)}
 							{this.renderEmployeeCollection()}
