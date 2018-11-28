@@ -29,3 +29,7 @@
 #dots{
     margin-left:38%;
 }
+#hours{
+    border-style:solid;
+    border-color:teal;
+}

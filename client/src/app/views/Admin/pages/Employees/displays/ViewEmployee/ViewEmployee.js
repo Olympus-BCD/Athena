@@ -158,20 +158,20 @@ class ViewEmployee extends React.Component {
 
 				{/*Employee Position*/}
 				<div className = "col s4">
-				     {
-					    this.state.editTitle
-					    ?<form onSubmit={this.onSubmit}>
-							   <input type='text' name='title' value={editEmployee.title} onChange={this.onChange} />
-							   <span onClick={this.cancel}> X </span>
-							   <button type='submit'>Save</button>
-						 </form>
-					    :<div>
+				{
+					this.state.editTitle
+					?  <form onSubmit={this.onSubmit}>
+							<input type='text' name='title' value={editEmployee.title} onChange={this.onChange} />
+							<span onClick={this.cancel}> X </span>
+							<button type='submit'>Save</button>
+						</form>
+					:   <div>
 							<h6>Position: {employee.title}
 							<span onClick={() => this.setState({ editTitle: true })}><i id="editIcon" className = "material-icons left">edit</i></span>
 							</h6>
 						</div>	
 				}
-				   </div>
+				</div>
 
 				{/* Username */}
 				<div className = "col s4">
@@ -185,13 +185,15 @@ class ViewEmployee extends React.Component {
 					:	<div>
 							<h6>Username: {employee.username}
 							<span onClick={() => this.setState({ editUsername: true })}><i id="editIcon" className = "material-icons left">edit</i></span>
+						
 							<i id="statusIcon" className = "material-icons right">lock</i>
 							</h6>
+						
 						</div>
 				}
 				
 				</div>
-				</div>
+			</div>
 
 				{/* Employee ID */}
 				<div className = "row">
@@ -213,16 +215,16 @@ class ViewEmployee extends React.Component {
 				  }
 				  </div>
 
-				{/*Department*/}
-				<div className = "col s4">
-				  <span>Department:{employee.department}<i id="Icon" className = "material-icons left">group_work</i></span>
-				</div>
+				  {/*Department*/}
+				  <div className = "col s4">
+				    <span>Department:{employee.department}<i id="Icon" className = "material-icons left">group_work</i></span>
+				  </div>
 
 
-				{/* Permissions */}
-				<div className = "col s4">
-				<h6>Permissions: {this.employeeRole()}<i id="Icon" className = "material-icons left">supervisor_account</i></h6>
-				</div>
+				  {/* Permissions */}
+				  <div className = "col s4">
+				    <h6>Permissions: {this.employeeRole()}<i id="Icon" className = "material-icons left">supervisor_account</i></h6>
+				  </div>
 				</div>
 
 				{/* Employee Hire Date */}
@@ -240,17 +242,11 @@ class ViewEmployee extends React.Component {
 				<div className = "col s4">
 				  <span>Account Status: Active {employee.active}<i id="statusIcon" className = "material-icons left">verified_user</i></span>
 				</div>
-
-				
-
-				
-				</div>
-
-				
-				</div>
-				</div>
-				   </div>
-				   </div>
+			</div>
+			</div>
+			</div>
+			</div>
+			</div>
 
 			{/* Employee Trainings  */}
     		<div className ="card-reveal">
@@ -259,9 +255,20 @@ class ViewEmployee extends React.Component {
       		   <span className ="card-title grey-text text-darken-4"><h4>Trainings</h4><i className = "material-icons right">close</i></span>
 			  </div>
 			 
-
 			{/* Add Training Button */}
-          	<div className="col s12">
+			<div className = "col s3">
+				<h6 className = "hours"><strong>Current Hours: 15</strong></h6>
+			</div>
+			{/* <div className = "col s2">
+			   <h6 className = "hours"><strong>Hours Still Needed: 4</strong></h6>
+			</div> */}
+			<div className = "col s3">
+				<h6 className="hours"><strong>Total Hours Required: 18</strong><i className = "material-icons left">edit</i></h6>
+			</div>
+			<div className = "col s3">
+			  <h6 className = "hours"><strong>Hours Due: Dec.31, 2018</strong></h6>
+			</div>
+          	<div className="col s3">
               <Link to={`/${this.props.organization.name.replace(/\s/g, '')}/trainings/add`}>
                 <a href="!#" className="waves-effect waves-light btn float-right">
                   <i className="material-icons left">event</i>Add Training
@@ -272,19 +279,54 @@ class ViewEmployee extends React.Component {
 		  
 		   {/*Collection of Employee Trainings*/}
 		   <ul className = "collection">
-		  	  <li className = "collection-item avatar row valign-wrapper">
-			    <div className = "avatar-wrapper flex-center">
-			  	  <i className = "material-icons">check_circle</i>
-			    </div>
-		 
-			  
+		   <li className="collection-item avatar row valign-wrapper employeeCollectionItem">
+					<div className='avatar-wrapper flex-center'>
+						<i className = "material-icons">event_note</i>
+					</div>
 				<div className = "titleTraining">
-		  		  <span className = "title">
-				    <p>
-					  OnBoarding
-					</p>
-				  </span>
-			  	
+		  		   <span className = "trainingTitle">
+				    Training Name
+				   </span>
+				</div>
+
+				<div className = "codeTraining">Training Code</div>
+
+				<div className = "hoursTraining">
+				  <p className = "">Training Hours</p>
+				</div>
+
+				<div className = "trainingFrequency">
+				  <p>Training Frequency</p>
+				</div>
+
+				<div className = "frequencyPeriod">
+				  <p>Frequency Period</p>
+				</div>
+			  </li>
+			  <li className="collection-item avatar row valign-wrapper employeeCollectionItem">
+					<div className='avatar-wrapper flex-center'>
+						<i className = "material-icons">event_note</i>
+					</div>
+				<div className = "titleTraining">
+		  		   <span className = "trainingTitle">
+				    CPR
+				   </span>
+				</div>
+				<div className = "codeTraining">
+					<span>
+						12345
+					</span>
+				</div>
+				<div className = "hoursTraining">
+				  <p className = "">8</p>
+				</div>
+
+				<div className = "trainingFrequency">
+				  <p>1</p>
+				</div>
+
+				<div className = "frequencyPeriod">
+				  <button>Complete</button>
 				</div>
 			  </li>
 		  </ul>
