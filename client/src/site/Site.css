@@ -16,3 +16,9 @@
     min-width: 100vw;
     min-height: 100vh;
 } */
+
+.athena-title a {
+    font-family: 'Cinzel Decorative', cursive;
+    color: white;
+    font-size: 1em;
+}
