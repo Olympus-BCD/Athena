@@ -7,8 +7,42 @@ import React from "react";
 import PageHeader from "./../../../components/PageHeader/PageHeader";
 import "./Dashboard.css";
 
+import API from '../../../../../utils/API';
+
 class DashboardPage extends React.Component {
+	
+	state = {
+		message: '',
+		trainings: []
+	};
+	
+	componentDidMount() {
+		this.getNewsfeedItems();
+	}
+	
+	getNewsfeedItems = () => {
+		const query = {
+			__organization: this.props.organization._id
+		};
+		API.newsfeed.getNewsfeedItems(query).then(results => {
+			if(results.data.success) {
+				console.log('Newsfeed Items:', results.data.newsfeedItems)
+				results.data.newsfeedItems.forEach(item => {
+					if(item.activityType == 'hybrid') console.log('Hybrid:', item);
+				});
+				this.setState({ newfeedItems: results.data.newsfeedItems, message: '' });
+			} else {
+				this.setState({ message: results.data.msg });
+			}
+			
+		}).catch(err => {
+			console.log(err);
+			this.setState({ message: 'Uh oh! Something went wrong!' });
+		});
+	};
+	
   render() {
+	  
     return (
       <div>
         <PageHeader />

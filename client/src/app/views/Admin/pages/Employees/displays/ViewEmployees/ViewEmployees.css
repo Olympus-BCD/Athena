@@ -12,7 +12,8 @@
 	padding: 0 2em;
 	margin: 0.5em 0;
 	display: flex;
-	justify-content: flex-start
+	justify-content: flex-start;
+	position: relative;
 }
 
 .employeesNav-wrapper span {
@@ -24,6 +25,15 @@
 /* 	font-weight: bold; */
 	color: white;
 	border-bottom: 2px solid white;
+}
+
+.employeeCount {
+	position: absolute;
+/* 	float: right; */
+	right: 1.5em;
+	top: -45%;
+	font-size: 2em;
+	color: white;
 }
 
 .defaultGray {

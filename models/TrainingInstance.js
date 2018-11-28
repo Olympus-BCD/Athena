@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
+const moment = require('moment');
 
 const TrainingInstanceSchema = new Schema({
 	name: {
@@ -11,9 +12,13 @@ const TrainingInstanceSchema = new Schema({
 		ref: 'Organization',
 		required: true
 	},
-	__creator: {
+	__user: {
 		type: mongoose.Schema.Types.ObjectId,
 		ref: 'User'
+	},
+	__training: {
+		type: mongoose.Schema.Types.ObjectId,
+		ref: 'Training'
 	},
 	date: {
 		type: Date,
@@ -40,8 +45,19 @@ const TrainingInstanceSchema = new Schema({
 	documents: {
 		type: mongoose.Schema.Types.ObjectId,
 		ref: 'Document',
-	}
+	},
 */
+	completed: {
+		type: Boolean,
+		default: false
+	},
+	dateCompleted: {
+		type: Number
+	},
+	dueDate: {
+		type: Number,
+		default: moment().format('X')
+	}
 });
 
 const TrainingInstance = mongoose.model('TrainingInstance', TrainingInstanceSchema);

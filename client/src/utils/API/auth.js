@@ -19,6 +19,13 @@ export default {
 	addTrainingToExistingUsers: training => {
 		return axios.put('/api/auth/users', training);
 	},
+	addTrainingInstances: (id, trainingInstancesArr) => {
+		console.log(1);
+		return axios.put('/api/auth/addtrainings', { userID: id, trainingInstances: trainingInstancesArr });
+	},
+	addTrainingHours: data => {
+		return axios.put('/api/auth/addhours', data);
+	},
 	test: (newEmployee, cb) => {
 		cb(newEmployee);
 	}

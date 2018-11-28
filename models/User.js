@@ -59,11 +59,19 @@ let UserSchema = new Schema({
 		type: String
 	},
 	hireDate: {
-		type: String
+		type: Number
 	},
 	trackHours: {
 		type: Boolean,
 		default: false
+	},
+	trackingFrequencyNumber: {
+		type: Number,
+		default: 1
+	},
+	trackingFrequencyPeriod: {
+		type: String,
+		default: 'year'
 	},
 	currentHours: {
 		type: Number,
@@ -74,10 +82,10 @@ let UserSchema = new Schema({
 		default: 0
 	},
 	hoursResetDate: {
-		type: String
+		type: Number
 	},
 	trackingDate: {
-		type: String
+		type: Number
 	},
 	date: {
 		type: Date,

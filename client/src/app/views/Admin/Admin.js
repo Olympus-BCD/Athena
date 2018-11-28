@@ -27,7 +27,7 @@ class AdminView extends React.Component {
 				/>
 				<div className='pageContainer'>
 					<Switch>
-						<Route path='/:org/dashboard' component={DashboardPage} />
+						<Route path='/:org/dashboard' render={(props) => <DashboardPage {...props} organization={this.props.organization} user={this.props.user} />} />
 						<Route path='/:org/trainings' render={(props) => <TrainingsPage {...props} organization={this.props.organization} user={this.props.user} />} />	
 						<Route path='/:org/employees' render={(props) => <EmployeesPage {...props} organization={this.props.organization} user={this.props.user} />} />
 						<Route path='/:org/reports' component={ReportsPage} />
