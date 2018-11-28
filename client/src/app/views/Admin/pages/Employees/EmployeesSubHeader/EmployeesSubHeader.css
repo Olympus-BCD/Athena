@@ -24,3 +24,7 @@
 .float-right {
 	float: right;
 }
+
+#search-close-icon {
+	top: 0.25em;
+}

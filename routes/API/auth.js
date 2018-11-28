@@ -35,11 +35,23 @@ router.route('/user')
 */
 		const putUserIsOwner = req.body.role > 2 ? true : false;
 		if(putUserIsOwner && !isOwner(req)) return res.json({ success: false, msg: 'You do not have permission to edit the Owner' });
-		if(isAdmin(req)) {
+		if(isAdmin(req) || req.body._id == req.user._id) {
 			controller.findOneAndUpdate(req, res);
 		} else {
 			res.json({ success: false, msg: 'You do not have permission to edit this user' });
 		}
+	});
+	
+router.route('/addhours')
+	.put(passport.authenticate('jwt', { session: false }), (req, res) => {
+		console.log('Add Hours PUT request received.', req.body);
+		requireLogin(req, res, controller.addHours);
+	});
+	
+router.route('/addtrainings')
+	.put(passport.authenticate('jwt', { session: false }), (req, res) => {
+		console.log(2);
+		requireLogin(req, res, controller.addTrainingInstances);
 	});
 	
 requireAdmin = (req, res, next) => {

@@ -17,6 +17,7 @@ class AdminView extends React.Component {
 	};	
 	
 	render() {
+		console.log('From Admin.js:', this.props.organization);
 		return(
 			<div className='adminView-wrapper'>
 
@@ -27,12 +28,12 @@ class AdminView extends React.Component {
 				/>
 				<div className='pageContainer'>
 					<Switch>
-						<Route path='/:org/dashboard' component={DashboardPage} />
+						<Route path='/:org/dashboard' render={(props) => <DashboardPage {...props} organization={this.props.organization} user={this.props.user} />} />
 						<Route path='/:org/trainings' render={(props) => <TrainingsPage {...props} organization={this.props.organization} user={this.props.user} />} />	
 						<Route path='/:org/employees' render={(props) => <EmployeesPage {...props} organization={this.props.organization} user={this.props.user} />} />
 						<Route path='/:org/reports' component={ReportsPage} />
 						<Route path='/:org/network' component={NetworkPage} />
-						<Route component={DashboardPage} />
+						<Route render={(props) => <DashboardPage {...props} organization={this.props.organization} user={this.props.user} />} />
 					</Switch>
 				</div>
 			</div>
