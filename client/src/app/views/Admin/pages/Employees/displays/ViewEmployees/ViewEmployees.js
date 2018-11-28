@@ -1,8 +1,9 @@
+// React Imports
 import React from "react";
-import { Link } from 'react-router-dom';
+
+// CSS & Local Imports
 import "./ViewEmployees.css";
 import API from '../../../../../../../utils/API';
-import AvatarPlaceholder from "./AvatarPlaceholder.png";
 import EmployeeListItem from './EmployeeListItem';
 import EmployeesSubHeader from '../../EmployeesSubHeader';
 
@@ -137,7 +138,6 @@ class ViewEmployees extends React.Component {
 				</div>
 				<div className="row veiwEmployees-wrapper">
 					<div className="col s12 m12 employee-padding">
-						{/*<div className="card-panel teal z-depth-5">*/}
 							<ul className="collection z-depth-3">
 								{filteredEmployees.map(employee =>
 									<EmployeeListItem
@@ -149,7 +149,6 @@ class ViewEmployees extends React.Component {
 									/>
 								)}
 							</ul>
-						{/*</div>*/}
 					</div>
 				</div>
 			</div>

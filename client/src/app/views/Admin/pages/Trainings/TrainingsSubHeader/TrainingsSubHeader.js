@@ -1,10 +1,10 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import "./EmployeesSubHeader.css";
+import  "./TrainingsSubHeader.css";
 
-class EmployeesSubHeader extends React.Component {
+class TrainingsSubHeader extends React.Component {
   render() {
-	const { organization, search, addEmployee } = this.props;
+	const { organization, search, addTraining } = this.props;
     return (
       <div className='subheader-wrapper'>
         <div className="row valign-wrapper">
@@ -13,11 +13,11 @@ class EmployeesSubHeader extends React.Component {
           <div className="col s4">
             <form>
               <div className="input-field">
-                <input id="search" type="search" required onChange={this.props.searchEmployees} />
+                <input id="search" type="search" required />
                 <label className="label-icon" for="search">
                   <i className="material-icons">search</i>
                 </label>
-                <i id='search-close-icon' className="material-icons">close</i>
+                <i className="material-icons">close</i>
               </div>
             </form>
           </div>
@@ -25,12 +25,12 @@ class EmployeesSubHeader extends React.Component {
 	        <div className='col s4'><Link to={`/${organization.name.replace(/\s/g, '')}/employees`}>BACK</Link></div>
 	    )}
           <div className="col s4" />
-        { addEmployee
+        { addTraining
 	    ? (
           <div className="col s4">
-            <Link to={`/${organization.name.replace(/\s/g, "")}/employees/add`} >
+            <Link to={`/${this.props.organization.name.replace(/\s/g, '')}/trainings/add`}>
               <a href="!#" className="waves-effect waves-light btn float-right">
-                <i className="material-icons left">person_add</i>Add Employee
+                <i className="material-icons left">event</i>Add Training
               </a>
             </Link>
           </div>
@@ -43,4 +43,4 @@ class EmployeesSubHeader extends React.Component {
   }
 }
 
-export default EmployeesSubHeader;
+export default TrainingsSubHeader;

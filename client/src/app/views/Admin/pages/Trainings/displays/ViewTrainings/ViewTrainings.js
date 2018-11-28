@@ -1,5 +1,10 @@
+// React Imports
 import React from "react";
 import { Link } from 'react-router-dom';
+
+// CSS & Local Imports
+import TrainingsSubHeader from "../../TrainingsSubHeader";
+import TrainingListItem from "../ViewTrainings/TrainingListItem";
 import "./ViewTrainings.css";
 import API from '../../../../../../../utils/API';
 
@@ -29,13 +34,24 @@ class ViewTrainings extends React.Component {
 	render() {
 		return (
 			<div>
+				<TrainingsSubHeader search={true} addTraining={true} organization={this.props.organization} />
 				{
 					this.state.message !== '' &&
 					<div>{this.state.message}</div>
 				}
+				<div className="row viewEmployees-wrapper">
+					<div className="col s12 m12 employee-padding">
+							<ul className="collection z-depth-3">
 				{this.state.trainings.map(training =>
-					<div key={training._id}><Link to={`/${this.props.organization.name.replace(/\s/g, '')}/trainings?id=${training._id}`}>{training.name}</Link></div>
+					// <div key={training._id}><Link to={`/${this.props.organization.name.replace(/\s/g, '')}/trainings?id=${training._id}`}>{training.name}</Link></div>
+					<TrainingListItem 
+						training={training}
+						organization={this.props.organization}
+					/>
 				)}
+				</ul>
+				</div>
+			</div>
 			</div>
 		);
 	}
