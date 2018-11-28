@@ -5,7 +5,6 @@ import API from '../../../../../../../utils/API';
 import EmployeesSubHeader from '../../EmployeesSubHeader';
 import EmployeeImage from "./me.jpg"
 
-
 class ViewEmployee extends React.Component {
 	
 	state = {
@@ -99,7 +98,7 @@ class ViewEmployee extends React.Component {
 
 
 	render() {
-		const { message, employee, editEmployee } = this.state;
+		const { message, employee, editEmployee, user } = this.state;
 		return (
 			<div>
 				<EmployeesSubHeader organization={this.props.organization} search={false} addEmployee={true} />
@@ -121,27 +120,27 @@ class ViewEmployee extends React.Component {
 				     <h5 id = "employeeView"><strong>{ employee.fname } { employee.lname }</strong></h5>
 					 <h5 id = "titleView"><strong>{ employee.title }</strong></h5>
 					 <h5 id = "roleView"><strong>{ this.employeeRole() }</strong></h5>
+				  <span className = "card-title activator grey-text text-darken-4">
+				      <i id = "dots" className = "material-icons">event_note</i>  View Trainings</span>
 				  </div>
 			  </div>
 			   
 			   {/* Card content setup */}
 				<div className = "row">
 				  <div className = "col s12">
-    		        <div className = "card-content">
-				      <span className = "card-title activator grey-text text-darken-4">
-				      <i className = "material-icons right">more_vert</i></span>
-			        </div>
-			
+    		        
 				{/* Employee Name */}
-			      <div className = "row">
-				  <div className = "col s6">
-				   {
+				<div id = "cardInfo" className = "card">
+				  <div id = "infoContainer" className = "container">
+			      	<div className = "row">
+				  		<div className = "col s4">
+				   	{
 					 this.state.editName
 					 ?	<form onSubmit={this.onSubmit}>
-						  <div id = "fname" className = "input-field col s3">
+						  <div id = "fname" className = "input-field col s5">
 							<input type='text' name='fname' value={editEmployee.fname} onChange={this.onChange} />
 						  </div>
-						  <div id="lname" className="input-field col s3">
+						  <div id="lname" className="input-field col s5">
 							<input type='text' name='lname' value={editEmployee.lname} onChange={this.onChange} />
 						  </div>
 							<div className = "col-s5">
@@ -157,8 +156,25 @@ class ViewEmployee extends React.Component {
 					}
 				</div>
 
+				{/*Employee Position*/}
+				<div className = "col s4">
+				     {
+					    this.state.editTitle
+					    ?<form onSubmit={this.onSubmit}>
+							   <input type='text' name='title' value={editEmployee.title} onChange={this.onChange} />
+							   <span onClick={this.cancel}> X </span>
+							   <button type='submit'>Save</button>
+						 </form>
+					    :<div>
+							<h6>Position: {employee.title}
+							<span onClick={() => this.setState({ editTitle: true })}><i id="editIcon" className = "material-icons left">edit</i></span>
+							</h6>
+						</div>	
+				}
+				   </div>
+
 				{/* Username */}
-				<div className = "col s6">
+				<div className = "col s4">
 				{
 					this.state.editUsername
 					?	<form onSubmit={this.onSubmit}>
@@ -169,15 +185,17 @@ class ViewEmployee extends React.Component {
 					:	<div>
 							<h6>Username: {employee.username}
 							<span onClick={() => this.setState({ editUsername: true })}><i id="editIcon" className = "material-icons left">edit</i></span>
+							<i id="statusIcon" className = "material-icons right">lock</i>
 							</h6>
 						</div>
 				}
+				
 				</div>
 				</div>
 
 				{/* Employee ID */}
 				<div className = "row">
-				  <div className = "col s6">
+				  <div className = "col s4">
 				 {
 					this.state.editEmployeeID
 					?	<form onSubmit={this.onSubmit}>
@@ -195,52 +213,81 @@ class ViewEmployee extends React.Component {
 				  }
 				  </div>
 
-				{/* Password */}
-				<div className = "col s6">
-				  <h6>Change Password<i id="editIcon" className = "material-icons left">edit</i></h6>
-				
-				</div>
+				{/*Department*/}
+				<div className = "col s4">
+				  <span>Department:{employee.department}<i id="Icon" className = "material-icons left">group_work</i></span>
 				</div>
 
-				{/* Employee Title */}
-				<div className = "row">
-				   <div className = "col s6">
-				     {
-					    this.state.editTitle
-					    ?<form onSubmit={this.onSubmit}>
-							   <input type='text' name='title' value={editEmployee.title} onChange={this.onChange} />
-							   <span onClick={this.cancel}> X </span>
-							   <button type='submit'>Save</button>
-						 </form>
-					    :<div>
-							<h6>Title: {employee.title}
-							<span onClick={() => this.setState({ editTitle: true })}><i id="editIcon" className = "material-icons left">edit</i></span>
-							</h6>
-						</div>	
-				}
-				   </div>
 
 				{/* Permissions */}
-				<div className = "col s6">
-				  <h6>{this.employeeRole()}</h6>
-				
+				<div className = "col s4">
+				<h6>Permissions: {this.employeeRole()}<i id="Icon" className = "material-icons left">supervisor_account</i></h6>
 				</div>
 				</div>
 
 				{/* Employee Hire Date */}
 				<div className = "row">
-				  <div className = "col s6">
-				    <span>Hire Date: Hire date goes here</span>
+				<div className = "col s4">
+				    <span>Hire Date: 11-27-18{employee.hireDate}<i id="Icon" className = "material-icons left">calendar_today</i></span>
 				  </div>
+
+				{/*Employee Status */}
+				<div className = "col s4">
+				  <span>Employee Status: Active{employee.employeeActive}<i id="statusIcon" className = "material-icons left">verified_user</i> </span>
 				</div>
 
+				{/*Account Status*/}
+				<div className = "col s4">
+				  <span>Account Status: Active {employee.active}<i id="statusIcon" className = "material-icons left">verified_user</i></span>
+				</div>
+
+				
+
+				
+				</div>
+
+				
+				</div>
 				</div>
 				   </div>
-				 
+				   </div>
+
+			{/* Employee Trainings  */}
     		<div className ="card-reveal">
-      		   <span className ="card-title grey-text text-darken-4">Card Title<i className = "material-icons right">close</i></span>
-      		   <p>Here is some more information about this product that is only revealed once clicked on.</p>
-    		</div>
+			  <div className = "row">
+			  <div className = "col s12">
+      		   <span className ="card-title grey-text text-darken-4"><h4>Trainings</h4><i className = "material-icons right">close</i></span>
+			  </div>
+			 
+
+			{/* Add Training Button */}
+          	<div className="col s12">
+              <Link to={`/${this.props.organization.name.replace(/\s/g, '')}/trainings/add`}>
+                <a href="!#" className="waves-effect waves-light btn float-right">
+                  <i className="material-icons left">event</i>Add Training
+                </a>
+              </Link>
+		    </div>
+		      </div>
+		  
+		   {/*Collection of Employee Trainings*/}
+		   <ul className = "collection">
+		  	  <li className = "collection-item avatar row valign-wrapper">
+			    <div className = "avatar-wrapper flex-center">
+			  	  <i className = "material-icons">check_circle</i>
+			    </div>
+		 
+			  
+				<div className = "titleTraining">
+		  		  <span className = "title">
+				    <p>
+					  OnBoarding
+					</p>
+				  </span>
+			  	
+				</div>
+			  </li>
+		  </ul>
  		</div>
     		</div>
 
@@ -296,7 +343,7 @@ class ViewEmployee extends React.Component {
 				}
 				<div>Role: {this.employeeRole()}</div> */}
 				
-				{employee.trainings.length > 0
+				{/* {employee.trainings.length > 0
 					?
 						<ul>Trainings:
 							{employee.trainings.map((training, i) => 
@@ -307,8 +354,9 @@ class ViewEmployee extends React.Component {
 						</ul>
 					:
 						<div>No Trainings Assigned :(</div>
-				}
-			</div>
+				} */}
+			 </div>
+		  </div>
 		);
 	}
 }
