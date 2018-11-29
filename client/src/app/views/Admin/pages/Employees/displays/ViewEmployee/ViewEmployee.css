@@ -4,6 +4,7 @@
 }
 .card-title{
     text-align: center;
+    color:white;
 }
 #employeeView{
     margin-top:40px;
@@ -30,11 +31,13 @@
 #dots-container {
 	display: flex;
 	justify-content: center;
-	align-items: center;
+    align-items: center;
+    color:white !important;
 }
 #dots{
 /*     margin-left:38%; */
-	margin-right: 7.5px;
+    margin-right: 7.5px;
+    color: white !important;
 }
 .employee-card {
 	min-width: 85%;
@@ -46,4 +49,23 @@
 	position: absolute;
 	top: 2.5%;
 	right: 2.5%;
+}
+#employeeCard {
+    background: #fafafa52 !important;
+    color:white;
+}
+#cardInfo{
+    background:rgba(0, 44, 82, 0.75);
+    color:white;
+}
+#revealTrainings{
+    background:#002C52;
+    color:white;
+}
+#trainingsHeader, #closeIcon{
+    color:white;
+}
+#employeeDelete, #trainingAdd, #completeTraining, .save{
+    background:rgba(128, 0, 128, 0.596);
+    border-radius:10px;
 }

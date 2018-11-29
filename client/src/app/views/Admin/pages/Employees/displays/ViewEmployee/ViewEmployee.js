@@ -3,8 +3,8 @@ import { Link } from 'react-router-dom';
 import "./ViewEmployee.css";
 import API from '../../../../../../../utils/API';
 import EmployeesSubHeader from '../../EmployeesSubHeader';
-import EmployeeImage from "./me.jpg"
 import moment from 'moment';
+import EmployeeImage from "./AvatarPlaceholder.png"
 
 class ViewEmployee extends React.Component {
 	
@@ -120,11 +120,11 @@ class ViewEmployee extends React.Component {
 
 			{/* Employee Card */}
 			<div className = "container employee-card">
-			  <div class="card  ">
+			  <div id = "employeeCard" class="card  ">
 				<div className = "row">
-				  <div className = "col s3 card-image waves-effect waves-block waves-light">
-    		          <img className = "activator" src ={ EmployeeImage } alt = "employeePic"/>
-    		     </div>
+				  <div className = "col s2 card-image waves-effect waves-block waves-light">
+    		      <img className = "activator" src ={ EmployeeImage } alt = "employeePic"/>
+    		  </div>
 				  <div id = "" className="col s7">
 				     <h5 id = "employeeView"><strong>{ employee.fname } { employee.lname }</strong></h5>
 					 <h5 id = "titleView"><strong>{ employee.title }</strong></h5>
@@ -148,8 +148,8 @@ class ViewEmployee extends React.Component {
 					 ?	<form onSubmit={this.onSubmit}>
 						  <div id = "fname" className = "input-field col s5">
 							<input type='text' name='fname' value={editEmployee.fname} onChange={this.onChange} />
-							<span onClick={this.cancel}> X </span>
-							<button type='submit'>Save</button>
+							<span onClick={this.cancel}><i class="material-icons">clear</i> </span>
+							<button className = "save" type='submit'>Save</button>
 						  </div>
 						  <div id="lname" className="input-field col s5">
 							<input type='text' name='lname' value={editEmployee.lname} onChange={this.onChange} />
@@ -170,8 +170,8 @@ class ViewEmployee extends React.Component {
 					?  <form onSubmit={this.onSubmit}>
 							<div id = "position" className = "input-field col s5">
 							<input type='text' name='title' value={editEmployee.title} onChange={this.onChange} />
-							<span onClick={this.cancel}> X </span>
-							<button type='submit'>Save</button>
+							<span onClick={this.cancel}><i class="material-icons">clear</i> </span>
+							<button className = "save" type='submit'>Save</button>
 							</div>
 						</form>
 					:   <div>
@@ -190,8 +190,8 @@ class ViewEmployee extends React.Component {
 					?	<form onSubmit={this.onSubmit}>
 					    <div id = "userName" className = "input-field col s5">
 							<input type='text' name='username' value={editEmployee.username} onChange={this.onChange} />
-							<span onClick={this.cancel}> X </span>
-							<button type='submit'>Save</button>
+							<span onClick={this.cancel}><i class="material-icons">clear</i> </span>
+							<button className = "save" type='submit'>Save</button>
 							</div>
 						</form>
 					:	<div>
@@ -215,8 +215,8 @@ class ViewEmployee extends React.Component {
 					?	<form onSubmit={this.onSubmit}>
 						  <div id = "id" className = "input-field col s5">
 							<input type='text' name='employeeID' value={editEmployee.employeeID} onChange={this.onChange} />
-							<span onClick={this.cancel}> Close this shit </span>
-							<button type='submit'>Save</button>
+							<span onClick={this.cancel}><i class="material-icons">clear</i> </span>
+							<button className = "save" type='submit'>Save</button>
 						  </div>
 						</form>
 					:	<div>
@@ -258,16 +258,16 @@ class ViewEmployee extends React.Component {
 			</div>
 			</div>
 			<div className = "deleteEmployee">
-				<button className = "waves-effect waves-light btn">Delete Employee</button>
+				<button id = "employeeDelete" className = "waves-effect waves-light btn">Delete Employee</button>
 			</div>
 			</div>
 			</div>
 
 			{/* Employee Trainings  */}
-    		<div className ="card-reveal">
+    		<div id = "revealTrainings" className ="card-reveal">
 			  <div className = "row">
 			  <div className = "col s12">
-      		   <span className ="card-title grey-text text-darken-4"><h4>Trainings</h4><i id='closeIcon' className = "material-icons right">close</i></span>
+      		   <span className ="card-title grey-text text-darken-4"><h4 id = "trainingsHeader">Trainings</h4><i id='closeIcon' className = "material-icons right">close</i></span>
 			  </div>
 			 
 			{/* Add Training Button */}
@@ -285,7 +285,7 @@ class ViewEmployee extends React.Component {
 			</div>
           	<div className="col s3">
               <Link to={`/${this.props.organization.name.replace(/\s/g, '')}/trainings/add`}>
-                <a href="!#" className="waves-effect waves-light btn float-right">
+                <a href="!#" id = "trainingAdd" className="waves-effect waves-light btn float-right">
                   <i className="material-icons left">event</i>Add Training
                 </a>
               </Link>
@@ -371,7 +371,7 @@ class ViewEmployee extends React.Component {
 				</div>
 
 				<div className = "frequencyPeriod">
-					
+					<button id = "completeTraining" className = "waves-effect waves-light btn">Complete</button>
 				</div>
 			  </li>
 			  

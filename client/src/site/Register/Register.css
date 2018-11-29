@@ -35,11 +35,12 @@
 
 #login-card {
     border-radius: 10px;
-    background: linear-gradient(to right top, #cac7d77c, #a39eaf88, #7d788888, #595363, #383140),transparent;
+    background: rgba(0, 0, 0, 0.322);    
     color: white;
     font-family: 'Raleway', sans-serif;
 }
 
 #register-button {
-    background: #595363;
+    background: rgba(128, 0, 128, 0.596);
+    border-radius: 10px;
 }
