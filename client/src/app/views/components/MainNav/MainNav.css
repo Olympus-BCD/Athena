@@ -10,92 +10,125 @@
 /*Body Font from Google Font*/
 /* font-family: 'Raleway', sans-serif; */
 
+/*Text and Icon Color*/
+/* color:white; */
+
+/*Button Styles*/
+/* background: rgba(128, 0, 128, 0.596); */
+/* border-radius: 10px; */
+
+/*Card Styles*/
+/* background: rgba(0, 0, 0, 0.322); */
+/* border-radius: 15px; */
+
+/*Components on top of Card*/
+/* background: #fafafa52 !important; */ /* NOTE: May need to adjust Opacity depending on the situation*/
+
+/*Hover Background Color*/
+/* background: rgba(110, 57, 90, 0.39); */
+
 /* =============================================*/
 
 .mainNav-bg {
-	background: #CAC7D7;
-	/* background: rgba(97, 70, 97, 0.644); */
-	/* background: rgba;(255, 255, 0, 0.288); */
-    /* background: linear-gradient(to right top, #cac7d77c, #a39eaf88, #7d788888, #595363, #383140),transparent; */
-	/* background: linear-gradient(to right top, #cac7d77c, #a39eaf88, #7d788888, #595363, #383140),transparent; */
-	max-height: 100vh;
-	margin: 0;
-	padding: 0;
-	overflow: auto;
+  background: rgba(0, 0, 0, 0.493);
+  max-height: 100vh;
+  margin: 0;
+  padding: 0;
+  overflow: auto;
 }
 
 .userprofile-organization-header {
-	font-family: 'Raleway', sans-serif;
-	font-weight: 500;
-    font-size: 2em;
-    text-align: center;
-    padding-top: 1em;
+  font-family: "Raleway", sans-serif;
+  font-weight: 500;
+  font-size: 2em;
+  text-align: center;
+  padding-top: 1em;
+  color: white !important;
+}
+
+a.subheader {
+  color: white !important;
 }
 
 .logout-wrapper {
-	display: flex;
-	justify-content: center;
-	flex-wrap: wrap;
-	width: 100%;
-	padding: 0 !important;
-	margin: 0;
-}
-
-.side-nav .userView>a {
-/*     padding-left: 6em; */
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  width: 100%;
+  padding: 0 !important;
+  margin: 0;
 }
 
 .side-nav .userView .circle {
-	height: 125px;
-	width: 125px;
-	margin: 0.65em 0;
+  height: 125px;
+  width: 125px;
+  margin: 0.65em 0;
 }
 
 .mainNav-header {
-    font-family: 'Raleway', sans-serif;
-	font-weight: 500;
+  font-family: 'Cinzel Decorative', cursive;
 }
 
 .mainNav-link {
-	font-family: 'Raleway', sans-serif;
+  font-family: "Raleway", sans-serif;
 }
 
-.blk {
-    color: black;
-    font-family: 'Raleway', sans-serif;
+.wht {
+  color: white;
+  font-family: "Raleway", sans-serif;
+  font-size: 18px;
 }
 
 #side-nav-footer a {
-	text-align: center;
-	font-family: 'Cinzel Decorative', cursive;
-	font-weight: bold;
-	padding: 0;
-	position: absolute;
-	bottom: 0;
-	width: 100%;
-	background: rgba(255, 255, 0, 0);
+  text-align: center;
+  font-family: "Cinzel Decorative", cursive;
+  font-weight: bold;
+  padding: 0;
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  background: rgba(255, 255, 0, 0);
 }
 
 .userView {
-	display: flex;
-	justify-content: center;
-	flex-wrap: wrap;
-	width: 100%;
-	padding: 0 !important;
-	margin: 0;
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  width: 100%;
+  padding: 0 !important;
+  margin: 0;
 }
 
 .userView a {
-	width: 100%;
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	text-align: center;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
 }
 
 .userView a span {
-	padding: 0 !important;
-	margin: 0 !important;
+  padding: 0 !important;
+  margin: 0 !important;
+}
+
+.side-nav a
+ {
+  color: white;
+}
+
+.side-nav a:hover
+ {
+  color: white;
+  background: rgba(110, 57, 90, 0.39);
+}
+
+.side-nav li>a>i.material-icons {
+  color: white;
+}
+
+ a .subheader{
+  color: white;
 }
 
 /*
