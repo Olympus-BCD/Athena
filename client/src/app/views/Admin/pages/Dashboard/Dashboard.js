@@ -71,7 +71,6 @@ class DashboardPage extends React.Component {
 */
 		switch(activityType) {
 			case 'newUser':
-				console.log('NEEEW UUUSERRRR');
 				header = `Welcome, ${item.userFirstName}!`;
 				return (
 					<CollapsibleItem header = {header} icon = 'announcement'>
@@ -79,7 +78,7 @@ class DashboardPage extends React.Component {
 		      				<Link className='white-text' to={`/${this.props.organization.name.replace(/\s/g, '')}/employees?id=${item.__user}`}>
 								<h5>{`${item.userFirstName} ${item.userLastName}`}</h5>
 							</Link>
-							<p>Has joined {this.props.organization.name}!</p>
+							<p>Has joined <b>{this.props.organization.name}</b>!</p>
 							<p>{moment(item.date).format('MMMM DD, YYYY')}</p>
 						</div>
 					</CollapsibleItem>
@@ -103,7 +102,7 @@ class DashboardPage extends React.Component {
 							<Link className='white-text' to={`/${this.props.organization.name.replace(/\s/g, '')}/employees?id=${item.__user}`}>
 								<h5>{`${item.userFirstName} ${item.userLastName}`}</h5>
 							</Link>
-							<p>Has joined {this.props.organization.name} and has completed {item.numberOfCompletedTrainings} trainings!</p>
+							<p>Has joined <b>{this.props.organization.name}</b> and has completed {item.numberOfCompletedTrainings} trainings!</p>
 							<p>{moment(item.date).format('MMMM DD, YYYY')}</p>
 						</div>
 					</CollapsibleItem>
@@ -120,6 +119,20 @@ class DashboardPage extends React.Component {
 				break;
 			case 'traningCompleted':
 			
+				break;
+			case 'newOrganization':
+				header = `${item.organizationName}`;
+				return (
+					<CollapsibleItem header = {header} icon = 'announcement'>
+		      			<div className='white-text'>
+		      				<Link className='white-text' to={`/${this.props.organization.name.replace(/\s/g, '')}/employees?id=${item.__user}`}>
+								<h5>{`${item.userFirstName} ${item.userLastName}`}</h5>
+							</Link>
+							<p>created <b>{this.props.organization.name}!</b>!</p>
+							<p>{moment(item.date).format('MMMM DD, YYYY')}</p>
+						</div>
+					</CollapsibleItem>
+				);
 				break;
 			default:
 			
@@ -236,12 +249,6 @@ class DashboardPage extends React.Component {
                       Save<Icon right>save</Icon>
                     </Button>
                   </CollapsibleItem>
-                  <CollapsibleItem header="Upcoming Holiday" icon="announcement" className="z-depth-5" >
-                   <p className="white-text"> We would like to Wish you all a very Merry Christmas and Happy New Year!</p>
-                  </CollapsibleItem>
-                  <CollapsibleItem header="New Hire" icon="announcement" className="z-depth-5">
-                    Please welcome our new Front End Developer, Tony Stark, to the team.
-                  </CollapsibleItem >
                   {
 	                  filteredNewsfeedItems.map(item =>
 	                  	this.renderNewsfeedItem(item)

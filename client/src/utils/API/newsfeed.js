@@ -4,10 +4,10 @@ export default {
 	getNewsfeedItems: (params = {}) => {
 		return axios.get('/api/newsfeed', { params });
 	},
-	create: trainingInstance => {
-		return axios.post('/api/newsfeed', trainingInstance);
+	create: newsfeedItem => {
+		return axios.post('/api/newsfeed', newsfeedItem);
 	},
-	insertMany: trainingInstances => {
-		return axios.post('/api/newsfeed/_bulk', trainingInstances);
+	insertMany: newsfeedItems => {
+		return axios.post('/api/newsfeed/_bulk', newsfeedItems);
 	}
 };
