@@ -1,6 +1,9 @@
 // React Imports
 import React from "react";
 
+ // Materialize Imports
+ import Modal from "react-materialize";
+
 // CSS & Local Imports
 import "./ViewEmployees.css";
 import API from '../../../../../../../utils/API';
