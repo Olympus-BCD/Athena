@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom';
 // NPM Imports
 import moment from 'moment';
 
+
 // Materialize Imports
 import { Collapsible } from "react-materialize";
 import { CollapsibleItem } from "react-materialize";
@@ -14,6 +15,7 @@ import { Icon } from "react-materialize";
 
 // CSS Imports
 import PageHeader from "./../../../components/PageHeader/PageHeader";
+import Calendar from "../../../components/Calendar/Calendar";
 import "./Dashboard.css";
 
 import API from '../../../../../utils/API';
@@ -157,7 +159,7 @@ class DashboardPage extends React.Component {
         <PageHeader />
         <div className="dashboard-wrapper">
           <div className="snapshot-wrapper">
-            <div id="snapshot-card" className="card z-depth-3 dashboard-card">
+            <div id="snapshot-card" className="card z-depth-5 dashboard-card">
               <div className="card-content white-text">
                 <span class="card-title center-align white-text">Weekly Snapshot</span>                 
                 <ul class="collection">
@@ -170,7 +172,7 @@ class DashboardPage extends React.Component {
                         <span class="trainings-overdue">2</span>
                       </div>  
                       <div className="col s4">
-                        <p>
+                        <p className="snapshot-text">
                           Trainings Overdue 
                         </p>
                       </div>
@@ -226,23 +228,21 @@ class DashboardPage extends React.Component {
             </div>
           </div>
           <div className="calendar-wrapper">
-            <div id="calendar-card" className="card z-depth-3 dashboard-card">
+            <div id="calendar-card" className="card z-depth-5 dashboard-card">
               <div className="card-content white-text">
                 <span className="card-title center-align">Calendar</span>
                 <p>
-                  I am a very simple card. I am good at containing small bits of
-                  information. I am convenient because I require little markup
-                  to use effectively.
+                    <Calendar/>
                 </p>
               </div>
             </div>
           </div>
           <div className="announcements-wrapper">
-            <div id="announcement-card" class="card z-depth-3 dashboard-card">
+            <div id="announcement-card" class="card z-depth-5 dashboard-card">
               <div class="card-content">
                 <span class="card-title center-align white-text">Announcements</span>
-                <Collapsible popout defaultActiveKey={1}>
-                  <CollapsibleItem id='add-announcement' header="Add Announcement" icon="add_comment">
+                <Collapsible popout defaultActiveKey={1} >
+                  <CollapsibleItem id='add-announcement' header="Add Announcement" icon="add_comment" className="z-depth-5">
                     <Input s={6} label="Title" id="announcement-title-input" className="white-text"/>
                     <Input type="textarea" label="Announcement" />
                     <Button id="announcement-button" waves="purple" >
@@ -261,7 +261,7 @@ class DashboardPage extends React.Component {
           <div className="newsfeed-wrapper">
             <div
               id="company-news-card"
-              className="card z-depth-3 dashboard-card"
+              className="card z-depth-5 dashboard-card"
             >
               <div className="card-content white-text">
                 <span className="card-title">Company News</span>

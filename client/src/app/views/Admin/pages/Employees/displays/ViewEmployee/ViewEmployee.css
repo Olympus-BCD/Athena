@@ -1,5 +1,6 @@
 .card{
     padding:10px; 
+    border-radius:15px;
 }
 .card-title{
     text-align: center;

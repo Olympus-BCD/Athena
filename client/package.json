@@ -6,6 +6,7 @@
   "dependencies": {
     "axios": "^0.18.0",
     "react": "^16.6.0",
+    "react-big-calendar": "^0.20.2",
     "react-dom": "^16.6.0",
     "react-icons": "^3.2.2",
     "react-materialize": "^2.4.8",

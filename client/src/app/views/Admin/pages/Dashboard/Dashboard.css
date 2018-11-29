@@ -1,13 +1,35 @@
 /* ============ Dustin's Design Notes ============*/
 
-/*Header Font from Google Font*/
+/*Athena Font from Google Font*/
 /* font-family: 'Cinzel Decorative', cursive; */
+
+/*Header Font from Google Font*/
+/*font-family: 'Raleway', sans-serif;
+	font-weight: 500; */
+
 /*Body Font from Google Font*/
 /* font-family: 'Raleway', sans-serif; */
 
+/*Button Styles*/
+/* background: rgba(128, 0, 128, 0.596); */
+/* border-radius: 10px; */
+
+/*Card Styles*/
+/* background: rgba(0, 0, 0, 0.322); */
+/* border-radius: 15px; */
+
+/*Components on top of Card*/
+/* background: #fafafa52 !important; */ /* NOTE: May need to adjust Opacity depending on the situation*/
+
 /* =============================================*/
+
 .container-fluid {
   height: 100vh;
+}
+
+.dashboard-card {
+  background: rgba(0, 0, 0, 0.322);
+  border-radius: 15px;
 }
 
 .dashboard-card-container,
@@ -18,7 +40,23 @@
 
 .collection {
   border-radius: 15px;
+  font-family: "Raleway", sans-serif;
+}
+
+li.collection-item {
+  background: #fafafa52 !important;
   font-family: 'Raleway', sans-serif;
+  font-size: 1em;
+  font-weight: 300;
+  color: white;
+}
+
+.black-text {
+  color: white !important;
+}
+
+.snapshot-text {
+  color: white;
 }
 
 .dashboard-wrapper {
@@ -55,6 +93,14 @@ input.label {
   color: white;
 }
 
+.input-field label {
+  color: white;
+}
+
+ .input-field input[type=text]:focus {
+  color: white;
+}
+
 .newsfeed-wrapper {
   grid-area: newsfeed;
   height: 100%;
@@ -62,8 +108,20 @@ input.label {
   padding: 10px;
 }
 
+.collapsible.popout {
+  background: #fafafa52;
+  font-family: 'Raleway', sans-serif;
+  border-radius: 15px;
+}
+
+.collapsible-header {
+  background: rgba(0, 0, 0, 0);
+  color: white;
+}
+
 #announcement-button {
-  background: purple;
+  background: rgba(128, 0, 128, 0.596);
+  border-radius: 10px;
 }
 
 /* #company-news-card {
@@ -85,32 +143,31 @@ input.label {
   background: linear-gradient(to right top, #cac7d77c, #a39eaf88, #7d788888, #595363, #383140),transparent;
 } */
 
-.dashboard-card {
-  background: rgba(202, 199, 215, 0.658);
-  border-radius: 15px;
+header,
+main,
+footer {
+  padding-left: 300px;
 }
 
-header, main, footer {
-    padding-left: 300px;
+@media only screen and (max-width: 992px) {
+  header,
+  main,
+  footer {
+    padding-left: 0;
   }
+}
 
-  @media only screen and (max-width : 992px) {
-    header, main, footer {
-      padding-left: 0;
-    }
-  }
-  
-.collapsible.popout>li {
-    margin: 0 !important;
+.collapsible.popout > li {
+  margin: 0 !important;
 }
 .card .card-content {
-    padding: 0;
+  padding: 0;
 }
 
 #add-announcement {
-	margin-bottom: 1em !important;
+  margin-bottom: 1em !important;
 }
 
 #add-announcement .collapsible-body {
-	padding-top: 0;
+  padding-top: 0;
 }

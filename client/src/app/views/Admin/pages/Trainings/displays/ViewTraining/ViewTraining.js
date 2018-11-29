@@ -39,22 +39,60 @@ class ViewTraining extends React.Component {
 		return (
 			<div>
 				<Link to={`/${this.props.organization.name.replace(/\s/g, '')}/trainings`}>X</Link>
-				<h3>{training.name}</h3>
-				{
-					this.state.message !== '' &&
-					<div>{this.state.message}</div>
-				}
-				<div>Name: {training.name}</div>
-				{
-					(training.trainingCode && training.trainingCode !== '') &&
-						<div>Training Code: {training.trainingCode}</div>
-				}
-				<div>Hours: {training.hours}</div>
-				<div>Recurring: {training.recurring ? 'Yes' : 'No'}</div>
-				{
-					training.recurring &&
-						<div>Training is required every {training.frequencyNumber} {training.frequencyPeriod}{training.frequencyNumber > 1 && 's'}.</div>
-				}
+				{/*Training Card*/}
+				<div className = "container">
+				 <div className = "card">
+				   <div className = "row">
+				     <div className = "col s12">
+					     <span class = "card-title"> 
+						   <h4><strong>{training.name}</strong></h4>
+						   <h6><strong>Recurring Training: {training.recurring ? 'Yes' : 'No'}</strong></h6>
+						  {
+							  this.state.message !== '' &&
+							  <div>{this.state.message}</div>
+						  }
+					     </span>
+				     </div>
+				   </div>
+					  
+					{/*Training Name */}
+					<div id = "trainingInfo" className = "card">
+					<div className = "row">
+					  <div className = " col s6">
+						<div>Name: {training.name}<i id="editIcon" className = "material-icons left">timer</i></div>
+					  </div>
+					  {/*Training Hours*/}
+					  <div className = " col s6">
+					     <h6>Hours: {training.hours}<i id="editIcon" className = "material-icons left">timer</i></h6>
+					  </div>	
+					</div>
+					{/*Training Code */}
+					<div className = "row">
+					  <div className = "col s6">
+					  {			
+					       (training.trainingCode && training.trainingCode !== '') &&
+						    <div>Training Code: {training.trainingCode}<i id="editIcon" className = "material-icons left">timer</i></div>
+					     }
+					  </div>
+					{/*Training Frequency*/}
+					  <div className = "col s6">
+					  
+					  {
+					    // training.recurring &&
+						<div>Training is required every {training.frequencyNumber} {training.frequencyPeriod}{training.frequencyNumber > 1 && 's'}.<i id="editIcon" className = "material-icons left">timer</i></div>
+				      }
+					  </div>
+					</div>
+					</div>
+					
+					<button>Delete Training</button>
+				  </div>
+				 </div>
+				
+				
+				
+				
+				
 				<div>Documents: N/A</div>
 			</div>
 		);

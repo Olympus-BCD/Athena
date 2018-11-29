@@ -16,16 +16,16 @@ class MainNav extends React.Component {
                 <SideNav
 	                trigger={<div data-target="slide-out" className="sidenav-trigger"><i className="material-icons">menu</i></div>}
 					fixed={true}
-	                className="mainNav-bg"
+	                className="mainNav-bg white-text"
                 >
-                	<div className='userprofile-organization-header'>{this.props.organization.name}</div>
+                	<div className='userprofile-organization-header white-text'>{this.props.organization.name}</div>
                     <SideNavItem
                         userView 
                         id='userProfile'
                         user={{
 	                        background: '',
 	                        image: AvatarPlaceholder,
-	                        name: <span className='blk'>
+	                        name: <span className='wht'>
 	                        	{this.props.user.fname
 			                        ? this.props.user.fname.toUpperCase()
 			                        : null}
@@ -38,14 +38,14 @@ class MainNav extends React.Component {
                         }}
                     />
 					<span className="logout-wrapper">
-                    	<div id="logout-button" className="btn-flat center" onClick={this.props.logout}>Logout</div>
+                    	<div id="logout-button" className="btn-flat center white-text" onClick={this.props.logout}>Logout</div>
                     </span>
                     <SideNavItem divider />
                     
                     <SideNavItem subheader className="mainNav-header">Administration</SideNavItem>
                     
                     <Link className='no-padding mainNav-link' to={`/${this.props.organization.name.replace(' ', '')}/dashboard`}>
-                    	<SideNavItem  className="" component={Link} icon='developer_board' >Dashboard</SideNavItem>
+                    	<SideNavItem  component={Link} icon='developer_board' >Dashboard</SideNavItem>
                     </Link>
                     <Link className='no-padding mainNav-link' to={`/${this.props.organization.name.replace(' ', '')}/trainings`}>
                     	<SideNavItem icon='event'>Trainings</SideNavItem>
