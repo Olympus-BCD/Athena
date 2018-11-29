@@ -1,9 +1,31 @@
 /* ============ Dustin's Design Notes ============*/
 
-/*Header Font from Google Font*/
+/*Athena Font from Google Font*/
 /* font-family: 'Cinzel Decorative', cursive; */
+
+/*Header Font from Google Font*/
+/*font-family: 'Raleway', sans-serif;
+	font-weight: 500; */
+
 /*Body Font from Google Font*/
 /* font-family: 'Raleway', sans-serif; */
+
+/*Text and Icon Color*/
+/* color:white; */
+
+/*Button Styles*/
+/* background: rgba(128, 0, 128, 0.596); */
+/* border-radius: 10px; */
+
+/*Card Styles*/
+/* background: rgba(0, 0, 0, 0.322); */
+/* border-radius: 15px; */
+
+/*Components on top of Card*/
+/* background: #fafafa52 !important; */ /* NOTE: May need to adjust Opacity depending on the situation*/
+
+/*Hover Background Color*/
+/* background: rgba(110, 57, 90, 0.39); */
 
 /* =============================================*/
 
@@ -19,6 +41,56 @@
 
 .athena-title a {
     font-family: 'Cinzel Decorative', cursive;
-    /* color: white; */
-    /* font-size: 1em; */
+    color: black;
 }
+
+ nav ul a,
+ nav .brand-logo {
+   color: #444;
+ }
+ 
+ p {
+   line-height: 2rem;
+ }
+ 
+ .sidenav-trigger {
+   color: #26a69a;
+ }
+ 
+ .parallax-container {
+   min-height: 380px;
+   line-height: 0;
+   height: auto;
+   color: rgba(255,255,255,.9);
+ }
+   .parallax-container .section {
+     width: 100%;
+   }
+ 
+ @media only screen and (max-width : 992px) {
+   .parallax-container .section {
+     position: absolute;
+     top: 40%;
+   }
+   #index-banner .section {
+     top: 10%;
+   }
+ }
+ 
+ @media only screen and (max-width : 600px) {
+   #index-banner .section {
+     top: 0;
+   }
+ }
+ 
+ .icon-block {
+   padding: 0 15px;
+ }
+ .icon-block .material-icons {
+   font-size: inherit;
+ }
+ 
+ footer.page-footer {
+   margin: 0;
+ }
+ 

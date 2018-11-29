@@ -36,3 +36,8 @@
 #login-card {
     padding: 1em;
 }
+
+#login-button {
+    background: rgba(128, 0, 128, 0.596);
+    border-radius: 10px;
+}

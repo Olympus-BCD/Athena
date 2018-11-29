@@ -105,13 +105,14 @@ class Login extends Component {
                           />
                         </div>
                         <button
+                          id="login-button"
                           class="btn waves-effect waves-light"
                           type="submit"
                           name="action"
                         >
                           Login
                         </button>
-                        <p>
+                        <p className="center">
                           Not a member?{" "}
                           <Link to="/register">Register here</Link>
                         </p>
