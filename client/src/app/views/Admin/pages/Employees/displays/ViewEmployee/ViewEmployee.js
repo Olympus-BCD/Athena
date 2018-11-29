@@ -111,7 +111,7 @@ class ViewEmployee extends React.Component {
 
 			{/* Employee Card */}
 			<div className = "container employee-card">
-			  <div class="card">
+			  <div class="card  ">
 				<div className = "row">
 				  <div className = "col s3 card-image waves-effect waves-block waves-light">
     		          <img className = "activator" src ={ EmployeeImage } alt = "employeePic"/>
@@ -139,14 +139,12 @@ class ViewEmployee extends React.Component {
 					 ?	<form onSubmit={this.onSubmit}>
 						  <div id = "fname" className = "input-field col s5">
 							<input type='text' name='fname' value={editEmployee.fname} onChange={this.onChange} />
+							<span onClick={this.cancel}> X </span>
+							<button type='submit'>Save</button>
 						  </div>
 						  <div id="lname" className="input-field col s5">
 							<input type='text' name='lname' value={editEmployee.lname} onChange={this.onChange} />
 						  </div>
-							<div className = "col-s5">
-							<span onClick={this.cancel}> X </span>
-							<button type='submit'>Save</button>
-							</div>
 						</form>
 					:	<div>
 							<h6>{(employee.fname && employee.lname) ? `${employee.fname} ${employee.lname}` : 'unknown'}
@@ -161,9 +159,11 @@ class ViewEmployee extends React.Component {
 				{
 					this.state.editTitle
 					?  <form onSubmit={this.onSubmit}>
+							<div id = "position" className = "input-field col s5">
 							<input type='text' name='title' value={editEmployee.title} onChange={this.onChange} />
 							<span onClick={this.cancel}> X </span>
 							<button type='submit'>Save</button>
+							</div>
 						</form>
 					:   <div>
 							<h6>Position: {employee.title}
@@ -178,9 +178,11 @@ class ViewEmployee extends React.Component {
 				{
 					this.state.editUsername
 					?	<form onSubmit={this.onSubmit}>
+					    <div id = "userName" className = "input-field col s5">
 							<input type='text' name='username' value={editEmployee.username} onChange={this.onChange} />
 							<span onClick={this.cancel}> X </span>
 							<button type='submit'>Save</button>
+							</div>
 						</form>
 					:	<div>
 							<h6>Username: {employee.username}
@@ -201,11 +203,11 @@ class ViewEmployee extends React.Component {
 				 {
 					this.state.editEmployeeID
 					?	<form onSubmit={this.onSubmit}>
-						  <div id = "id" className = "input-field col s1">
+						  <div id = "id" className = "input-field col s5">
 							<input type='text' name='employeeID' value={editEmployee.employeeID} onChange={this.onChange} />
-						  </div>
-							<span onClick={this.cancel}> X </span>
+							<span onClick={this.cancel}> Close this shit </span>
 							<button type='submit'>Save</button>
+						  </div>
 						</form>
 					:	<div>
 							<h6>Employee ID: {employee.employeeID}
@@ -245,6 +247,9 @@ class ViewEmployee extends React.Component {
 			</div>
 			</div>
 			</div>
+			<div className = "deleteEmployee">
+				<button className = "waves-effect waves-light btn">Delete Employee</button>
+			</div>
 			</div>
 			</div>
 
@@ -276,8 +281,9 @@ class ViewEmployee extends React.Component {
               </Link>
 		    </div>
 		      </div>
-		  
-		   {/*Collection of Employee Trainings*/}
+
+				
+		   {/*Collection of Employee Trainings - HardCoded*/}
 		   <ul className = "collection">
 		   <li className="collection-item avatar row valign-wrapper employeeCollectionItem">
 					<div className='avatar-wrapper flex-center'>

@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom';
 // NPM Imports
 import moment from 'moment';
 
+
 // Materialize Imports
 import { Collapsible } from "react-materialize";
 import { CollapsibleItem } from "react-materialize";
@@ -14,6 +15,7 @@ import { Icon } from "react-materialize";
 
 // CSS Imports
 import PageHeader from "./../../../components/PageHeader/PageHeader";
+import Calendar from "../../../components/Calendar/Calendar";
 import "./Dashboard.css";
 
 import API from '../../../../../utils/API';
@@ -217,9 +219,7 @@ class DashboardPage extends React.Component {
               <div className="card-content white-text">
                 <span className="card-title center-align">Calendar</span>
                 <p>
-                  I am a very simple card. I am good at containing small bits of
-                  information. I am convenient because I require little markup
-                  to use effectively.
+                    <Calendar/>
                 </p>
               </div>
             </div>

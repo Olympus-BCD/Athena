@@ -18,6 +18,7 @@
     "passport-jwt": "^4.0.0",
     "query-string": "^6.2.0",
     "randomstring": "^1.1.5",
+    "react-big-calendar": "^0.20.2",
     "serve-favicon": "^2.5.0"
   },
   "devDependencies": {
