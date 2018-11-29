@@ -68,9 +68,32 @@ class Register extends Component {
 								    						.then(res => {
 									    						if(res.data.success) {
 										    						localStorage.setItem("jwtToken", res.data.token);
-										                            this.setState({ message: '' });
-										                            this.props.history.push(`/${organization.replace(/\s/g, '')}`);
-	// 									                            window.location.href = `/${res.data.organization.name.replace(/\s/g, '')}}`;
+										    						const newsfeedItem = {
+											    						activityType: 'newOrganization',
+											    						__organization: newOrganization._id,
+											    						__user: newUser._id,
+											    						userFirstName: newUser.fname,
+											    						userLastName: newUser.lname,
+											    						organizationName: organization
+										    						};
+										    						console.log('Creating newsfeed item:', newsfeedItem);
+										    						API.newsfeed
+										    							.create(newsfeedItem)
+										    							.then(res => {
+											    							if(res.data.success) {
+// 												    							localStorage.setItem("jwtToken", res.data.token);
+// 													                            this.setState({ message: '' });
+													                            this.props.history.push(`/${organization.replace(/\s/g, '')}`);
+//																				window.location.href = `/${res.data.organization.name.replace(/\s/g, '')}}`;
+											    							} else {
+												    							console.log('Error creating newsfeed item.', res.data.msg);
+												    							this.props.history.push(`/${organization.replace(/\s/g, '')}`);
+											    							}
+										    							})
+										    							.catch(err => {
+											    							console.log('Error creating newsfeed item.', err);
+											    							this.props.history.push(`/${organization.replace(/\s/g, '')}`);
+										    							});
 									    						} else {
 										    						this.setState({ message: res.data.msg });
 									    						}

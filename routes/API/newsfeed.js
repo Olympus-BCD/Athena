@@ -9,9 +9,7 @@ router.route('/')
 	.get(passport.authenticate('jwt', { session: false }), (req, res) => {
 		requireLogin(req, res, controller.findAll);
 	})
-	.post(passport.authenticate('jwt', { session: false }), (req, res) => {
-		requireLogin(req, res, controller.create);
-	});
+	.post(controller.create);
 	
 //	('/api/newsfeed/:id')
 router.route('/:id')
