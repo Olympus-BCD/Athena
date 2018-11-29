@@ -24,6 +24,9 @@ const NewsfeedItemSchema = new Schema({
 	userLastName: {
 		type: String
 	},
+	organizationName: {
+		type: String
+	},
 	date: {
 		type: Date,
 		default: Date.now
