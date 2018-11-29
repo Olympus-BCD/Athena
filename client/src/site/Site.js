@@ -1,5 +1,12 @@
+// React Imports
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
+
+// Materialize Imports
+import { Navbar } from "react-materialize";
+import { NavItem } from "react-materialize";
+
+// CSS & Local Imports
 import "./Site.css";
 
 class Site extends Component {
@@ -22,7 +29,17 @@ class Site extends Component {
   render() {
     return (
       <div className="site-bg">
-        <div className="container center">
+        <Navbar brand="logo" right>
+			<NavItem>
+			<Link to="/login">
+				Login
+			</Link>
+			</NavItem>
+          <NavItem href="components.html">About Us</NavItem>
+
+        </Navbar>
+
+        <div className="">
           <h1 className="athena-title">
             <Link to="/">Athena</Link>
           </h1>
