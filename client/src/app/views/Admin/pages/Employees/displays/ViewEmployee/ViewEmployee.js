@@ -4,12 +4,13 @@ import "./ViewEmployee.css";
 import API from '../../../../../../../utils/API';
 import EmployeesSubHeader from '../../EmployeesSubHeader';
 import EmployeeImage from "./me.jpg"
+import moment from 'moment';
 
 class ViewEmployee extends React.Component {
 	
 	state = {
 		message: '',
-		employee: { trainings: [] },
+		employee: { trainings: [], trainingInstances: [] },
 		editEmployee: {},
 		editName: false,
 		editUsername: false,
@@ -95,6 +96,14 @@ class ViewEmployee extends React.Component {
 				return 'N/A';
 		}
 	};
+	
+	holla = e => {
+		this.setState({ test: e.target.innerHTML });
+	};
+	
+	onBlur = e => {
+		alert(this.state.test);
+	}
 
 
 	render() {
@@ -166,7 +175,8 @@ class ViewEmployee extends React.Component {
 							</div>
 						</form>
 					:   <div>
-							<h6>Position: {employee.title}
+							<h6>Position: <span>{employee.title}</span>
+							{/*<h6>Position: <span value='hey' contenteditable="true" onBlur={this.onBlur} onInput={this.holla}>{employee.title}</span>*/}
 							<span onClick={() => this.setState({ editTitle: true })}><i id="editIcon" className = "material-icons left">edit</i></span>
 							</h6>
 						</div>	
@@ -219,7 +229,7 @@ class ViewEmployee extends React.Component {
 
 				  {/*Department*/}
 				  <div className = "col s4">
-				    <span>Department:{employee.department}<i id="Icon" className = "material-icons left">group_work</i></span>
+				    <span>Department: {employee.department}<i id="Icon" className = "material-icons left">group_work</i></span>
 				  </div>
 
 
@@ -232,17 +242,17 @@ class ViewEmployee extends React.Component {
 				{/* Employee Hire Date */}
 				<div className = "row">
 				<div className = "col s4">
-				    <span>Hire Date: 11-27-18{employee.hireDate}<i id="Icon" className = "material-icons left">calendar_today</i></span>
+				    <span>Hire Date: {moment(employee.hireDate, 'X').format('MMM DD, YYYY')}<i id="Icon" className = "material-icons left">calendar_today</i></span>
 				  </div>
 
 				{/*Employee Status */}
 				<div className = "col s4">
-				  <span>Employee Status: Active{employee.employeeActive}<i id="statusIcon" className = "material-icons left">verified_user</i> </span>
+				  <span>Employee Status: {employee.employeeActive ? 'Active' : 'Inactive'}<i id="statusIcon" className = "material-icons left">verified_user</i> </span>
 				</div>
 
 				{/*Account Status*/}
 				<div className = "col s4">
-				  <span>Account Status: Active {employee.active}<i id="statusIcon" className = "material-icons left">verified_user</i></span>
+				  <span>Account Status: {employee.active ? 'Active' : 'Inactive'}<i id="statusIcon" className = "material-icons left">verified_user</i></span>
 				</div>
 			</div>
 			</div>
@@ -262,16 +272,16 @@ class ViewEmployee extends React.Component {
 			 
 			{/* Add Training Button */}
 			<div className = "col s3">
-				<h6 className = "hours"><strong>Current Hours: 15</strong></h6>
+				<h6 className = "hours"><strong>Current Hours: {employee.currentHours}</strong></h6>
 			</div>
 			{/* <div className = "col s2">
 			   <h6 className = "hours"><strong>Hours Still Needed: 4</strong></h6>
 			</div> */}
 			<div className = "col s3">
-				<h6 className="hours"><strong>Total Hours Required: 18</strong><i className = "material-icons left">edit</i></h6>
+				<h6 className="hours"><strong>Total Hours Required: {employee.totalHours}</strong><i className = "material-icons left">edit</i></h6>
 			</div>
 			<div className = "col s3">
-			  <h6 className = "hours"><strong>Hours Due: Dec.31, 2018</strong></h6>
+			  <h6 className = "hours"><strong>Hours Due: {moment(employee.hoursResetDate, 'X').format('MMM DD, YYYY')}</strong></h6>
 			</div>
           	<div className="col s3">
               <Link to={`/${this.props.organization.name.replace(/\s/g, '')}/trainings/add`}>
@@ -309,6 +319,35 @@ class ViewEmployee extends React.Component {
 				  <p>Frequency Period</p>
 				</div>
 			  </li>
+				{
+					employee.trainingInstances.map(training => 
+						<li key={training._id} className='collection-item avatar row valign-wrapper employeeCollectionItem'>
+							<div className='avatar-wrapper flex-center'>
+								<i className='material-icons'>event_note</i>
+							</div>
+							<div className='titleTraining'>
+								<span className='trainingTitle'>{training.name}</span>
+							</div>
+							<div className='codeTraining'>
+								<span>{training.trainingCode}</span>
+							</div>
+							<div className='hoursTraining'>
+								<p className=''>{training.hours}</p>
+							</div>
+							<div className='trainingFrequency'>
+								<p>Required every {training.frequencyNumber} {training.frequencyPeriod}</p>
+							</div>
+							<div className='frequencyPeriod'>
+								{
+									training.completed
+										?	<p>Completed!</p>
+										:	<button>Complete</button>
+								}
+							</div>
+						</li>
+					)
+				}
+			  
 			  <li className="collection-item avatar row valign-wrapper employeeCollectionItem">
 					<div className='avatar-wrapper flex-center'>
 						<i className = "material-icons">event_note</i>
@@ -332,9 +371,12 @@ class ViewEmployee extends React.Component {
 				</div>
 
 				<div className = "frequencyPeriod">
-				  <button>Complete</button>
+					
 				</div>
 			  </li>
+			  
+			  
+			  
 		  </ul>
  		</div>
     		</div>

@@ -3,6 +3,7 @@ import moment from 'moment';
  import events from './Events';
 import BigCalendar from 'react-big-calendar';
 import 'react-big-calendar/lib/css/react-big-calendar.css';
+import './Calendar.css';
 
 moment.locale('en-GB');
 const localizer = BigCalendar.momentLocalizer(moment);
@@ -12,7 +13,7 @@ const allViews = Object
   .map(k => BigCalendar.Views[k])
 
 const Calendar = () => (
-  <div style={{ height: 500, width: 560 }}>
+  <div id='calendar'>
     <BigCalendar
       localizer = {localizer}
       events={events}

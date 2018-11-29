@@ -35,7 +35,17 @@
 .dashboard-card-container,
 #snapshot-card,
 #calendar-card {
-  min-height: 50vh !important;
+/*   min-height: 50vh !important; */
+}
+#calendar-card,
+#cardContent {
+	height: 100% !important;
+	margin: 0;
+	padding: 0;
+}
+.calendar-wrap {
+	height: 90%;
+	padding: 0.5em;
 }
 
 .collection {
@@ -73,20 +83,54 @@ li.collection-item {
   height: 100%;
   width: 100%;
   padding: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+#snapshot-card,
+#snapshot-content {
+	height: 100% !important;
+	margin: 0;
+	padding: 0;
+}
+#snapshot-card {
+	width: 100%;
+	padding: 0 0.5em;
+}
+#snapshot-content {
+	width: 90%;
+	margin: 0 auto;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	flex-wrap: wrap;
+}
+#snapshot-card-title {
+	margin: 0;
+}
+#snapshot-collection {
+	padding: 0;
+	margin: 0;
+/* 	height: 90%; */
+	max-height: 340px;
+}
+#snapshot-collection li {
+	max-height: 85px;
+	padding-left: inherit;
 }
 
 .calendar-wrapper {
   grid-area: calendar;
   height: 100%;
   width: 100%;
-  padding: 10px;
+  padding: 0 10px;
 }
 
 .announcements-wrapper {
   grid-area: announcements;
   height: 100%;
   width: 100%;
-  padding: 10px;
+  padding: 0 10px;
 }
 
 input.label {

@@ -160,9 +160,9 @@ class DashboardPage extends React.Component {
         <div className="dashboard-wrapper">
           <div className="snapshot-wrapper">
             <div id="snapshot-card" className="card z-depth-5 dashboard-card">
-              <div className="card-content white-text">
-                <span class="card-title center-align white-text">Weekly Snapshot</span>                 
-                <ul class="collection">
+              <div id='snapshot-content' className="card-content white-text">
+                <span id='snapshot-card-title' class="card-title center-align white-text">Weekly Snapshot</span>                 
+                <ul id='snapshot-collection' class="collection">
                   <li class="collection-item avatar black-text">
                     <div className="row">
                       <div className="col s4">
@@ -229,9 +229,9 @@ class DashboardPage extends React.Component {
           </div>
           <div className="calendar-wrapper">
             <div id="calendar-card" className="card z-depth-5 dashboard-card">
-              <div className="card-content white-text">
-                <span className="card-title center-align">Calendar</span>
-                <p>
+              <div id="cardContent" className="card-content white-text">
+                <span id="cardTitle" className="card-title center-align">Calendar</span>
+                <p className='calendar-wrap'>
                     <Calendar/>
                 </p>
               </div>
