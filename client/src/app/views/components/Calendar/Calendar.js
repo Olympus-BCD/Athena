@@ -12,7 +12,7 @@ const allViews = Object
   .map(k => BigCalendar.Views[k])
 
 const Calendar = () => (
-  <div style={{ height: 500, width: 560 }}>
+  <div style={{ height: 500, width: 560}}>
     <BigCalendar
       localizer = {localizer}
       events={events}
