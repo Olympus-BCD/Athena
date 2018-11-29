@@ -2,6 +2,7 @@ import React from "react";
 import { Link } from 'react-router-dom';
 import "./ViewTraining.css";
 import API from '../../../../../../../utils/API';
+import Upload from "../../../../../components/Upload/Upload.js"
 
 class ViewTraining extends React.Component {
 	
@@ -41,7 +42,7 @@ class ViewTraining extends React.Component {
 				<Link to={`/${this.props.organization.name.replace(/\s/g, '')}/trainings`}>X</Link>
 				{/*Training Card*/}
 				<div className = "container">
-				 <div className = "card">
+				 <div id ="trainingsCard" className = "card">
 				   <div className = "row">
 				     <div className = "col s12">
 					     <span class = "card-title"> 
@@ -84,8 +85,18 @@ class ViewTraining extends React.Component {
 					  </div>
 					</div>
 					</div>
+					<div className = "row">
+					 <div className = "col s6">
+					  <div className = "deleteEmployee">
+						  <button className = "waves-effect waves-light btn">Delete Training</button>
+				  	</div>
+					 </div>
+					 <div className = "col s6">
+							<Upload/>
+					 </div>
+					   
+					</div>
 					
-					<button>Delete Training</button>
 				  </div>
 				 </div>
 				
