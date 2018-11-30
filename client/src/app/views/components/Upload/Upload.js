@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import Dropzone from "react-dropzone";
+import API from '../../../../utils/API';
 
 const zoneStyle = {
   width:"150px",
@@ -12,7 +13,8 @@ const cloudURL = "http://api.cloudinary.com/v1_1/blnicholson/upload";
 class Upload extends Component {
    
     state = {
-        fileUrl:""
+        fileUrl:"",
+        message: ''
     }
 
     handleDrop = files => {
@@ -21,7 +23,7 @@ class Upload extends Component {
           // Initial FormData
           const formData = new FormData();
           formData.append("file", file);
-          formData.append("upload_preset", "o2x3uzal"); 
+          formData.append("upload_preset", "prknzege"); 
           formData.append("api_key", "829388363351532"); 
           formData.append("timestamp", (Date.now() / 1000) | 0);
           
@@ -31,15 +33,31 @@ class Upload extends Component {
           }).then(response => {
             const data = response.data;
             this.setState({fileUrl: data.secure_url})
-            console.log(data);
+            console.log('Return data:', data);
             
+          }).catch(err => {
+	          console.log('Error uploading file to cloud', err);
           })
         });
-      
-        // Once all the files are uploaded 
-        axios.all(uploaders).then(() => {
-          console.log("file uploaded!")
-        });
+		
+		// Once all the files are uploaded 
+		axios.all(uploaders).then(() => {
+			const { training } = this.props;
+			
+			API.trainings.addDocument(training._id, this.state.fileUrl).then(res => {
+				if(res.data.success) {
+					console.log('API Response:', res.data);
+					console.log('File saved to DB:', res.data.training);
+					this.setState({ message: 'WOOT!'});
+				} else {
+					console.log('Error saving document.', res.data.error);
+					this.setState({ message: res.data.msg });
+				}
+			}).catch(err => {
+				console.log('Error saving document to database:', err);
+				this.setState({ message: 'Uh Oh! Something went wrong!' });
+			});
+		});
       }
     
   render() {
@@ -53,7 +71,6 @@ class Upload extends Component {
            >
          <p>Drop Files or Click to upload</p>
         </Dropzone>
-
            <a href = {this.state.fileUrl}>Download File</a>
         </div>
     );

@@ -36,6 +36,9 @@ const TrainingSchema = new Schema({
 	frequencyPeriod: {
 		type: String
 	},
+	documents: {
+		type: [ String ]
+	}
 /*
 	documents: {
 		type: mongoose.Schema.Types.ObjectId,
