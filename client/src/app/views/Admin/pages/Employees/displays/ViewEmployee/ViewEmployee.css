@@ -4,6 +4,8 @@
 }
 .card-title{
     text-align: center;
+    font-family: 'Raleway', sans-serif;
+	font-weight: 500;
     color:white;
 }
 #employeeView{
@@ -40,7 +42,9 @@
     color: white !important;
 }
 .employee-card {
-	min-width: 85%;
+    min-width: 85%;
+    font-family: 'Raleway', sans-serif;
+	
 }
 #infoContainer {
 	min-width: 85%;
@@ -68,4 +72,10 @@
 #employeeDelete, #trainingAdd, #completeTraining, .save{
     background:rgba(128, 0, 128, 0.596);
     border-radius:10px;
+}
+#profilePic{
+    width:200px;
+    height:200px;
+    margin-left:15px;
+    border-radius:100%
 }
