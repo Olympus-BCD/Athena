@@ -59,7 +59,8 @@ let UserSchema = new Schema({
 		type: String
 	},
 	hireDate: {
-		type: Number
+		type: Number,
+		default: 0
 	},
 	trackHours: {
 		type: Boolean,
@@ -82,7 +83,8 @@ let UserSchema = new Schema({
 		default: 0
 	},
 	hoursResetDate: {
-		type: Number
+		type: Number,
+		default: 0
 	},
 	trackingDate: {
 		type: Number

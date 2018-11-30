@@ -5,7 +5,7 @@ module.exports = {
 	findAll: function(req, res) {
 		db.TrainingInstance
 			.find(req.query)
-			.sort({ date: -1 })
+			.sort({ date: 1 })
 			.then(trainings => res.json({ success: true, trainingInstances: trainings }))
 			.catch(err => res.status(422).json({ success: false, msg: 'Failed to find training instance', error: err }));
 	},

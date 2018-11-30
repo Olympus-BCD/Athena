@@ -20,7 +20,6 @@ export default {
 		return axios.put('/api/auth/users', training);
 	},
 	addTrainingInstances: (id, trainingInstancesArr) => {
-		console.log(1);
 		return axios.put('/api/auth/addtrainings', { userID: id, trainingInstances: trainingInstancesArr });
 	},
 	addTrainingHours: data => {

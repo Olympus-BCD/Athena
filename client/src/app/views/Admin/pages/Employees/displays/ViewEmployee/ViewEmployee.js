@@ -11,6 +11,8 @@ class ViewEmployee extends React.Component {
 	state = {
 		message: '',
 		employee: { trainings: [], trainingInstances: [] },
+		trainings: [],
+		dropdown: false,
 		editEmployee: {},
 		editName: false,
 		editUsername: false,
@@ -73,7 +75,20 @@ class ViewEmployee extends React.Component {
 			if(results.data.success) {
 				const employee = results.data.user
 				console.log('Employee: ', employee);
-				this.setState({ employee: employee, editEmployee: Object.assign({}, employee) });
+				const query = {
+					__organization: this.props.organization._id
+				};
+				API.trainings.getTrainings(query).then(results => {
+					if(results.data.success) {
+						this.setState({ employee: employee, editEmployee: Object.assign({}, employee), trainings: results.data.trainings, message: '' });
+					} else {
+						console.log('Error retrieving trainings.');
+						this.setState({ message: results.data.msg });
+					}
+				}).catch(err => {
+					console.log(err);
+					this.setState({ message: 'Uh oh! Something went wrong!' });
+				});
 			} else {
 				this.setState({ message: results.data.msg });
 			}
@@ -82,6 +97,13 @@ class ViewEmployee extends React.Component {
 			this.props.history.push(`/${this.props.organization.name.replace(/\s/g, '')}/employees`);
 // 			this.setState({ message: 'Uh Oh! Something went wrong!' });
 		});
+	};
+	
+	addTrainingInstance = training => {
+		const { user } = this.props;
+		console.log(training);
+		training.__user = user._id;
+		
 	};
 	
 	employeeRole = () => {
@@ -97,6 +119,11 @@ class ViewEmployee extends React.Component {
 		}
 	};
 	
+	toggleTrainingsDropdown = () => {
+		const { dropdown } = this.state;
+		this.setState({ dropdown: !dropdown });
+	};
+	
 	holla = e => {
 		this.setState({ test: e.target.innerHTML });
 	};
@@ -107,11 +134,17 @@ class ViewEmployee extends React.Component {
 
 
 	render() {
-		const { message, employee, editEmployee, user } = this.state;
+		const { message, employee, editEmployee, dropdown, trainings } = this.state;
+		
+		let trainingInstancesIDs = [];
+		employee.trainingInstances.forEach(training => {
+			trainingInstancesIDs.push(training.__training);
+		});
+		let filteredTrainings = trainings.filter(training => ( trainingInstancesIDs.indexOf(training._id) < 0 || !training.recurring ));
+		
 		return (
 			<div>
 				<EmployeesSubHeader organization={this.props.organization} search={false} addEmployee={true} />
-				{/* <h3>{employee.fname}</h3> */}
 				{
 					message !== '' &&
 					<div>{message}</div>
@@ -121,11 +154,11 @@ class ViewEmployee extends React.Component {
 			{/* Employee Card */}
 			<div className = "container employee-card">
 			  <div id = "employeeCard" class="card  ">
-				<div className = "row">
-				  <div className = "col s2 card-image waves-effect waves-block waves-light">
-    		      <img className = "activator" src ={ EmployeeImage } alt = "employeePic"/>
+				<div id='topProfile-wrapper' className = "row">
+				  <div id='profileImg-wrapper' className = "col s2 card-image waves-effect waves-block waves-light">
+    		      <img className = "" src ={ EmployeeImage } alt = "employeePic"/>
     		  </div>
-				  <div id = "" className="col s7">
+				  <div id = "profileInfo-wrapper" className="col s7">
 				     <h5 id = "employeeView"><strong>{ employee.fname } { employee.lname }</strong></h5>
 					 <h5 id = "titleView"><strong>{ employee.title }</strong></h5>
 					 <h5 id = "roleView"><strong>{ this.employeeRole() }</strong></h5>
@@ -175,7 +208,12 @@ class ViewEmployee extends React.Component {
 							</div>
 						</form>
 					:   <div>
-							<h6>Position: <span>{employee.title}</span>
+							<h6>Position: 
+								<span>  { employee.title
+											? <span>{employee.title}</span>
+											: <span>Not on file</span>
+										}
+								</span>
 							{/*<h6>Position: <span value='hey' contenteditable="true" onBlur={this.onBlur} onInput={this.holla}>{employee.title}</span>*/}
 							<span onClick={() => this.setState({ editTitle: true })}><i id="editIcon" className = "material-icons left">edit</i></span>
 							</h6>
@@ -220,7 +258,11 @@ class ViewEmployee extends React.Component {
 						  </div>
 						</form>
 					:	<div>
-							<h6>Employee ID: {employee.employeeID}
+							<h6>Employee ID: 	<span>	{ employee.employeeID
+															? <span>{employee.employeeID}</span>
+															: <span>Not on file</span>
+														}
+												</span>
 							<span onClick={() => this.setState({ editEmployeeID: true })}><i id="editIcon" className = "material-icons left">edit</i></span>
 							</h6>
 						</div>	
@@ -229,7 +271,14 @@ class ViewEmployee extends React.Component {
 
 				  {/*Department*/}
 				  <div className = "col s4">
-				    <span>Department: {employee.department}<i id="Icon" className = "material-icons left">group_work</i></span>
+				    <span>Department:
+				    	<span>	{ employee.department
+					    			? <span>{employee.department}</span>
+					    			: <span>Not on file</span>
+				    			}
+				    	</span>
+				    	<i id="Icon" className = "material-icons left">group_work</i>
+				    </span>
 				  </div>
 
 
@@ -242,7 +291,12 @@ class ViewEmployee extends React.Component {
 				{/* Employee Hire Date */}
 				<div className = "row">
 				<div className = "col s4">
-				    <span>Hire Date: {moment(employee.hireDate, 'X').format('MMM DD, YYYY')}<i id="Icon" className = "material-icons left">calendar_today</i></span>
+				    <span>Hire Date: { employee.hireDate > 0
+								    	? <span>{moment(employee.hireDate, 'X').format('MMM DD, YYYY')}</span>
+								    	: <span>'Not on file'</span>
+								     }
+						<i id="Icon" className = "material-icons left">calendar_today</i>
+					</span>
 				  </div>
 
 				{/*Employee Status */}
@@ -267,7 +321,7 @@ class ViewEmployee extends React.Component {
     		<div id = "revealTrainings" className ="card-reveal">
 			  <div className = "row">
 			  <div className = "col s12">
-      		   <span className ="card-title grey-text text-darken-4"><h4 id = "trainingsHeader">Trainings</h4><i id='closeIcon' className = "material-icons right">close</i></span>
+      		   <span className ="card-title grey-text text-darken-4"><h4 id = "trainingsHeader">Trainings</h4><i id='closeIcon' onClick={() => this.setState({ dropdown: false })} className = "material-icons right">close</i></span>
 			  </div>
 			 
 			{/* Add Training Button */}
@@ -281,21 +335,31 @@ class ViewEmployee extends React.Component {
 				<h6 className="hours"><strong>Total Hours Required: {employee.totalHours}</strong><i className = "material-icons left">edit</i></h6>
 			</div>
 			<div className = "col s3">
-			  <h6 className = "hours"><strong>Hours Due: {moment(employee.hoursResetDate, 'X').format('MMM DD, YYYY')}</strong></h6>
+			  <h6 className = "hours"><strong>Hours Due: { employee.hoursResetDate > 0
+				  	? <span>{moment(employee.hoursResetDate, 'X').format('MMM DD, YYYY')}</span>
+				  	: <span>N/A</span>
+				  	}
+				  </strong>
+			  </h6>
 			</div>
-          	<div className="col s3">
-              <Link to={`/${this.props.organization.name.replace(/\s/g, '')}/trainings/add`}>
-                <a href="!#" id = "trainingAdd" className="waves-effect waves-light btn float-right">
+          	<div id='add-training-container' className="col s3">
+                <span id = "trainingAdd" className="waves-effect waves-light btn float-right" onClick={this.toggleTrainingsDropdown}>
                   <i className="material-icons left">event</i>Add Training
-                </a>
-              </Link>
+                </span>
+                 { dropdown &&
+				    <ul className='add-training-dropdown-wrapper'>
+				    	{filteredTrainings.map(training =>
+					    	<li key={training._id} className='training-dropdown-item' onClick={e => this.addTrainingInstance(training)}>{training.name} { training.trainingCode && <span>({training.trainingCode})</span>}</li>
+					    )}
+				    </ul>
+				}
 		    </div>
-		      </div>
+		    </div>
 
 				
 		   {/*Collection of Employee Trainings - HardCoded*/}
 		   <ul className = "collection">
-		   <li className="collection-item avatar row valign-wrapper employeeCollectionItem">
+		   {/*<li className="collection-item avatar row valign-wrapper employeeCollectionItem">
 					<div className='avatar-wrapper flex-center'>
 						<i className = "material-icons">event_note</i>
 					</div>
@@ -316,9 +380,9 @@ class ViewEmployee extends React.Component {
 				</div>
 
 				<div className = "frequencyPeriod">
-				  <p>Frequency Period</p>
+				  <p>Completed</p>
 				</div>
-			  </li>
+			  </li>*/}
 				{
 					employee.trainingInstances.map(training => 
 						<li key={training._id} className='collection-item avatar row valign-wrapper employeeCollectionItem'>
@@ -327,56 +391,44 @@ class ViewEmployee extends React.Component {
 							</div>
 							<div className='titleTraining'>
 								<span className='trainingTitle'>{training.name}</span>
-							</div>
-							<div className='codeTraining'>
-								<span>{training.trainingCode}</span>
+								{training.trainingCode &&
+									<span>
+										<br />
+										<span className='trainingTitle'>{training.trainingCode}</span>
+									</span>
+								}
 							</div>
 							<div className='hoursTraining'>
-								<p className=''>{training.hours}</p>
+								<p className=''>{training.hours} hours</p>
 							</div>
 							<div className='trainingFrequency'>
-								<p>Required every {training.frequencyNumber} {training.frequencyPeriod}</p>
+								{ training.recurring 
+									? <p>Required every {training.frequencyNumber !== 1 ? training.frequencyNumber : null} {training.frequencyPeriod}</p>
+									: <p>This training is not recurring</p>
+								}
+							</div>
+							<div className='codeTraining'>
+								{ training.completed
+									? <span>Completed on {moment(training.dateCompleted, 'X').format('MMM DD, YYYY')}</span>
+									: <span>Due: {moment(training.dueDate, 'X').format('MMM DD, YYYY')}</span>
+								}
 							</div>
 							<div className='frequencyPeriod'>
 								{
 									training.completed
 										?	<p>Completed!</p>
-										:	<button>Complete</button>
+										:	<button id='completeTraining' className='waves-effect waves-light btn'>Complete</button>
 								}
 							</div>
 						</li>
 					)
 				}
-			  
-			  <li className="collection-item avatar row valign-wrapper employeeCollectionItem">
-					<div className='avatar-wrapper flex-center'>
-						<i className = "material-icons">event_note</i>
-					</div>
-				<div className = "titleTraining">
-		  		   <span className = "trainingTitle">
-				    CPR
-				   </span>
-				</div>
-				<div className = "codeTraining">
-					<span>
-						12345
-					</span>
-				</div>
-				<div className = "hoursTraining">
-				  <p className = "">8</p>
-				</div>
-
-				<div className = "trainingFrequency">
-				  <p>1</p>
-				</div>
-
-				<div className = "frequencyPeriod">
-					<button id = "completeTraining" className = "waves-effect waves-light btn">Complete</button>
-				</div>
-			  </li>
-			  
-			  
-			  
+				{
+					employee.trainingInstances.length === 0 &&
+						<li className='collection-item avatar row valign-wrapper employeeCollectionItem'>
+							<div id='noTrainings'>No trainings have been assigned to this user.  Click the button above to add trainings!</div>
+						</li>
+				}
 		  </ul>
  		</div>
     		</div>
