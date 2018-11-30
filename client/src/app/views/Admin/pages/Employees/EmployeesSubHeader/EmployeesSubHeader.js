@@ -29,7 +29,7 @@ class EmployeesSubHeader extends React.Component {
 	    ? (
           <div className="col s4">
             <Link to={`/${organization.name.replace(/\s/g, "")}/employees/add`} >
-              <a href="!#" className="waves-effect waves-light btn float-right">
+              <a href="!#" id="add-employee-button" className="waves-effect waves-light btn float-right">
                 <i className="material-icons left">person_add</i>Add Employee
               </a>
             </Link>

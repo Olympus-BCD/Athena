@@ -5,14 +5,14 @@ import React from "react";
 
 // CSS & Local Component Import
 import "./Network.css";
-import PageHeader from "../../../components/PageHeader";
+import NetworkPageHeader from "./NetworkPageHeader";
 
 
 class NetworkPage extends React.Component {
 	
 	render() {
 		return (
-			<PageHeader />
+			<NetworkPageHeader />
 		);
 	}
 }

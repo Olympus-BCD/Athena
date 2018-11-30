@@ -132,7 +132,6 @@ class ViewEmployee extends React.Component {
 		alert(this.state.test);
 	}
 
-
 	render() {
 		const { message, employee, editEmployee, dropdown, trainings } = this.state;
 		
@@ -151,12 +150,13 @@ class ViewEmployee extends React.Component {
 				}
 				<br/>
 
+
 			{/* Employee Card */}
 			<div className = "container employee-card">
 			  <div id = "employeeCard" class="card  ">
 				<div id='topProfile-wrapper' className = "row">
 				  <div id='profileImg-wrapper' className = "col s2 card-image waves-effect waves-block waves-light">
-    		      <img className = "" src ={ EmployeeImage } alt = "employeePic"/>
+					<img id ="profilePic" src = "https://res.cloudinary.com/blnicholson/image/fetch/https://res.cloudinary.com/blnicholson/image/upload/v1543535341/rfuasfmw16zbzpjfyrez.jpg" alt="ironMan"/>
     		  </div>
 				  <div id = "profileInfo-wrapper" className="col s7">
 				     <h5 id = "employeeView"><strong>{ employee.fname } { employee.lname }</strong></h5>

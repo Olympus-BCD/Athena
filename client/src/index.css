@@ -6,7 +6,7 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  background-image: url("./sky.jpg");
+  background-image:linear-gradient(rgba(0, 0, 0, 0.486), rgba(0, 0, 0, 0.486)), url("./sky.jpg");
   background-position: center;
   background-size: cover;
   background-repeat: no-repeat;

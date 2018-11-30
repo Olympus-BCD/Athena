@@ -2,6 +2,7 @@ import React from 'react';
 import moment from 'moment';
  import events from './Events';
 import BigCalendar from 'react-big-calendar';
+import "./Calendar.css";
 import 'react-big-calendar/lib/css/react-big-calendar.css';
 import './Calendar.css';
 
@@ -12,6 +13,12 @@ const allViews = Object
   .keys(BigCalendar.Views)
   .map(k => BigCalendar.Views[k])
 
+const calStyle = {
+  width:"550px",
+  height: "400px",
+  fontColor:"white"
+}
+
 const Calendar = () => (
   <div id='calendar'>
     <BigCalendar
@@ -19,6 +26,7 @@ const Calendar = () => (
       events={events}
       step={60}
       views={allViews}
+      style = {}
       defaultDate={new Date("November 5, 2018")}
     />
   </div>
