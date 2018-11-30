@@ -23,7 +23,20 @@
 
 /* =============================================*/
 
-#report-card {
-    background: rgba(0, 0, 0, 0.322);
-    border-radius: 15px;
+.wrapper {
+    position: relative;
+    text-align: center;
+    color: white;
+    margin-top: 10%;
+}
+
+
+
+.coming-soon {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-family: 'Raleway', sans-serif;
+    font-size: 5em;
 }

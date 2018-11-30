@@ -29,7 +29,7 @@ class TrainingsSubHeader extends React.Component {
 	    ? (
           <div className="col s4">
             <Link to={`/${this.props.organization.name.replace(/\s/g, '')}/trainings/add`}>
-              <a href="!#" className="waves-effect waves-light btn float-right">
+              <a id="add-training-button" href="!#" className="waves-effect waves-light btn float-right">
                 <i className="material-icons left">event</i>Add Training
               </a>
             </Link>
