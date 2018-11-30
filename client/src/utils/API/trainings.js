@@ -21,5 +21,11 @@ export default {
 		}
 // 		console.log('limit/offset', params);
 		return axios.get('/api/trainings/pagination', { params });
+	},
+	update: training => {
+		return axios.put('/api/trainings/' + training._id, training);
+	},
+	addDocument: (id, document) => {
+		return axios.put('/api/trainings/' + id, { $push: { documents: document }});
 	}
 };

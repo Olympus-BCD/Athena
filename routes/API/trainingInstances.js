@@ -17,6 +17,9 @@ router.route('/')
 router.route('/:id')
 	.get(passport.authenticate('jwt', { session: false }), (req, res) => {
 		requireLogin(req, res, controller.findById);
+	})
+	.put(passport.authenticate('jwt', { session: false }), (req, res) => {
+		requireLogin(req, res, controller.update);
 	});
 
 requireLogin = (req, res, next) => {

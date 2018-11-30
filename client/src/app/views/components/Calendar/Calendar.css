@@ -1,6 +1,10 @@
+#calendar {
+	height: 100%;
+}
 .rbc-toolbar button{
     color:white !important;
 }
 .rbc-toolbar button:active,.rbc-toolbar button.rbc-active{
     background-color:rgba(0, 44, 82, 0.75) !important;
+
 }

@@ -4,6 +4,7 @@ import moment from 'moment';
 import BigCalendar from 'react-big-calendar';
 import "./Calendar.css";
 import 'react-big-calendar/lib/css/react-big-calendar.css';
+import './Calendar.css';
 
 moment.locale('en-GB');
 const localizer = BigCalendar.momentLocalizer(moment);
@@ -19,13 +20,12 @@ const calStyle = {
 }
 
 const Calendar = () => (
-  <div>
+  <div id='calendar'>
     <BigCalendar
       localizer = {localizer}
       events={events}
       step={60}
       views={allViews}
-      style = {calStyle}
       defaultDate={new Date("November 5, 2018")}
     />
   </div>
