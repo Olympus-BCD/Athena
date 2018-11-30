@@ -196,7 +196,7 @@ class Site extends Component {
         </div>
 
         {/* <div>
-          <Background />
+          <Background/>
         </div> */}
 
         <footer class="page-footer teal">

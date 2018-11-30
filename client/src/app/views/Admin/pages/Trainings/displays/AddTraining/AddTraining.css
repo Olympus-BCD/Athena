@@ -1,5 +1,18 @@
 #addTrainingCard{
     margin-top:150px;
-    text-align: center;
+    background: #fafafa52 !important;
+    color:white;
+    font-family: 'Raleway', sans-serif;
+	font-weight: 500;
+}
+#addTrainingForm{
+    background:rgba(0, 44, 82, 0.75);
+    color:white;
+    font-family: 'Raleway', sans-serif;
+
 }
 
+#addTraining{
+    background:rgba(128, 0, 128, 0.596);
+    border-radius:10px;
+}
