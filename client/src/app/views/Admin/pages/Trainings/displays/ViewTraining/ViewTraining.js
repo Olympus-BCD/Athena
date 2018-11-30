@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import "./ViewTraining.css";
 import API from '../../../../../../../utils/API';
 import Upload from "../../../../../components/Upload/Upload.js"
+import TrainingsSubHeader from "../../TrainingsSubHeader/TrainingsSubHeader"
 
 class ViewTraining extends React.Component {
 	
@@ -39,7 +40,9 @@ class ViewTraining extends React.Component {
 		const { training } = this.state;
 		return (
 			<div>
-				<Link to={`/${this.props.organization.name.replace(/\s/g, '')}/trainings`}>X</Link>
+				<TrainingsSubHeader organization={this.props.organization} />
+
+				{/* <Link to={`/${this.props.organization.name.replace(/\s/g, '')}/trainings`}>X</Link> */}
 				{/*Training Card*/}
 				<div className = "container">
 				 <div id ="trainingsCard" className = "card">
@@ -88,7 +91,8 @@ class ViewTraining extends React.Component {
 					<div className = "row">
 					 <div className = "col s6">
 					  <div className = "deleteEmployee">
-						  <button className = "waves-effect waves-light btn">Delete Training</button>
+						<button id = "deleteTraining" className = "waves-effect waves-light btn">Delete Training</button>
+
 				  	</div>
 					 </div>
 					 <div className = "col s6">
@@ -97,7 +101,7 @@ class ViewTraining extends React.Component {
 					 
 					 	{ training.documents.map(doc =>
 						 	<div className='doc-container'>
-								<a target='_blank' href={doc}>{doc}</a>
+								<a target='_blank' href={doc}>Download</a>
 							</div>
 						)}
 					   
@@ -110,7 +114,7 @@ class ViewTraining extends React.Component {
 				
 				
 				
-				<div>Documents: N/A</div>
+			
 			</div>
 		);
 	}

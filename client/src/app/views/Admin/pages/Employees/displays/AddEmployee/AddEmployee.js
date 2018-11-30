@@ -10,7 +10,7 @@ import API from '../../../../../../../utils/API';
 import EmployeesSubHeader from '../../EmployeesSubHeader';
 
 // Materialize Imports
-import { Row, Input, Autocomplete, Collection, CollectionItem, Badge, Button, Pagination } from "react-materialize";
+import { Row, Input, Autocomplete, Collection, CollectionItem, Badge, Button, Pagination, Card } from "react-materialize";
 
 class AddEmployee extends React.Component {
 	
@@ -726,76 +726,88 @@ class AddEmployee extends React.Component {
 					{
 						step === 1 &&
 					<div>
-						<Row>
-							<h4>Step One: Employee Info</h4>	
-						</Row>
-						<Row>
-							<Input s={6} label='First Name' defaultValue={employee.fname} onChange={this.onChange} name='fname' />
-							<Input s={6} label='Last Name' defaultValue={employee.lname} onChange={this.onChange} name='lname' />
-						</Row>
-						<Row>
-							<Input s={6} label='Employee ID' defaultValue={employee.employeeID} onChange={this.onChange} name='employeeID' />
-							<Input s={6} name='hireDate' label='Hire Date' type='date' dateFormat='YYYY-MM-DD' value={employee.hireDate}  onChange={this.changeDate} />
-						</Row>
-						<Row>
-							<Input s={6} label='Position' defaultValue={employee.title} onChange={this.onChange} name='title' />
-							<Input s={6} label='Department' defaultValue={employee.department} onChange={this.onChange} name='department' />
-						</Row>
+						<Card className="add-employee-card">
+							<Row>
+								<h4 className="white-text">Step One: Employee Info</h4>	
+							</Row>
+						<Card className="form-card">
+							<Row>
+								<Input s={6} label='First Name' defaultValue={employee.fname} onChange={this.onChange} name='fname' />
+								<Input s={6} label='Last Name' defaultValue={employee.lname} onChange={this.onChange} name='lname' />
+							</Row>
+							<Row>
+								<Input s={6} label='Employee ID' defaultValue={employee.employeeID} onChange={this.onChange} name='employeeID' />
+								<Input s={6} name='hireDate' label='Hire Date' type='date' dateFormat='YYYY-MM-DD' value={employee.hireDate}  onChange={this.changeDate} />
+							</Row>
+							<Row>
+								<Input s={6} label='Position' defaultValue={employee.title} onChange={this.onChange} name='title' />
+								<Input s={6} label='Department' defaultValue={employee.department} onChange={this.onChange} name='department' />
+							</Row>
+						</Card>
+						</Card>
 					</div>
 					}
 					{
 						step === 2 &&
 					<div>
-						<Row>
-						 <h4>Step Two: Account Info</h4>
-						</Row>
-						<Row>
-							<Input s={6} label='Account Username' defaultValue={employee.username} onChange={this.onChange} name='username' />
-							<Input s={6} label='Default Password' defaultValue={employee.password} onChange={this.onChange} name='password' />
-						</Row>
-						<Row>
-							<Input name='isAdmin' type='checkbox' value={this.state.isAdmin} checked={this.state.isAdmin ? 'checked' : null} label='Create this user with Admin privileges' onClick={this.toggleCheckbox} />
-						</Row>
-						<Row>
-							<Input name='active' type='checkbox' value={this.state.active} checked={!this.state.active ? 'checked' : null} label='Do not create an account for this user' onClick={this.toggleCheckbox} />
-						</Row>
+						<Card className="add-employee-card">
+							<Row>
+							<h4 className="white-text">Step Two: Account Info</h4>
+							</Row>
+						<Card className="form-card">
+							<Row>
+								<Input s={6} label='Account Username' defaultValue={employee.username} onChange={this.onChange} name='username' />
+								<Input s={6} label='Default Password' defaultValue={employee.password} onChange={this.onChange} name='password' />
+							</Row>
+							<Row>
+								<Input name='isAdmin' type='checkbox' value={this.state.isAdmin} checked={this.state.isAdmin ? 'checked' : null} label='Create this user with Admin privileges' onClick={this.toggleCheckbox} />
+							</Row>
+							<Row>
+								<Input name='active' type='checkbox' value={this.state.active} checked={!this.state.active ? 'checked' : null} label='Do not create an account for this user' onClick={this.toggleCheckbox} />
+							</Row>
+						</Card>
+						</Card>
 					</div>
 					}
 					{
 						step == 3 &&
 					<div>
-						<Row>
-							<h4>Step Three: Training Info</h4>	
-						</Row>
-						<Row>
-							<Input name='trackHours' type='checkbox' value={this.state.trackHours} checked={this.state.trackHours ? 'checked' : null} label='Track training hours for this employee' onClick={this.toggleCheckbox} />
-						</Row>
-						{
-							this.state.trackHours &&
-						<div>
-							<Row>How many total training hours does this employee require?</Row>
+						<Card className="add-employee-card">
 							<Row>
-								<Input name='totalHours' type='number' value={employee.totalHours} onChange={this.onChange} />
-								{/*<Input name='trackingDate' type='date' label='Start tracking hours on:' dateFormat='YYYY-MM-DD' value={employee.trackingDate} onChange={this.changeDate} />*/}
+								<h4 className="white-text">Step Three: Training Info</h4>	
 							</Row>
-							<Row>On what day should this {`employee's`} training hours reset?</Row>
+						<Card className="form-card">
 							<Row>
-								{ this.renderTrackingHoursDays() }
-								<Input name='trackingHoursMonth' type='select' defaultValue={employee.trackingHoursMonth} onChange={this.onChange}>
-									<option value='January'>January</option>
-									<option value='February'>February</option>
-									<option value='March'>March</option>
-									<option value='April'>April</option>
-									<option value='May'>May</option>
-									<option value='June'>June</option>
-									<option value='July'>July</option>
-									<option value='August'>August</option>
-									<option value='September'>September</option>
-									<option value='October'>October</option>
-									<option value='November'>November</option>
-									<option value='December'>December</option>
-								</Input>
+								<Input name='trackHours' type='checkbox' value={this.state.trackHours} checked={this.state.trackHours ? 'checked' : null} label='Track training hours for this employee' onClick={this.toggleCheckbox} />
 							</Row>
+							{
+								this.state.trackHours &&
+							<div>
+								<Row>How many total training hours does this employee require?</Row>
+								<Row>
+									<Input name='totalHours' type='number' value={employee.totalHours} onChange={this.onChange} />
+									{/*<Input name='trackingDate' type='date' label='Start tracking hours on:' dateFormat='YYYY-MM-DD' value={employee.trackingDate} onChange={this.changeDate} />*/}
+								</Row>
+								<Row>On what day should this {`employee's`} training hours reset?</Row>
+								<Row>
+									{ this.renderTrackingHoursDays() }
+									<Input name='trackingHoursMonth' type='select' defaultValue={employee.trackingHoursMonth} onChange={this.onChange}>
+										<option value='January'>January</option>
+										<option value='February'>February</option>
+										<option value='March'>March</option>
+										<option value='April'>April</option>
+										<option value='May'>May</option>
+										<option value='June'>June</option>
+										<option value='July'>July</option>
+										<option value='August'>August</option>
+										<option value='September'>September</option>
+										<option value='October'>October</option>
+										<option value='November'>November</option>
+										<option value='December'>December</option>
+									</Input>
+								</Row>
+							
+							
 							{/*<Row>How frequently should this {`employee's`} training hours reset?</Row>
 							<Row>Every&nbsp;
 								<Input name='trackingFrequencyNumber' type='number' value={employee.trackingFrequencyNumber} onChange={this.onChange} />
@@ -805,24 +817,26 @@ class AddEmployee extends React.Component {
 									<option value='year'>{employee.trackingFrequencyNumber == 1 ? 'Year' : 'Years'}</option>
 								</Input>
 							</Row>*/}
-						</div>
+							</div>
 						}
-						<Row><h5>Select any additional trainings to add to this employee</h5></Row>
-						<Row>
-							{this.renderOrganizationCollection(trainings, `${organization.name}'s Trainings`)}
-							{this.renderEmployeeCollection()}
-						</Row>
+							<Row><h5 className="white-text">Select any additional trainings to add to this employee</h5></Row>
+								<Row>
+									<span className="white-text">{this.renderOrganizationCollection(trainings, `${organization.name}'s Trainings`)}</span>
+									<span className="white-text">{this.renderEmployeeCollection()}</span>
+								</Row>
+							</Card>
+						</Card>
 					</div>
 					}
 						<Row>
 						{ (step === 2 || step === 3) &&
-								<Button onClick={this.previousStep}>Back</Button>
+								<Button id="back-button" onClick={this.previousStep}>Back</Button>
 						}
 						{ (step === 1 || step === 2) &&
-							<Button onClick={this.nextStep}>Next</Button>
+							<Button id="next-button" onClick={this.nextStep}>Next</Button>
 						}
 						{ (step === 3) &&
-							<Button onClick={this.addEmployee}>Add Employee</Button>
+							<Button id="submit-employee" onClick={this.addEmployee}>Add Employee</Button>
 						}
 						</Row>
 				</form>

@@ -7,6 +7,7 @@ import TrainingsForm from '../../../../../components/TrainingsForm';
 
 // Materialize Imports
 import { Row, Input } from "react-materialize";
+import TrainingsSubHeader from "../../TrainingsSubHeader/TrainingsSubHeader";
 
 
 class AddTraining extends React.Component {
@@ -99,37 +100,40 @@ class AddTraining extends React.Component {
 		const { training, addTrainingToExistingUsers } = this.state
 		return (
 			<div>
+				<TrainingsSubHeader organization={this.props.organization} />
+				{/* <Link to={`/${this.props.organization.name.replace(/\s/g, '')}/trainings`}><i class=" back material-icons">arrow_back</i></Link> */}
 			
-				<Link to={`/${this.props.organization.name.replace(/\s/g, '')}/trainings`}>X</Link>
-				
-				<div className = "row">
-				  <div className = "col s12">
-				    <div className = "card purple">
-					 <div className = "card-content white-text">
+				<div className = "container">
+				   <div id = "addTrainingCard" className = "card">
+				     <div className = "row">
+					   <div className = "col s12">
 					   <span className = "card-title">
+					      <h3>Add Training</h3>
 						  {
 							this.state.message !== '' &&
 							<div>{this.state.message}</div>
 						  }
-					     <h3>Add Training</h3>
 					   </span>
-					   <div className = "row">
+					   </div>
+					   </div>
+					
+					   <div id = "addTrainingForm" className = "card">
+					   <div className = "card-content">
 					   <form>
-					     <div className = "col s6">
-						<Input label='Training Name' type='text' name='name' onChange={this.onChange} value={training.name} required />
-						 </div>
-						 <div className ="col s6">
-						<Input label='Training Code' type='text' name='trainingCode'onChange={this.onChange} value={training.trainingCode} />
-
-						 </div>
+					    <Row>
+							<Input s={12}  label='Training Name' type='text' name='name' onChange={this.onChange} value={training.name} required />
+					    </Row>
+						<Row>
+							 <Input s={6} label='Training Code' type='text' name='trainingCode'	onChange={this.onChange} value={training.trainingCode} />
+						    <Input s={6} label='Training Hours' type='number' name='hours' value={training.hours} onChange={this.onChange} placeholder='-' />
+						</Row>
 						{/*<Input name='trackHours' type='checkbox' value={training.trackHours} checked={training.trackHours ? 'checked' : null} label='Add Training Hours' onClick={this.toggleCheckbox} />
 						{
 							training.trackHours &&
 							<Input type='number' name='hours' value={training.hours} onChange={this.onChange} placeholder='Training Hours...' />
 						}*/}
-						<Input label='Training Hours' type='number' name='hours' value={training.hours} onChange={this.onChange} placeholder='-' />
-						<Input name='requiredOnboarding' type='checkbox' value={training.requiredOnboarding} checked={training.requiredOnboarding ? 'checked' : null} label='Is this training required by new employees?' onClick={this.toggleCheckbox} />
-						<Input name='recurring' type='checkbox' value={training.recurring} checked={training.recurring ? 'checked' : null} label='Is this training recurring?' onClick={this.toggleCheckbox} />
+						<Input  name='requiredOnboarding' type='checkbox' value={training.requiredOnboarding} checked={training.requiredOnboarding ? 'checked' : null} label='Is this training required by new employees?' onClick={this.toggleCheckbox} />
+						<Input  name='recurring' type='checkbox' value={training.recurring} checked={training.recurring ? 'checked' : null} label='Is this training recurring?' onClick={this.toggleCheckbox} />
 						{
 							training.recurring &&
 							<p>This training is required every
@@ -141,15 +145,15 @@ class AddTraining extends React.Component {
 								</Input>
 							</p>
 						}
-						<Input name='addTrainingToExistingUsers' type='checkbox' value={addTrainingToExistingUsers} checked={addTrainingToExistingUsers ? 'checked' : null} label='Add this training to all existing users?' onClick={this.toggleAddTrainingToExistingUsers} />
+						<Input  name='addTrainingToExistingUsers' type='checkbox' value={addTrainingToExistingUsers} checked={addTrainingToExistingUsers ? 'checked' : null} label='Add this training to all existing users?' onClick={this.toggleAddTrainingToExistingUsers} />
 						<p>Add documents to this training</p>
-						<button onClick={this.addTraining}>Add Training</button>
+						<button id = "addTraining" className = "waves-effect waves-light btn">Add Training</button>
+
 					</form>
-						 
-					   </div>
-					 </div>
 					</div>
-				  </div>
+					</div>
+					
+					</div>
 				</div>
 				
 				

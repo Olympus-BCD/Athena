@@ -22,14 +22,14 @@ class TrainingsSubHeader extends React.Component {
             </form>
           </div>
         ) : (
-	        <div className='col s4'><Link to={`/${organization.name.replace(/\s/g, '')}/employees`}>BACK</Link></div>
+	        <div className='col s4'><Link to={`/${organization.name.replace(/\s/g, '')}/trainings`}><i className=" back material-icons small"> arrow_back</i></Link></div>
 	    )}
           <div className="col s4" />
         { addTraining
 	    ? (
           <div className="col s4">
             <Link to={`/${this.props.organization.name.replace(/\s/g, '')}/trainings/add`}>
-              <a href="!#" className="waves-effect waves-light btn float-right">
+              <a id="add-training-button" href="!#" className="waves-effect waves-light btn float-right">
                 <i className="material-icons left">event</i>Add Training
               </a>
             </Link>
