@@ -14,7 +14,7 @@ class TrainingListItem extends React.Component {
 		
 		return (
 			<Link key={training._id} to={`/${this.props.organization.name.replace(/\s/g, '')}/trainings?id=${training._id}`}>
-				<li className="collection-item avatar row valign-wrapper employeeCollectionItem">
+				<li id="hover-training" className="collection-item avatar row valign-wrapper employeeCollectionItem">
 					<div className='avatar-wrapper flex-center'>
 						<img id='avatar-img' src={AvatarPlaceholder} alt="{training.name}" className="circle" />
 					</div>

@@ -11,7 +11,6 @@ import { Parallax } from "react-materialize";
 import Clouds from "./clouds_pink_hue.jpg";
 import Sky from "./sky.jpg";
 import Dawn from "./cold_dawn.jpg";
-// import Background from "./Background";
 import "./Site.css";
 
 class Site extends Component {
@@ -194,10 +193,6 @@ class Site extends Component {
             alt="place"
           />
         </div>
-
-        {/* <div>
-          <Background/>
-        </div> */}
 
         <footer class="page-footer teal">
           <div class="container">

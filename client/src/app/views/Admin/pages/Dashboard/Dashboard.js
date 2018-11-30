@@ -13,9 +13,10 @@ import { Input } from "react-materialize";
 import { Button } from "react-materialize";
 import { Icon } from "react-materialize";
 
-// CSS Imports
+// CSS & Local Imports
 import PageHeader from "./../../../components/PageHeader/PageHeader";
 import Calendar from "../../../components/Calendar/Calendar";
+import Clock from "./Clock";
 import "./Dashboard.css";
 
 import API from '../../../../../utils/API';
@@ -264,8 +265,8 @@ class DashboardPage extends React.Component {
               id="company-news-card"
               className="card z-depth-5 dashboard-card"
             >
-              <div className="card-content white-text">
-                <span className="card-title">Company News</span>
+              <div className="card-content white-text center">
+                <Clock />
               </div>
             </div>
           </div>

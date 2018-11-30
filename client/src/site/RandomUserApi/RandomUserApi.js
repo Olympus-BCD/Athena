@@ -3,9 +3,9 @@ import  React from 'react';
 import { Component } from 'react';
 
 // CSS & Local Imports
-import "./Background.css";
+import "./RandomUserApi.css";
 
-class Background extends Component {
+class RandomUserApi extends Component {
     constructor() {
         super();
         this.state = {
@@ -43,4 +43,4 @@ render() {
 }
 
 }
-export default Background;
+export default RandomUserApi;

@@ -6,6 +6,7 @@ import { Card } from "react-materialize";
 
 // CSS & Local Imports
 import ReportsPageHeader from "./ReportsPageHeader";
+import ClipboardIcon from "./clipboard-blue-opacity.png";
 import "./Reports.css";
 
 class ReportsPage extends React.Component {
@@ -13,13 +14,10 @@ class ReportsPage extends React.Component {
     return (
       <div>
         <ReportsPageHeader />
-        <div className="container-fluid">
-			<div className="row">
-				<div className="col s12">
-					<Card id="report-card"/>
-				</div>
-			</div>
-		</div>
+        <div className="wrapper">
+          <img id="icon" src={ClipboardIcon} />
+          <div className="coming-soon">Feature Coming Soon!</div>
+        </div>
       </div>
     );
   }
