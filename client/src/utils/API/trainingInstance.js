@@ -6,5 +6,11 @@ export default {
 	},
 	create: trainingInstance => {
 		return axios.post('/api/traininginstances', trainingInstance);
+	},
+	update: trainingInstance => {
+		return axios.put('/api/traininginstances/' + trainingInstance._id, trainingInstance);
+	},
+	addDocument: (id, document) => {
+		return axios.put('/api/traininginstances/' + id, { query: { $push: { documents: document }}});
 	}
 };

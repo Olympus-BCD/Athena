@@ -8,7 +8,7 @@ class ViewTraining extends React.Component {
 	
 	state = {
 		message: '',
-		training: {},
+		training: { documents: [] },
 		editTraining: {}
 	};
 	
@@ -23,7 +23,7 @@ class ViewTraining extends React.Component {
 		API.trainings.findById(query).then(results => {
 			if(results.data.success) {
 				const { training } = results.data;
-// 				console.log('Training: ', training);
+				console.log('Training: ', training);
 				this.setState({ training: training, editTraining: Object.assign({}, training) });
 			} else {
 				this.setState({ message: results.data.msg });
@@ -92,8 +92,14 @@ class ViewTraining extends React.Component {
 				  	</div>
 					 </div>
 					 <div className = "col s6">
-							<Upload/>
+							<Upload training={training} />
 					 </div>
+					 
+					 	{ training.documents.map(doc =>
+						 	<div className='doc-container'>
+								<a target='_blank' href={doc}>{doc}</a>
+							</div>
+						)}
 					   
 					</div>
 					
