@@ -51,6 +51,10 @@ li.collection-item {
   color: white;
 }
 
+li.collection-item:hover {
+  background: rgba(110, 57, 90, 0.39); 
+}
+
 .black-text {
   color: white !important;
 }
@@ -87,6 +91,10 @@ li.collection-item {
   height: 100%;
   width: 100%;
   padding: 10px;
+}
+
+#announcement-collection li:last-child div {
+  border-bottom: none;
 }
 
 input.label {
