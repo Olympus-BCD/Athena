@@ -1,9 +1,16 @@
+.card-title{
+    font-family: 'Raleway', sans-serif;
+	font-weight: 500;
+}
 #trainingsCard{
     background: #fafafa52 !important;
+    font-family: 'Raleway', sans-serif;
     color:white;
 }
 
 #trainingInfo{
     background:rgba(0, 44, 82, 0.75);
+    font-family: 'Raleway', sans-serif;
+	
 }
 
