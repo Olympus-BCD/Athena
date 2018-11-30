@@ -150,7 +150,6 @@ class ViewEmployee extends React.Component {
 				}
 				<br/>
 
-
 			{/* Employee Card */}
 			<div className = "container employee-card">
 			  <div id = "employeeCard" class="card  ">

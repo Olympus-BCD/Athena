@@ -40,7 +40,9 @@
 .float-right {
 	float: right;
 }
-
+.back{
+	color:white;
+}
 #add-training-button {
 	background: rgba(128, 0, 128, 0.596);
 	border-radius: 10px;

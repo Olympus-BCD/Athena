@@ -14,7 +14,7 @@ class RandomUserApi extends Component {
     }
 
 componentDidMount() {
-    fetch('https://randomuser.me/api/?results=500')
+    fetch('https://randomuser.me/api/?results=25')
     .then(results =>{
         return results.json();
     }).then(data => {
@@ -34,11 +34,11 @@ componentDidMount() {
 
 render() {
     return (
-        <div className="container-fluid">
+       
             <div className="container">
             {this.state.pictures}
             </div>
-        </div>
+     
     );
 }
 

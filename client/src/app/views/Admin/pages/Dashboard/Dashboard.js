@@ -149,7 +149,8 @@ class DashboardPage extends React.Component {
 	
   render() {
 	  
-	  const { newsfeedItems } = this.state;
+    const { newsfeedItems } = this.state;
+  
 	  
 	  const filteredNewsfeedItems = newsfeedItems.slice(0, 5);
 	  
@@ -157,7 +158,7 @@ class DashboardPage extends React.Component {
 	  
     return (
       <div>
-        <PageHeader />
+        <PageHeader organization={this.props.organization} />
         <div className="dashboard-wrapper">
           <div className="snapshot-wrapper">
             <div id="snapshot-card" className="card z-depth-5 dashboard-card">

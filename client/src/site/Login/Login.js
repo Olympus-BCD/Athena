@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import "./Login.css";
+import Background from "../Background/Background";
 
 import API from "../../utils/API";
 
