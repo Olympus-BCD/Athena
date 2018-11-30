@@ -6,10 +6,13 @@ const routes = require('./routes');
 const app = express();
 const PORT = process.env.PORT || 3001;
 const env = require('dotenv').load();
+const cors = require('cors');
 
 app.use(logger('dev'));
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
+app.use(cors());
+
 
 /*
 if (process.env.NODE_ENV === 'production') {
