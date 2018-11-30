@@ -8,8 +8,10 @@ import { NavItem } from "react-materialize";
 import { Parallax } from "react-materialize";
 
 // CSS & Local Imports
-import Clouds from "./"
+import Clouds from "./clouds_pink_hue.jpg";
 import Sky from "./sky.jpg";
+import Dawn from "./cold_dawn.jpg";
+// import Background from "./Background";
 import "./Site.css";
 
 class Site extends Component {
@@ -45,40 +47,6 @@ class Site extends Component {
           </NavItem>
         </Navbar>
 
-        {/* <div>
-          <div id="index-banner" className="parallax-container">
-          <div className="section no-pad-bot">
-            <div className="container">
-              <br />
-              <br />            
-              <h1 className="header athena-title center">
-                <Link to="/">Athena</Link>
-              </h1>
-              <div className="row center">
-                <h4 className="header col s12 grey-text text-darken-3 lighten-3">Welcome to Athena</h4>
-              </div>
-              <p className="header center grey-text text-darken-3 lighten-3">
-                Training management made easy...
-              </p>
-              <div className=" row center">
-                <Link to="/register">Try Athena out for free!</Link>
-              </div>
-              <br/>
-              <br/>              
-            </div>
-          </div>
-          <Parallax           
-            imageSrc="http://materializecss.com/images/parallax1.jpg"
-          />
-          </div>
-
-
-         
-         
-          <Parallax imageSrc="http://materializecss.com/images/parallax2.jpg" />
-
-        </div> */}
-
         <div id="index-banner" class="parallax-container">
           <div class="section no-pad-bot">
             <div class="container">
@@ -94,7 +62,7 @@ class Site extends Component {
               </div>
               <div class="row center">
                 <Link to="/register">
-                  <a
+                  <a href="!#"
                     id="download-button"
                     class="btn-large waves-effect waves-light teal lighten-1"
                   >
@@ -107,7 +75,7 @@ class Site extends Component {
             </div>
           </div>
           <Parallax
-            imageSrc={ Sky }
+            imageSrc={ Clouds }
             alt="place"
           />
         </div>
@@ -179,10 +147,9 @@ class Site extends Component {
             </div>
           </div>
           <Parallax
-            imageSrc="http://materializecss.com/images/parallax2.jpg"
+            imageSrc={Sky}
             alt="place"
           />
-          {/* <div class="parallax"><img src="background2.jpg" alt="Unsplashed background img 2"/></div> */}
         </div>
 
         <div class="container">
@@ -223,11 +190,14 @@ class Site extends Component {
             </div>
           </div>
           <Parallax
-            imageSrc="http://materializecss.com/images/parallax2.jpg"
+            imageSrc={Dawn}
             alt="place"
           />
-          {/* <div class="parallax"><img src="background3.jpg" alt="Unsplashed background img 3"/></div> */}
         </div>
+
+        {/* <div>
+          <Background />
+        </div> */}
 
         <footer class="page-footer teal">
           <div class="container">
