@@ -22,3 +22,21 @@
 /* background: #fafafa52 !important; */ /* NOTE: May need to adjust Opacity depending on the situation*/
 
 /* =============================================*/
+
+.timeDisplay {
+    color: #fff;
+    font-size: 7rem;
+    font-weight: 700;
+  }
+  
+  .dateDisplay {
+    color: #fff;
+    font-size: 1.3rem;
+    font-weight: 500;
+  }
+
+
+
+
+
+
