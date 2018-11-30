@@ -100,10 +100,49 @@ class ViewEmployee extends React.Component {
 	};
 	
 	addTrainingInstance = training => {
-		const { user } = this.props;
-		console.log(training);
-		training.__user = user._id;
+		const { employee } = this.state;
+		training.__user = employee._id;
+		training.__training = training._id;
+		delete training.documents;
+		delete training._id;
+		const hireDate = moment(employee.hireDate, 'X').format('YYYY-MM-DD');
+		training.dueDate = moment(hireDate).add(training.frequencyNumber, training.frequencyPeriod).format('X');
+		console.log('Hire Date:', hireDate);
+		console.log('Due Date:', moment(training.dueDate, 'X').format('YYYY-MM-DD'));
+		const today = moment().startOf('day').format('X');
+		if(training.dueDate < today) {
+			const year = moment().add(1, 'year').year();
+			training.dueDate = moment(training.dueDate, 'X').format('MM-DD');
+			training.dueDate += '-' + year;
+		}
+// 		return console.log('Creating training instance:', employee._id, [ training ]);
+		API.trainingInstance.create(training).then(res => {
+			if(res.data.success) {
+				API.auth.addTrainingInstances(employee._id, [ res.data.trainingInstance._id ]).then(res => {
+					if(res.data.success) {
+						this.getEmployee();
+					} else {
+						console.log('Error adding training instance to user:', res.data.error);
+						this.setState({ message: res.data.msg });
+					}
+				}).catch(err => {
+					console.log('Error adding training instance to user:', err);
+					this.setState({ message: 'Uh Oh! Something went wrong!' });
+				});
+			} else {
+				console.log('Error creating training instance:', res.data.error);
+				this.setState({ message: res.data.msg });
+			}
+		}).catch(err => {
+			console.log('Error creating training instance:', err);
+			this.setState({ message: 'Uh Oh! Something went wrong!' });
+		});
+	};
+	
+	completeTraining = training => {
+		training.completed = true;
 		
+		console.log(training);
 	};
 	
 	employeeRole = () => {
@@ -293,7 +332,7 @@ class ViewEmployee extends React.Component {
 				<div className = "col s4">
 				    <span>Hire Date: { employee.hireDate > 0
 								    	? <span>{moment(employee.hireDate, 'X').format('MMM DD, YYYY')}</span>
-								    	: <span>'Not on file'</span>
+								    	: <span>Not on file</span>
 								     }
 						<i id="Icon" className = "material-icons left">calendar_today</i>
 					</span>
@@ -417,7 +456,7 @@ class ViewEmployee extends React.Component {
 								{
 									training.completed
 										?	<p>Completed!</p>
-										:	<button id='completeTraining' className='waves-effect waves-light btn'>Complete</button>
+										:	<button id='completeTraining' className='waves-effect waves-light btn' onClick={e => this.completeTraining(training)}>Complete</button>
 								}
 							</div>
 						</li>
