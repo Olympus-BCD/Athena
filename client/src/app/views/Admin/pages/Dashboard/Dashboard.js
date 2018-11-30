@@ -73,7 +73,7 @@ class DashboardPage extends React.Component {
 			case 'newUser':
 				header = `Welcome, ${item.userFirstName}!`;
 				return (
-					<CollapsibleItem header = {header} icon = 'announcement'>
+					<CollapsibleItem header = {header} className="border-bottom" icon = 'person_pin'>
 		      			<div className='white-text'>
 		      				<Link className='white-text' to={`/${this.props.organization.name.replace(/\s/g, '')}/employees?id=${item.__user}`}>
 								<h5>{`${item.userFirstName} ${item.userLastName}`}</h5>
@@ -97,7 +97,7 @@ class DashboardPage extends React.Component {
 			case 'hybrid':
 				header = `Welcome, ${item.userFirstName}!`;
 				return (
-					<CollapsibleItem header = {header} icon = 'announcement'>
+					<CollapsibleItem header = {header} icon = 'how_to_reg'>
 		      			<div className='white-text'>
 							<Link className='white-text' to={`/${this.props.organization.name.replace(/\s/g, '')}/employees?id=${item.__user}`}>
 								<h5>{`${item.userFirstName} ${item.userLastName}`}</h5>
@@ -123,7 +123,7 @@ class DashboardPage extends React.Component {
 			case 'newOrganization':
 				header = `${item.organizationName}`;
 				return (
-					<CollapsibleItem header = {header} icon = 'announcement'>
+					<CollapsibleItem header = {header} icon = 'assignment_turned_in'>
 		      			<div className='white-text'>
 		      				<Link className='white-text' to={`/${this.props.organization.name.replace(/\s/g, '')}/employees?id=${item.__user}`}>
 								<h5>{`${item.userFirstName} ${item.userLastName}`}</h5>
@@ -241,7 +241,7 @@ class DashboardPage extends React.Component {
             <div id="announcement-card" class="card z-depth-5 dashboard-card">
               <div class="card-content">
                 <span class="card-title center-align white-text">Announcements</span>
-                <Collapsible popout defaultActiveKey={1} >
+                <Collapsible id="announcement-collection" popout defaultActiveKey={1} >
                   <CollapsibleItem id='add-announcement' header="Add Announcement" icon="add_comment" className="z-depth-5">
                     <Input s={6} label="Title" id="announcement-title-input" className="white-text"/>
                     <Input type="textarea" label="Announcement" />
