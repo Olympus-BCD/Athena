@@ -99,35 +99,39 @@ class AddTraining extends React.Component {
 		const { training, addTrainingToExistingUsers } = this.state
 		return (
 			<div>
-			
 				<Link to={`/${this.props.organization.name.replace(/\s/g, '')}/trainings`}>X</Link>
-				
-				<div className = "row">
-				  <div className = "col s12">
-				    <div className = "card purple">
-					 <div className = "card-content white-text">
+			
+				<div className = "container">
+				   <div id = "addTrainingCard" className = "card purple">
+				     <div className = "row">
 					   <span className = "card-title">
+					      <h3>Add Training</h3>
 						  {
 							this.state.message !== '' &&
 							<div>{this.state.message}</div>
 						  }
-					     <h3>Add Training</h3>
 					   </span>
-					   <div className = "row">
+					   
+					   <div className = "card-content">
 					   <form>
-					     <div className = "col s6">
-						<Input label='Training Name' type='text' name='name' onChange={this.onChange} value={training.name} required />
-						 </div>
-						 <div className ="col s6">
-						<Input label='Training Code' type='text' name='trainingCode'onChange={this.onChange} value={training.trainingCode} />
-
-						 </div>
+					   <div className = "row">
+					      <div id="trainingField" className = "input-field col s6">
+							 <Input  label='Training Name' type='text' name='name' onChange={this.onChange} value={training.name} required />
+					   </div>
+						  </div>
+						  <div className = "row">
+						   <div className = "col s6">
+							 <Input label='Training Code' type='text' name='trainingCode'	onChange={this.onChange} value={training.trainingCode} />
+						   </div>
+						   <div className = "col s6">
+						   <Input label='Training Hours' type='number' name='hours' value={training.hours} onChange={this.onChange} placeholder='-' />
+						   </div>
+						  </div>
 						{/*<Input name='trackHours' type='checkbox' value={training.trackHours} checked={training.trackHours ? 'checked' : null} label='Add Training Hours' onClick={this.toggleCheckbox} />
 						{
 							training.trackHours &&
 							<Input type='number' name='hours' value={training.hours} onChange={this.onChange} placeholder='Training Hours...' />
 						}*/}
-						<Input label='Training Hours' type='number' name='hours' value={training.hours} onChange={this.onChange} placeholder='-' />
 						<Input name='requiredOnboarding' type='checkbox' value={training.requiredOnboarding} checked={training.requiredOnboarding ? 'checked' : null} label='Is this training required by new employees?' onClick={this.toggleCheckbox} />
 						<Input name='recurring' type='checkbox' value={training.recurring} checked={training.recurring ? 'checked' : null} label='Is this training recurring?' onClick={this.toggleCheckbox} />
 						{
@@ -145,11 +149,9 @@ class AddTraining extends React.Component {
 						<p>Add documents to this training</p>
 						<button onClick={this.addTraining}>Add Training</button>
 					</form>
-						 
-					   </div>
 					 </div>
 					</div>
-				  </div>
+					</div>
 				</div>
 				
 				
