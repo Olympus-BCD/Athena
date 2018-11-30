@@ -13,7 +13,7 @@ class EmployeeListItem extends React.Component {
 		
 		return (
 			<Link key={employee._id} to={`/${organization.name.replace(/\s/g, '')}/employees?id=${employee._id}`}>
-				<li className="collection-item avatar row valign-wrapper employeeCollectionItem">
+				<li id="hover-employee" className="collection-item avatar row valign-wrapper employeeCollectionItem">
 					<div className='avatar-wrapper flex-center'>
 						<img id='avatar-img' src={AvatarPlaceholder} alt={employee.username} className="circle" />
 					</div>
@@ -48,7 +48,7 @@ class EmployeeListItem extends React.Component {
 						</p>
 					</div>
 					
-					<div className=''>
+					<div id="role-button" className=''>
 						<p className={employee.role > 1 ? 'role-btn flex-center role-admin' : 'role-btn flex-center role-user'} onClick={e => changeRole(e, employee)}>{employee.role === 3 ? 'Owner' : 'Admin' }</p>
 					</div>
 					

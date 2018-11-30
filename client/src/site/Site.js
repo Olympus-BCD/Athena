@@ -8,6 +8,7 @@ import { NavItem } from "react-materialize";
 import { Parallax } from "react-materialize";
 
 // CSS & Local Imports
+import Clouds from "./"
 import Sky from "./sky.jpg";
 import "./Site.css";
 
@@ -84,12 +85,11 @@ class Site extends Component {
               <br />
               <br />
               <h1 class="header center teal-text text-lighten-2">
-                Parallax Template
+                Athena
               </h1>
               <div class="row center">
                 <h5 class="header col s12 light">
-                  A modern responsive front-end framework based on Material
-                  Design
+                 Training Management made easy...
                 </h5>
               </div>
               <div class="row center">
@@ -98,7 +98,7 @@ class Site extends Component {
                     id="download-button"
                     class="btn-large waves-effect waves-light teal lighten-1"
                   >
-                    Try Athena out for free!d
+                    Try Athena out for free!
                   </a>
                 </Link>
               </div>
