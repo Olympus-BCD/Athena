@@ -8,14 +8,14 @@ module.exports = {
 		db.Training
 			.find(req.query)
 			.sort({ date: -1 })
-			.then(trainings => res.json({ trainings: trainings, user: user }))
+			.then(trainings => res.json({ success: true, trainings: trainings, user: user }))
 /*
 			.then(trainings => {
 				console.log('Query: ', req.query);
 				res.json({trainings: trainings, user: user});	
 			})
 */
-			.catch(err => res.status(422).json(err));
+			.catch(err => res.status(422).json({ success: false, msg: 'Failed to find trainings.', error: err}));
 	},
 	findById: (req, res) => {
 		db.Training
@@ -32,10 +32,12 @@ module.exports = {
 			.catch(err => res.status(422).json({ success: false, msg: 'Failed to create training.', error: err }));
 	},
 	update: function(req, res) {
+		console.log('Updating training:', req.params.id);
+		console.log(req.body);
 		db.Training
-		  .findOneAndUpdate({ _id: req.params.id }, req.body)
-		  .then(training => res.json(training))
-		  .catch(err => res.status(422).json(err));
+		  .findOneAndUpdate({ _id: req.params.id }, req.body, { new: true })
+		  .then(training => res.json({ success: true, training: training}))
+		  .catch(err => res.status(422).json({ success: false, error: err, msg: 'Failed to update training.' }));
 	},
 	remove: function(req, res) {
 		db.Training

@@ -359,6 +359,14 @@ class AddEmployee extends React.Component {
 	};
 	
 	addEmployee = (e) => {
+		console.log('State upon registration:', this.state);
+// 		console.log('EMP Trainings:', this.state.employee.trainings);
+/*
+		console.log(this.state);
+		const test = moment('2018-11-22').add(1, 'year').startOf('day').format('X');
+		const test2 = moment('2018-11-14').add(1, 'year').startOf('day').format('X');
+		return console.log(test, test2);
+*/
 		e.preventDefault();
 		const { employee } = this.state;
 		employee.__organization = this.props.organization._id;
@@ -409,12 +417,23 @@ class AddEmployee extends React.Component {
 						const trainingID = instance._id;
 						delete instance._id;
 						instance.__user = user._id;
-						instance.completed = (this.state[trainingID] && this.state[trainingID].completed);
-						instance.dueDate = (this.state[trainingID] && this.state[trainingID].completed)
+// 						instance.completed = false;
+						instance.completed = (this.state[trainingID] && this.state[trainingID].completed) || false;
+						instance.dueDate = (instance.completed)
 							? moment(this.state[trainingID].dateCompleted).add(instance.frequencyNumber, instance.frequencyPeriod).startOf('day').format('X')
-							: moment(user.hireDate).add(instance.frequencyNumber, instance.frequencyPeriod).startOf('day').format('X');
+							: moment(user.hireDate, 'X').add(instance.frequencyNumber, instance.frequencyPeriod).startOf('day').format('X');
+						console.log('ID Exists && Completed:', (this.state[trainingID] && this.state[trainingID].completed));
+						console.log('Hire Date:', user.hireDate);
+						console.log('Hire Date:', moment(user.hireDate));
+						console.log('Hire Date:', moment(user.hireDate, 'X').add(instance.frequencyNumber, instance.frequencyPeriod));
+						console.log('Hire Date:', moment(user.hireDate, 'X').add(instance.frequencyNumber, instance.frequencyPeriod).format('X'));
+						console.log('Moment 2:', moment(user.hireDate, 'X').add(instance.frequencyNumber, instance.frequencyPeriod).startOf('day').format('X'));
+						console.log(`Moment 2 = moment(${user.hireDate}).add(${instance.frequencyNumber}, ${instance.frequencyPeriod[0]}).startof('day').format('X');`)
+						console.log('Instance/trainingInstances[' + count + ']', instance, trainingInstances);
 						if(instance.completed) {
-							instance.dateCompleted = moment().startOf('day').format('X');
+							instance.dateCompleted = moment(this.state[trainingID].dateCompleted).startOf('day').format('X');
+							console.log('Moment 1:', moment(this.state[trainingID].dateCompleted).add(instance.frequencyNumber, instance.frequencyPeriod[0]).startOf('day').format('X'));
+							console.log(instance.dateCompleted);
 						}
 						instance.__training = trainingID;
 						console.log('Training Instance to be created:', instance);
@@ -433,10 +452,12 @@ class AddEmployee extends React.Component {
 											
 											if(instance.recurring) {
 											
-												const recreatedTrainingInstance = instance;
+												const recreatedTrainingInstance = newTrainingInstance;
+												recreatedTrainingInstance.dueDate = moment(newTrainingInstance.dateCompleted, 'X').add(instance.frequencyNumber, instance.frequencyPeriod).startOf('day').format('X');
+												delete recreatedTrainingInstance._id;
 												delete recreatedTrainingInstance.dateCompleted;
 												recreatedTrainingInstance.completed = false;
-												recreatedTrainingInstance.dueDate = moment(instance.dateCompleted).add(instance.frequencyNumber, instance.frequencyPeriod).startOf('day').format('X');
+												
 												console.log('Re-creating recurring instance:', recreatedTrainingInstance);
 												
 												API.trainingInstance.create(recreatedTrainingInstance).then(res => {
@@ -582,9 +603,11 @@ class AddEmployee extends React.Component {
 		e.preventDefault();
 		
 		let { employee, newTrainings, employeePagination } = this.state;
+		const state = this.state;
 // 		const trainings = this.state.trainings.filter(t => t._id != training._id);
 		if(newTrainings.indexOf(training._id) < 0) {
 			newTrainings.push(training._id);
+// 			state[training._id] = { completed: false };
 			employee.trainings.push(training);
 			employeePagination.count++;
 			
@@ -604,6 +627,7 @@ class AddEmployee extends React.Component {
 // 		console.log('Training:', training);
 // 		console.log('Pre-filter:', employeePagination);
 		newTrainings = newTrainings.filter(id => id != training._id);
+// 		delete this.state[training._id];
 		employee.trainings = employee.trainings.filter(t => t._id != training._id);
 		employeePagination.count--;
 		

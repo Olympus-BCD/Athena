@@ -6,18 +6,9 @@ class TrainingsForm extends React.Component {
     return (
       <div class="row">
         <div class="col s12 m12">
-          <div class="card-panel teal z-depth-5">
+          <div class="card purple">
             <div className="row">
-              <form className="col s12 white-text">
-                <div className="row">
-                  <div className="input-field col s12">
-                    <textarea id="textarea1" className="materialize-textarea" />
-                    <label className="white-text" for="textarea1">
-                      Textarea
-                    </label>
-                  </div>
-                </div>
-              </form>
+              
               <button
                 class="btn waves-effect waves-light"
                 type="submit"
