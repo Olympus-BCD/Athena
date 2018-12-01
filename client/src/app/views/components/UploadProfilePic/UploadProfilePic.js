@@ -2,9 +2,9 @@ import React, { Component } from 'react';
 import axios from 'axios';
 import Dropzone from "react-dropzone";
 import API from '../../../../utils/API';
-// import { url } from 'inspector';
 import FileIcon from "./fileIcon.png";
-import "./UploadDocAddTrain";
+import "./UploadProfilePic.css";
+import ProfilePic from "./AvatarPlaceholder.png"
 
 const zoneStyle = {
   width:"150px",
@@ -72,9 +72,10 @@ class Upload extends Component {
            multiple
            style={zoneStyle}
            >
-         <p>Drop Files or Click to</p>
-         <p id ="dropzoneText"> upload</p>
-         <img src = {FileIcon} />
+          <img src = {ProfilePic} alt="default"/>
+         {/* <p>Set Profile </p>
+         <p id ="dropzoneText"> upload</p> */}
+         {/* <img src = {FileIcon} alt="file" /> */}
         </Dropzone>
            
         </div>
@@ -82,4 +83,5 @@ class Upload extends Component {
   }
 }
 
+//https://res.cloudinary.com/blnicholson/image/upload/v1543546473/qbswekpy1p0y1cknkkpe.png (default Avatar)
 export default Upload;

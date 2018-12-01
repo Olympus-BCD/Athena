@@ -29,15 +29,43 @@
 
 /* =============================================*/
 
-/* .site-bg {
-    background-image: url("./clouds_pink_hue.jpg");
-    background-position: center;
-    background-size: cover;
-    padding: 0;
-    margin: 0;
-    min-width: 100vw;
-    min-height: 100vh;
-} */
+
+
+.site-bg {
+  background-image: url("./clouds_pink_hue.jpg"); 
+  background-size: cover;
+  background-attachment: fixed;
+  background-position: center;
+   min-width: 100vw;
+   min-height: 100vh;
+   color:white;
+}
+
+#siteLogo{
+  margin-top:10%;
+}
+
+.containerAthenaInfo{
+  min-width: 75vw;
+  min-height: 75vh;
+  background-image:url("./cold_dawn.jpg");
+  background-position:center;
+  background-size:cover;
+  background-attachment:fixed;
+  color:white;
+  font-family: 'Raleway', sans-serif;
+}
+
+.containerAbout{
+  min-width: 75vw;
+  min-height: 75vh;
+  background-image:url("./sky.jpg");
+  background-position:center;
+  background-size:cover;
+  background-attachment:fixed;
+  color:white;
+  font-family: 'Raleway', sans-serif;
+}
 
 .athena-title {
   font-family: 'Cinzel Decorative', cursive;
@@ -45,12 +73,16 @@
 
 .athena-title a {
     font-family: 'Cinzel Decorative', cursive;
-    color: black;
+    color: white;
+}
+
+.logoContainer{
+  margin-top:15%;
 }
 
  nav ul a,
  nav .brand-logo {
-   color: #444;
+   color:white;
  }
 
  #about-link,
@@ -106,6 +138,54 @@
  }
  
  footer.page-footer {
-   margin: 0;
+   font-family: 'Raleway', sans-serif;
  }
+
+ /* nav ul a, nav .brand-logo {
+  color: white;
+} */
  
+.aboutPics{
+  width:200px;
+  height:auto;
+}
+.aboutCards{
+  width:350px;
+  height:auto;
+  background:#fafafa00;
+  color:black;
+}
+
+#brandyImage{
+  background-image:url("./me2.jpg");
+  background-position:center;
+  background-size:cover;
+  width:330px;
+  height:322.08px;
+
+}
+#codyImage{
+  background-image:url("./cody.jpg");
+  background-position:center;
+  background-size:cover;
+  width:330px;
+  height:322.08px;
+}
+.profileTitle{
+  font-family: 'Raleway', sans-serif;
+	font-weight: 500;
+
+}
+.container-portfolios{
+  margin-left:10%;
+}
+.companyBio{
+  margin-left:25%;
+}
+
+.olympusHub{
+  margin-left:12%;
+}
+.siteIcons{
+  color:white;
+}
