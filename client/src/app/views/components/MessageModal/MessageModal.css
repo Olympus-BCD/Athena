@@ -1,7 +1,32 @@
+/* ============ Dustin's Design Notes ============*/
+
+/*Athena Font from Google Font*/
+/* font-family: 'Cinzel Decorative', cursive; */
+
+/*Header Font from Google Font*/
+/*font-family: 'Raleway', sans-serif;
+	font-weight: 500; */
+
+/*Body Font from Google Font*/
+/* font-family: 'Raleway', sans-serif; */
+
+/*Button Styles*/
+/* background: rgba(128, 0, 128, 0.596); */
+/* border-radius: 10px; */
+
+/*Card Styles*/
+/* background: rgba(0, 0, 0, 0.322); */
+/* border-radius: 15px; */
+
+/*Components on top of Card*/
+/* background: #fafafa52 !important; */ /* NOTE: May need to adjust Opacity depending on the situation*/
+
+/* =============================================*/
+
 .message-modal-background {
 	height: 100%;
 	width: 100%;
-	background: rgba(0, 0, 0, 0.75);
+	background: rgba(0, 0, 0, 0.554);
 	position: absolute;
 	top: 0;
 	left: 0;
@@ -25,20 +50,30 @@
 	justify-content: center;
 	align-items: center;
 	flex-wrap: wrap;
-	background: purple;
+	background: #fafafa52;
 }
 .message-modal-title {
 	width: 100%;
 	margin: 0;
 	margin-bottom: 1em;
+	font-family: 'Raleway', sans-serif;
+	color: white;
+
 }
 .message-modal-message {
 	width: 100%;
+	color: white;
 }
-.message-modal-button {
+
+#modal-close-button {
+	border-radius: 10px;
+	background: rgba(128, 0, 128, 0.596);
+}
+
+/* .message-modal-button {
 	cursor: pointer;
 	border-radius: 1em;
 	padding: 0.5em 1em;
 	background: midnightblue;
 	color: white;
-}
+} */

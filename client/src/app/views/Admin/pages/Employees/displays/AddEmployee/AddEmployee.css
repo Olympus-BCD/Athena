@@ -47,6 +47,10 @@
 	border-radius: 10px;
 }
 
+#next-button {
+	margin-left: 1em;
+}
+
 .pagination li.active {
 	background: transparent;
 }

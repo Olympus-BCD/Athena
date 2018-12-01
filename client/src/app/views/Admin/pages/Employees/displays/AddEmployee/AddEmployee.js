@@ -8,6 +8,7 @@ import moment from 'moment';
 import API from '../../../../../../../utils/API';
 
 import EmployeesSubHeader from '../../EmployeesSubHeader';
+import MessageModal from '../../../../../components/MessageModal';
 
 // Materialize Imports
 import { Row, Input, Autocomplete, Collection, CollectionItem, Badge, Button, Pagination, Card } from "react-materialize";
@@ -712,6 +713,10 @@ class AddEmployee extends React.Component {
 	}
 */
 
+closeMessageModal = () => {
+	this.setState({ message: '' })
+};
+
 	render() {
 		const { user, organization } = this.props;
 		const { employee, trainings, pagination, step } = this.state;
@@ -720,7 +725,8 @@ class AddEmployee extends React.Component {
 				<EmployeesSubHeader organization={this.props.organization} />
 				{
 					this.state.message !== '' &&
-					<div>{this.state.message}</div>
+					// <div>{this.state.message}</div>
+					<MessageModal message={this.state.message} closeMessageModal={this.closeMessageModal} />
 				}
 				<form className='center-align'>
 					{
@@ -810,8 +816,11 @@ class AddEmployee extends React.Component {
 									</Input>
 									{ this.renderTrackingHoursDays() }
 								</Row>
-							
-							
+
+								<Row>
+									<Input name='totalHours' type='number' value={employee.totalHours} onChange={this.onChange} />
+								</Row>
+
 							{/*<Row>How frequently should this {`employee's`} training hours reset?</Row>
 							<Row>Every&nbsp;
 								<Input name='trackingFrequencyNumber' type='number' value={employee.trackingFrequencyNumber} onChange={this.onChange} />

@@ -19,6 +19,7 @@ router.route('/:id')
 		requireLogin(req, res, controller.findById);
 	})
 	.put(passport.authenticate('jwt', { session: false }), (req, res) => {
+		console.log('updating instance:', req.body)
 		requireLogin(req, res, controller.update);
 	});
 
