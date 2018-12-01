@@ -2,11 +2,15 @@ import React, { Component } from 'react';
 import axios from 'axios';
 import Dropzone from "react-dropzone";
 import API from '../../../../utils/API';
+// import { url } from 'inspector';
+ import FileIcon from "./fileIcon.png";
 
 const zoneStyle = {
   width:"150px",
-  height:"100px", 
-  border: "1px solid white"
+  height:"150px", 
+  border: "1px outset",
+  borderRadius: "15px",
+  borderColor:"rgba(128, 0, 128, 0.596)",
 }
 const proxyurl = "https://cors-anywhere.herokuapp.com/";
 const cloudURL = "http://api.cloudinary.com/v1_1/blnicholson/upload";
