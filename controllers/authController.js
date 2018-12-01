@@ -213,7 +213,6 @@ module.exports = {
 			.catch(err => res.status(422).json({ success: false, msg: 'Failed to update user' }));
 	},
 	addTrainingInstances: (req, res) => {
-		console.log(3);
 		User
 			.update({ _id: req.body.userID}, { $push: { trainingInstances: { $each: req.body.trainingInstances }}}, { new: true })
 			.then(user => {

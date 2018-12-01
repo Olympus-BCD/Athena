@@ -6,6 +6,9 @@ import EmployeesSubHeader from '../../EmployeesSubHeader';
 import moment from 'moment';
 import EmployeeImage from "./AvatarPlaceholder.png"
 
+// import { Modal, ModalHeader, ModalBody, ModalFooter } from 'elemental';
+import { Input } from 'react-materialize';
+
 class ViewEmployee extends React.Component {
 	
 	state = {
@@ -13,6 +16,7 @@ class ViewEmployee extends React.Component {
 		employee: { trainings: [], trainingInstances: [] },
 		trainings: [],
 		dropdown: false,
+		showModal: false,
 		editEmployee: {},
 		editName: false,
 		editUsername: false,
@@ -100,10 +104,72 @@ class ViewEmployee extends React.Component {
 	};
 	
 	addTrainingInstance = training => {
-		const { user } = this.props;
-		console.log(training);
-		training.__user = user._id;
-		
+		const { employee } = this.state;
+		training.__user = employee._id;
+		training.__training = training._id;
+		delete training.documents;
+		delete training._id;
+		const hireDate = moment(employee.hireDate, 'X').format('YYYY-MM-DD');
+		training.dueDate = moment(hireDate).add(training.frequencyNumber, training.frequencyPeriod).format('X');
+		console.log('Hire Date:', hireDate);
+		console.log('Due Date:', moment(training.dueDate, 'X').format('YYYY-MM-DD'));
+		const today = moment().startOf('day').format('X');
+		if(training.dueDate < today) {
+			const year = moment().add(1, 'year').year();
+			training.dueDate = moment(training.dueDate, 'X').format('MM-DD');
+			training.dueDate += '-' + year;
+		}
+// 		return console.log('Creating training instance:', employee._id, [ training ]);
+		API.trainingInstance.create(training).then(res => {
+			if(res.data.success) {
+				API.auth.addTrainingInstances(employee._id, [ res.data.trainingInstance._id ]).then(res => {
+					if(res.data.success) {
+						this.getEmployee();
+					} else {
+						console.log('Error adding training instance to user:', res.data.error);
+						this.setState({ message: res.data.msg });
+					}
+				}).catch(err => {
+					console.log('Error adding training instance to user:', err);
+					this.setState({ message: 'Uh Oh! Something went wrong!' });
+				});
+			} else {
+				console.log('Error creating training instance:', res.data.error);
+				this.setState({ message: res.data.msg });
+			}
+		}).catch(err => {
+			console.log('Error creating training instance:', err);
+			this.setState({ message: 'Uh Oh! Something went wrong!' });
+		});
+	};
+	
+	completeTraining = training => {
+		const completedTraining = Object.assign({}, training);
+		completedTraining.completed = true;
+// 		this.toggleModal();
+		this.setState({ completedTraining: completedTraining, showModal: true });
+	};
+	
+	toggleModal = () => {
+		const state = this.state;
+		state.showModal = !state.showModal;
+		this.setState(state);
+	};
+	
+	cancelModal = e => {
+		e.preventDefault();
+		this.setState({ completedTraining: {}, showModal: false });
+	};
+	
+	changeCompletionDate = e => {
+		const { completedTraining } = this.state;
+		completedTraining.dateCompleted = moment(e.target.value, 'DD MMMM, YYYY').format('X');
+		console.log(completedTraining);
+	};
+	
+	finalizeCompletion = e => {
+		e.preventDefault();
+		console.log(this.state.completedTraining);
 	};
 	
 	employeeRole = () => {
@@ -133,7 +199,7 @@ class ViewEmployee extends React.Component {
 	}
 
 	render() {
-		const { message, employee, editEmployee, dropdown, trainings } = this.state;
+		const { message, employee, editEmployee, dropdown, trainings, showModal } = this.state;
 		
 		let trainingInstancesIDs = [];
 		employee.trainingInstances.forEach(training => {
@@ -148,8 +214,20 @@ class ViewEmployee extends React.Component {
 					message !== '' &&
 					<div>{message}</div>
 				}
-				<br/>
-
+				{ showModal &&
+					<div className='modalBackground'>
+						<div className='modalContainer'>
+							<div className='modalFormContainer'>
+								<h5>What day was this training completed?</h5>
+								<form>
+									<Input type='date' name='dateCompleted' label='Completion Date' defaultValue={moment().format('YYYY-MM-DD')} onChange={e => this.changeCompletionDate(e) } />
+									<button onClick={this.cancelModal}>Cancel</button>
+									<button type='submit' onClick={this.finalizeCompletion}>Complete Training</button>
+								</form>
+							</div>
+						</div>
+					</div>
+				}
 			{/* Employee Card */}
 			<div className = "container employee-card">
 			  <div id = "employeeCard" class="card  ">
@@ -292,7 +370,7 @@ class ViewEmployee extends React.Component {
 				<div className = "col s4">
 				    <span>Hire Date: { employee.hireDate > 0
 								    	? <span>{moment(employee.hireDate, 'X').format('MMM DD, YYYY')}</span>
-								    	: <span>'Not on file'</span>
+								    	: <span>Not on file</span>
 								     }
 						<i id="Icon" className = "material-icons left">calendar_today</i>
 					</span>
@@ -416,7 +494,7 @@ class ViewEmployee extends React.Component {
 								{
 									training.completed
 										?	<p>Completed!</p>
-										:	<button id='completeTraining' className='waves-effect waves-light btn'>Complete</button>
+										:	<button id='completeTraining' className='waves-effect waves-light btn' onClick={e => this.completeTraining(training)}>Complete</button>
 								}
 							</div>
 						</li>
