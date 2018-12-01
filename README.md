@@ -31,8 +31,7 @@
 
 ### Authors
 ---
-<ul>
-<li>[Brandy Nicholson](https://github.com/blnicholson)</li>
-<li>[Dustin McGilvray](https://github.com/DustinMcGilvray)</li>
-<li>[Cody Thompson](https://github.com/cdt12988)</li>
-</ul>
+* [Brandy Nicholson](https://github.com/blnicholson)
+* [Dustin McGilvray](https://github.com/DustinMcGilvray)
+* [Cody Thompson](https://github.com/cdt12988)
+
