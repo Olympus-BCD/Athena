@@ -176,6 +176,12 @@
 .modalContainer form {
 	width: 80%;
 }
+.snapshot-action {
+	cursor: pointer;
+}
+.snapshot-action:hover {
+	color: blueviolet;
+}
 /*
 #profilePic{
     width:200px;

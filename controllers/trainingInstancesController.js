@@ -29,7 +29,7 @@ module.exports = {
 		console.log('ID:', req.params.id);
 // 		return res.json({ success: true, trainingInstance: 'jasfojaewoif' });
 		db.TrainingInstance
-		  .findOneAndUpdate({ _id: req.params.id }, req.body.query)
+		  .findOneAndUpdate({ _id: req.params.id }, req.body, { new: true })
 		  .then(training => { console.log('Training Updated:', training); res.json({ success: true, trainingInstance: training }) } )
 		  .catch(err => res.status(422).json({ success: false, msg: 'Failed to update training instance.', error: err }));
 	},
