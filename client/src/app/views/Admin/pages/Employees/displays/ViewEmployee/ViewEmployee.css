@@ -138,6 +138,44 @@
 	border-bottom: none;
 	padding-bottom: 0.5em;
 }
+.modalBackground {
+	height: 100%;
+	width: 100%;
+/* 	margin-left: 300px; */
+	background: rgba(0, 0, 0, 0.75);
+	position: absolute;
+	top: 0;
+	left: 0;
+	z-index: 100;
+}
+.modalContainer {
+	height: 100%;
+	width: 100%;
+
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: center;
+	align-items: center;
+	text-align: center;
+}
+.modalContainer h5 {
+	width: 100%;
+	margin: 0;
+	margin-bottom: 1em;
+}
+.modalFormContainer {
+	margin: 0 auto;
+	padding: 5%;
+	border-radius: 1em;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	flex-wrap: wrap;
+	background: purple;
+}
+.modalContainer form {
+	width: 80%;
+}
 /*
 #profilePic{
     width:200px;
@@ -146,4 +184,4 @@
     border-radius:100%
 }
 */
-
+/* @import '../../../../../../../../../node_modules/elemental/less/elemental.less' */
