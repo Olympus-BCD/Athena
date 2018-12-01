@@ -147,7 +147,7 @@ class AddTraining extends React.Component {
 						}
 						<Input  name='addTrainingToExistingUsers' type='checkbox' value={addTrainingToExistingUsers} checked={addTrainingToExistingUsers ? 'checked' : null} label='Add this training to all existing users?' onClick={this.toggleAddTrainingToExistingUsers} />
 						<p>Add documents to this training</p>
-						<button id = "addTraining" className = "waves-effect waves-light btn">Add Training</button>
+						<button id = "addTraining" className = "waves-effect waves-light btn" onClick={this.addTraining}>Add Training</button>
 
 					</form>
 					</div>
