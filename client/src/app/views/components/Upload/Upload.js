@@ -4,7 +4,7 @@ import Dropzone from "react-dropzone";
 import API from '../../../../utils/API';
 // import { url } from 'inspector';
 import FileIcon from "./fileIcon.png";
-import "./Upload";
+import "./Upload.css";
 
 const zoneStyle = {
   width:"150px",

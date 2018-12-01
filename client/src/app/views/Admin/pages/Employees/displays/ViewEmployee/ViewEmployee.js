@@ -5,6 +5,7 @@ import API from '../../../../../../../utils/API';
 import EmployeesSubHeader from '../../EmployeesSubHeader';
 import moment from 'moment';
 import EmployeeImage from "./AvatarPlaceholder.png"
+import UploadProfilePic from "../../../../../components/UploadProfilePic/UploadProfilePic"
 
 // import { Modal, ModalHeader, ModalBody, ModalFooter } from 'elemental';
 import { Input } from 'react-materialize';
@@ -233,7 +234,8 @@ class ViewEmployee extends React.Component {
 			  <div id = "employeeCard" class="card  ">
 				<div id='topProfile-wrapper' className = "row">
 				  <div id='profileImg-wrapper' className = "col s2 card-image waves-effect waves-block waves-light">
-					<img id ="profilePic" src = "https://res.cloudinary.com/blnicholson/image/fetch/https://res.cloudinary.com/blnicholson/image/upload/v1543535341/rfuasfmw16zbzpjfyrez.jpg" alt="ironMan"/>
+				    <UploadProfilePic />
+					{/* <img id ="profilePic" src = {EmployeeImage} alt="defaultImage"/> */}
     		  </div>
 				  <div id = "profileInfo-wrapper" className="col s7">
 				     <h5 id = "employeeView"><strong>{ employee.fname } { employee.lname }</strong></h5>
