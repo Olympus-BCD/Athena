@@ -815,11 +815,7 @@ closeMessageModal = () => {
 										<option value='December'>December</option>
 									</Input>
 									{ this.renderTrackingHoursDays() }
-								</Row>
-
-								<Row>
-									<Input name='totalHours' type='number' value={employee.totalHours} onChange={this.onChange} />
-								</Row>
+								</Row>																				
 
 							{/*<Row>How frequently should this {`employee's`} training hours reset?</Row>
 							<Row>Every&nbsp;
