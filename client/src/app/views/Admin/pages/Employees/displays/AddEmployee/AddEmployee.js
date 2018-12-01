@@ -789,14 +789,17 @@ closeMessageModal = () => {
 							{
 								this.state.trackHours &&
 							<div>
-								<Row>How many total training hours does this employee require?</Row>
+								<Row>
+									<p s={12}>How many total training hours does this employee require?</p>
+								</Row>
 								<Row>
 									<Input name='totalHours' type='number' value={employee.totalHours} onChange={this.onChange} />
-									{/*<Input name='trackingDate' type='date' label='Start tracking hours on:' dateFormat='YYYY-MM-DD' value={employee.trackingDate} onChange={this.changeDate} />*/}
+									{/* <Input name='trackingDate' type='date' label='Start tracking hours on:' dateFormat='YYYY-MM-DD' value={employee.trackingDate} onChange={this.changeDate} /> */}
 								</Row>
-								<Row>On what day should this {`employee's`} training hours reset?</Row>
 								<Row>
-									{ this.renderTrackingHoursDays() }
+									<p s={12}>On what day should this {`employee's`} training hours reset?</p></Row>
+								<Row>
+									
 									<Input name='trackingHoursMonth' type='select' defaultValue={employee.trackingHoursMonth} onChange={this.onChange}>
 										<option value='January'>January</option>
 										<option value='February'>February</option>
@@ -811,6 +814,7 @@ closeMessageModal = () => {
 										<option value='November'>November</option>
 										<option value='December'>December</option>
 									</Input>
+									{ this.renderTrackingHoursDays() }
 								</Row>
 
 								<Row>
