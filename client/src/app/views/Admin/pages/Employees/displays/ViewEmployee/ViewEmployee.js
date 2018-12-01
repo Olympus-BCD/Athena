@@ -1,10 +1,11 @@
 import React from "react";
-import { Link } from 'react-router-dom';
+// import { Link } from 'react-router-dom';
 import "./ViewEmployee.css";
 import API from '../../../../../../../utils/API';
 import EmployeesSubHeader from '../../EmployeesSubHeader';
 import moment from 'moment';
-import EmployeeImage from "./AvatarPlaceholder.png"
+// import EmployeeImage from "./AvatarPlaceholder.png"
+import MessageModal from '../../../../../components/MessageModal';
 
 // import { Modal, ModalHeader, ModalBody, ModalFooter } from 'elemental';
 import { Input } from 'react-materialize';
@@ -198,6 +199,10 @@ class ViewEmployee extends React.Component {
 		alert(this.state.test);
 	}
 
+	closeMessageModal = () => {
+		this.setState({ message: '' })
+	};
+
 	render() {
 		const { message, employee, editEmployee, dropdown, trainings, showModal } = this.state;
 		
@@ -212,7 +217,7 @@ class ViewEmployee extends React.Component {
 				<EmployeesSubHeader organization={this.props.organization} search={false} addEmployee={true} />
 				{
 					message !== '' &&
-					<div>{message}</div>
+					<MessageModal message={this.state.message} closeMessageModal={this.closeMessageModal} />
 				}
 				{ showModal &&
 					<div className='modalBackground'>
@@ -221,8 +226,12 @@ class ViewEmployee extends React.Component {
 								<h5>What day was this training completed?</h5>
 								<form>
 									<Input type='date' name='dateCompleted' label='Completion Date' defaultValue={moment().format('YYYY-MM-DD')} onChange={e => this.changeCompletionDate(e) } />
-									<button onClick={this.cancelModal}>Cancel</button>
-									<button type='submit' onClick={this.finalizeCompletion}>Complete Training</button>
+									{/* <button onClick={this.cancelModal}>Cancel</button> */}
+									<div id="modal-cancel-button" className="waves-effect waves-light white-text btn-flat" onClick={this.cancelModal}>Cancel</div>
+
+									{/* <button type='submit' onClick={this.finalizeCompletion}>Complete Training</button> */}
+									<div id="modal-complete-button" className="waves-effect waves-light white-text btn-flat" onClick={this.finalizeCompletion}>Complete Training</div>
+
 								</form>
 							</div>
 						</div>
