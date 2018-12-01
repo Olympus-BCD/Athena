@@ -28,4 +28,5 @@ export default {
 	addDocument: (id, document) => {
 		return axios.put('/api/trainings/' + id, { $push: { documents: document }});
 	}
+	
 };
