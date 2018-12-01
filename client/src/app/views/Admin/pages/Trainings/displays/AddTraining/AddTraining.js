@@ -8,7 +8,7 @@ import TrainingsForm from '../../../../../components/TrainingsForm';
 // Materialize Imports
 import { Row, Input } from "react-materialize";
 import TrainingsSubHeader from "../../TrainingsSubHeader/TrainingsSubHeader";
-import UploadDocAddTrain from "../../../../../components/Upload/Upload"
+import UploadDocAddTrain from "../../../../../components/UploadDocAddTrain/UploadDocAddTrain"
 
 
 class AddTraining extends React.Component {

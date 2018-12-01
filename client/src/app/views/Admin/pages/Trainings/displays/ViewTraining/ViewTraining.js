@@ -106,7 +106,7 @@ class ViewTraining extends React.Component {
 					 <div className = 'col s2 center'>
 					 	{ training.documents.map(doc =>
 						 	<div className='doc-container'>
-								<a target='_blank' href={doc}>
+								<a target='_blank' rel="noopener noreferrer" href={doc}>
 								  <img src = {ViewFile} alt = "File"/>
 								</a>
 							</div>
