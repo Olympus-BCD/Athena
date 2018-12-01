@@ -1,25 +1,11 @@
 <p align="center">
-  <img src = screenshots//>
+  <img src = screenshots/screenshot path here/>
 </p>
 
 ## Overview
-This is a React-based Training Management Application that  
 
 
 
-<p align="center">
-  <img src = screenshots//>
-</p>
-
-
-<p align="center">
-  <img src = screenshots//>
-</p>
-
-
-<p align="center">
-  <img src = screenshots//>
-</p>
 
 ### Crafted With
 ---
@@ -45,6 +31,8 @@ This is a React-based Training Management Application that
 
 ### Authors
 ---
-[Brandy Nicholson]()
-[Dustin McGilvray]()
-[Cody Thimposon]()
+<ul>
+<li>[Brandy Nicholson]()</li>
+<li>[Dustin McGilvray]()</li>
+<li>[Cody Thimposon]()</li>
+</ul>
