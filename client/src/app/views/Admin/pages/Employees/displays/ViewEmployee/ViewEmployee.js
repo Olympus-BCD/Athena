@@ -6,6 +6,9 @@ import EmployeesSubHeader from '../../EmployeesSubHeader';
 import moment from 'moment';
 import EmployeeImage from "./AvatarPlaceholder.png"
 
+// import { Modal, ModalHeader, ModalBody, ModalFooter } from 'elemental';
+import { Input } from 'react-materialize';
+
 class ViewEmployee extends React.Component {
 	
 	state = {
@@ -13,6 +16,7 @@ class ViewEmployee extends React.Component {
 		employee: { trainings: [], trainingInstances: [] },
 		trainings: [],
 		dropdown: false,
+		showModal: false,
 		editEmployee: {},
 		editName: false,
 		editUsername: false,
@@ -140,9 +144,32 @@ class ViewEmployee extends React.Component {
 	};
 	
 	completeTraining = training => {
-		training.completed = true;
-		
-		console.log(training);
+		const completedTraining = Object.assign({}, training);
+		completedTraining.completed = true;
+// 		this.toggleModal();
+		this.setState({ completedTraining: completedTraining, showModal: true });
+	};
+	
+	toggleModal = () => {
+		const state = this.state;
+		state.showModal = !state.showModal;
+		this.setState(state);
+	};
+	
+	cancelModal = e => {
+		e.preventDefault();
+		this.setState({ completedTraining: {}, showModal: false });
+	};
+	
+	changeCompletionDate = e => {
+		const { completedTraining } = this.state;
+		completedTraining.dateCompleted = moment(e.target.value, 'DD MMMM, YYYY').format('X');
+		console.log(completedTraining);
+	};
+	
+	finalizeCompletion = e => {
+		e.preventDefault();
+		console.log(this.state.completedTraining);
 	};
 	
 	employeeRole = () => {
@@ -172,7 +199,7 @@ class ViewEmployee extends React.Component {
 	}
 
 	render() {
-		const { message, employee, editEmployee, dropdown, trainings } = this.state;
+		const { message, employee, editEmployee, dropdown, trainings, showModal } = this.state;
 		
 		let trainingInstancesIDs = [];
 		employee.trainingInstances.forEach(training => {
@@ -187,8 +214,20 @@ class ViewEmployee extends React.Component {
 					message !== '' &&
 					<div>{message}</div>
 				}
-				<br/>
-
+				{ showModal &&
+					<div className='modalBackground'>
+						<div className='modalContainer'>
+							<div className='modalFormContainer'>
+								<h5>What day was this training completed?</h5>
+								<form>
+									<Input type='date' name='dateCompleted' label='Completion Date' defaultValue={moment().format('YYYY-MM-DD')} onChange={e => this.changeCompletionDate(e) } />
+									<button onClick={this.cancelModal}>Cancel</button>
+									<button type='submit' onClick={this.finalizeCompletion}>Complete Training</button>
+								</form>
+							</div>
+						</div>
+					</div>
+				}
 			{/* Employee Card */}
 			<div className = "container employee-card">
 			  <div id = "employeeCard" class="card  ">
