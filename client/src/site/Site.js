@@ -51,7 +51,7 @@ class Site extends Component {
             <div class="container">
               <br />
               <br />
-              <h1 class="header center teal-text text-lighten-2">
+              <h1 class="header center white-text athena-title">
                 Athena
               </h1>
               <div class="row center">
@@ -62,8 +62,8 @@ class Site extends Component {
               <div class="row center">
                 <Link to="/register">
                   <a href="!#"
-                    id="download-button"
-                    class="btn-large waves-effect waves-light teal lighten-1"
+                    id="register-button"
+                    class="btn-large waves-effect waves-light lighten-1"
                   >
                     Try Athena out for free!
                   </a>
