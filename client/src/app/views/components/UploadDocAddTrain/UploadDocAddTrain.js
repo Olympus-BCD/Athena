@@ -47,7 +47,7 @@ class Upload extends Component {
 		axios.all(uploaders).then(() => {
 			const { training } = this.props;
 			
-			API.trainings.addDocument(training._id, this.state.fileUrl).then(res => {
+			API.trainings.addDocument(this.state.fileUrl).then(res => {
 				if(res.data.success) {
 					console.log('API Response:', res.data);
 					console.log('File saved to DB:', res.data.training);

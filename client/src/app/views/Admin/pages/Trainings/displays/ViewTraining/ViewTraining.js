@@ -2,8 +2,10 @@ import React from "react";
 import { Link } from 'react-router-dom';
 import "./ViewTraining.css";
 import API from '../../../../../../../utils/API';
-import Upload from "../../../../../components/Upload/Upload.js"
-import TrainingsSubHeader from "../../TrainingsSubHeader/TrainingsSubHeader"
+import Upload from "../../../../../components/Upload/Upload.js";
+import TrainingsSubHeader from "../../TrainingsSubHeader/TrainingsSubHeader";
+import ViewFile from "./32x32.png";
+
 
 class ViewTraining extends React.Component {
 	
@@ -89,21 +91,28 @@ class ViewTraining extends React.Component {
 					</div>
 					</div>
 					<div className = "row">
-					 <div className = "col s6">
+					 <div className = "col s4">
 					  <div className = "deleteEmployee">
 						<button id = "deleteTraining" className = "waves-effect waves-light btn">Delete Training</button>
 
 				  	</div>
 					 </div>
-					 <div className = "col s6">
-							<Upload training={training} />
+					 <div className = "col s4 center">
+							<Upload training={training} 
+								getTraining={this.getTraining}
+							/> 
 					 </div>
-					 
+
+					 <div className = 'col s2 center'>
 					 	{ training.documents.map(doc =>
 						 	<div className='doc-container'>
-								<a target='_blank' href={doc}>Download</a>
+								<a target='_blank' href={doc}>
+								  <img src = {ViewFile} alt = "File"/>
+								</a>
 							</div>
 						)}
+					 </div>
+					 
 					   
 					</div>
 					

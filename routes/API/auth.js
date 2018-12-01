@@ -10,6 +10,10 @@ router.route('/login')
 router.route('/register')
 	.post(controller.register);
 	
+//	('api/auth/:id')
+router.route('/:id')
+	.put()
+	
 //	('api/auth/users')
 router.route('/users')
 	.get(passport.authenticate('jwt', { session: false }), (req, res) => {
@@ -50,7 +54,6 @@ router.route('/addhours')
 	
 router.route('/addtrainings')
 	.put(passport.authenticate('jwt', { session: false }), (req, res) => {
-		console.log(2);
 		requireLogin(req, res, controller.addTrainingInstances);
 	});
 	

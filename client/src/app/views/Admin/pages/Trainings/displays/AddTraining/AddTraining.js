@@ -8,6 +8,7 @@ import TrainingsForm from '../../../../../components/TrainingsForm';
 // Materialize Imports
 import { Row, Input } from "react-materialize";
 import TrainingsSubHeader from "../../TrainingsSubHeader/TrainingsSubHeader";
+import UploadDocAddTrain from "../../../../../components/Upload/Upload"
 
 
 class AddTraining extends React.Component {
@@ -124,7 +125,7 @@ class AddTraining extends React.Component {
 							<Input s={12}  label='Training Name' type='text' name='name' onChange={this.onChange} value={training.name} required />
 					    </Row>
 						<Row>
-							 <Input s={6} label='Training Code' type='text' name='trainingCode'	onChange={this.onChange} value={training.trainingCode} />
+							<Input s={6} label='Training Code' type='text' name='trainingCode'	onChange={this.onChange} value={training.trainingCode} />
 						    <Input s={6} label='Training Hours' type='number' name='hours' value={training.hours} onChange={this.onChange} placeholder='-' />
 						</Row>
 						{/*<Input name='trackHours' type='checkbox' value={training.trackHours} checked={training.trackHours ? 'checked' : null} label='Add Training Hours' onClick={this.toggleCheckbox} />
@@ -132,23 +133,35 @@ class AddTraining extends React.Component {
 							training.trackHours &&
 							<Input type='number' name='hours' value={training.hours} onChange={this.onChange} placeholder='Training Hours...' />
 						}*/}
+						<Row>
 						<Input  name='requiredOnboarding' type='checkbox' value={training.requiredOnboarding} checked={training.requiredOnboarding ? 'checked' : null} label='Is this training required by new employees?' onClick={this.toggleCheckbox} />
-						<Input  name='recurring' type='checkbox' value={training.recurring} checked={training.recurring ? 'checked' : null} label='Is this training recurring?' onClick={this.toggleCheckbox} />
+						</Row>
+						<Row>
+						<Input s={6} name='recurring' type='checkbox' value={training.recurring} checked={training.recurring ? 'checked' : null} label='Is this training recurring?' onClick={this.toggleCheckbox} />
+						
 						{
 							training.recurring &&
+							<div className = "col s6">
 							<p>This training is required every
-								<Input name='frequencyNumber' type='number' value={training.frequencyNumber} onChange={this.onChange} />
-								<Input name='frequencyPeriod' type='select' defaultValue={training.frequencyPeriod} onChange={this.onChange}>
+								<Input s={3} name='frequencyNumber' type='number' value={training.frequencyNumber} onChange={this.onChange} />
+								<Input s={3} name='frequencyPeriod' type='select' defaultValue={training.frequencyPeriod} onChange={this.onChange}>
 									<option value='day'>{training.frequencyNumber == 1 ? 'Day' : 'Days'}</option>
 									<option value='month'>{training.frequencyNumber == 1 ? 'Month' : 'Months'}</option>
 									<option value='year'>{training.frequencyNumber == 1 ? 'Year' : 'Years'}</option>
 								</Input>
 							</p>
+							</div>
 						}
-						<Input  name='addTrainingToExistingUsers' type='checkbox' value={addTrainingToExistingUsers} checked={addTrainingToExistingUsers ? 'checked' : null} label='Add this training to all existing users?' onClick={this.toggleAddTrainingToExistingUsers} />
-						<p>Add documents to this training</p>
-						<button id = "addTraining" className = "waves-effect waves-light btn">Add Training</button>
-
+						</Row>
+						<Row>
+						<Input name='addTrainingToExistingUsers' type='checkbox' value={addTrainingToExistingUsers} checked={addTrainingToExistingUsers ? 'checked' : null} label='Add this training to all existing users?' onClick={this.toggleAddTrainingToExistingUsers} />
+						<div className = " col s12 center uploadArea">
+					    <UploadDocAddTrain />
+						</div>
+						</Row>
+						
+						
+						<button id = "addTraining" className = "waves-effect waves-light btn" onClick={this.addTraining}>Add Training</button>
 					</form>
 					</div>
 					</div>

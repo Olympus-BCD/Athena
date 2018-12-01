@@ -422,6 +422,12 @@ class AddEmployee extends React.Component {
 						instance.dueDate = (instance.completed)
 							? moment(this.state[trainingID].dateCompleted).add(instance.frequencyNumber, instance.frequencyPeriod).startOf('day').format('X')
 							: moment(user.hireDate, 'X').add(instance.frequencyNumber, instance.frequencyPeriod).startOf('day').format('X');
+						const today = moment().startOf('day').format('X');
+						if(instance.dueDate < today) {
+							const year = moment().add(1, 'year').year();
+							instance.dueDate = moment(instance.dueDate, 'X').format('MM-DD');
+							instance.dueDate += '-' + year;
+						}
 						console.log('ID Exists && Completed:', (this.state[trainingID] && this.state[trainingID].completed));
 						console.log('Hire Date:', user.hireDate);
 						console.log('Hire Date:', moment(user.hireDate));

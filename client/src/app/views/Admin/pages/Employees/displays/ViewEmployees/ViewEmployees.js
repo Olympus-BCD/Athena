@@ -1,13 +1,12 @@
 // React Imports
 import React from "react";
 
- // Materialize Imports
-
 // CSS & Local Imports
 import API from '../../../../../../../utils/API';
 import EmployeeListItem from './EmployeeListItem';
 import EmployeesSubHeader from '../../EmployeesSubHeader';
 import "./ViewEmployees.css";
+import MessageModal from '../../../../../components/MessageModal';
 
 class ViewEmployees extends React.Component {
 	
@@ -121,18 +120,24 @@ class ViewEmployees extends React.Component {
 		this.props.history.push(`/login`);
 	};
 	
+	closeMessageModal = () => {
+		this.setState({ message: '' })
+	};
+	
 	render() {
-		const { selected } = this.state;
-		const { employees } = this.state;
+		const { selected, employees, message } = this.state;
 		let filteredEmployees = employees;
 		if(selected.active) filteredEmployees = employees.filter(employee => employee.employeeActive);
 		if(selected.inactive) filteredEmployees = employees.filter(employee => !employee.employeeActive);
 		return (
 			<div>
 				<EmployeesSubHeader search={true} searchEmployees={this.searchEmployees} addEmployee={true} organization={this.props.organization} user={this.props.user} />
-				{
+				{/*
 					this.state.message !== '' &&
 					<div>{this.state.message}</div>
+				*/}
+				{ message !== '' &&
+					<MessageModal message={message} closeMessageModal={this.closeMessageModal} />
 				}
 				<div className='employeesNav-wrapper'>
 					<span className={selected.all && 'employeesNav-selected'} id='all' onClick={this.switchTab}>All </span>| 

@@ -1,3 +1,8 @@
+.uploadArea{
+    margin-left:65px !important;
+    margin-top:25px;
+    text-align:center;
+}
 #addTrainingCard{
     margin-top:150px;
     background: #fafafa52 !important;
@@ -9,10 +14,11 @@
     background:rgba(0, 44, 82, 0.75);
     color:white;
     font-family: 'Raleway', sans-serif;
-
 }
 
 #addTraining{
     background:rgba(128, 0, 128, 0.596);
-    border-radius:10px;
+    border-radius:10px;   
 }
+
+
