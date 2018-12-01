@@ -32,7 +32,7 @@
 ### Authors
 ---
 <ul>
-<li>[Brandy Nicholson]()</li>
-<li>[Dustin McGilvray]()</li>
-<li>[Cody Thimposon]()</li>
+<li>[Brandy Nicholson](https://github.com/blnicholson)</li>
+<li>[Dustin McGilvray](https://github.com/DustinMcGilvray)</li>
+<li>[Cody Thompson](https://github.com/cdt12988)</li>
 </ul>
