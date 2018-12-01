@@ -47,19 +47,19 @@ class Upload extends Component {
 		axios.all(uploaders).then(() => {
 			const { training } = this.props;
 			
-			API.trainings.addDocument(this.state.fileUrl).then(res => {
-				if(res.data.success) {
-					console.log('API Response:', res.data);
-					console.log('File saved to DB:', res.data.training);
-					this.props.getTraining();
-				} else {
-					console.log('Error saving document.', res.data.error);
-					this.setState({ message: res.data.msg });
-				}
-			}).catch(err => {
-				console.log('Error saving document to database:', err);
-				this.setState({ message: 'Uh Oh! Something went wrong!' });
-			});
+			// API.trainings.addDocument(this.state.fileUrl).then(res => {
+			// 	if(res.data.success) {
+			// 		console.log('API Response:', res.data);
+			// 		console.log('File saved to DB:', res.data.training);
+			// 		this.props.getTraining();
+			// 	} else {
+			// 		console.log('Error saving document.', res.data.error);
+			// 		this.setState({ message: res.data.msg });
+			// 	}
+			// }).catch(err => {
+			// 	console.log('Error saving document to database:', err);
+			// 	this.setState({ message: 'Uh Oh! Something went wrong!' });
+			// });
 		});
       }
     

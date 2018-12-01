@@ -315,7 +315,7 @@ class ViewEmployee extends React.Component {
 							<h6>Username: {employee.username}
 							<span onClick={() => this.setState({ editUsername: true })}><i id="editIcon" className = "material-icons left">edit</i></span>
 						
-							<i id="statusIcon" className = "material-icons right">lock</i>
+							
 							</h6>
 						
 						</div>
@@ -361,9 +361,9 @@ class ViewEmployee extends React.Component {
 				  </div>
 
 
-				  {/* Permissions */}
+				  {/* Password Change */}
 				  <div className = "col s4">
-				    <h6>Permissions: {this.employeeRole()}<i id="Icon" className = "material-icons left">supervisor_account</i></h6>
+				    <h6>Change Password<i id="Icon" className = "material-icons left">lock</i></h6>
 				  </div>
 				</div>
 
