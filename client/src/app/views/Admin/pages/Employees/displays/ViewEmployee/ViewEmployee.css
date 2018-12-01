@@ -1,3 +1,28 @@
+/* ============ Dustin's Design Notes ============*/
+
+/*Athena Font from Google Font*/
+/* font-family: 'Cinzel Decorative', cursive; */
+
+/*Header Font from Google Font*/
+/*font-family: 'Raleway', sans-serif;
+	font-weight: 500; */
+
+/*Body Font from Google Font*/
+/* font-family: 'Raleway', sans-serif; */
+
+/*Button Styles*/
+/* background: rgba(128, 0, 128, 0.596); */
+/* border-radius: 10px; */
+
+/*Card Styles*/
+/* background: rgba(0, 0, 0, 0.322); */
+/* border-radius: 15px; */
+
+/*Components on top of Card*/
+/* background: #fafafa52 !important; */ /* NOTE: May need to adjust Opacity depending on the situation*/
+
+/* =============================================*/
+
 .card{
     padding:10px; 
     border-radius:15px;
@@ -142,7 +167,7 @@
 	height: 100%;
 	width: 100%;
 /* 	margin-left: 300px; */
-	background: rgba(0, 0, 0, 0.75);
+	background: rgba(0, 0, 0, 0.554);
 	position: absolute;
 	top: 0;
 	left: 0;
@@ -171,17 +196,31 @@
 	justify-content: center;
 	align-items: center;
 	flex-wrap: wrap;
-	background: purple;
+	background: rgba(0, 0, 0, 0.322);
+	color: white;
 }
 .modalContainer form {
 	width: 80%;
 }
+
 .snapshot-action {
 	cursor: pointer;
 }
 .snapshot-action:hover {
 	color: blueviolet;
 }
+
+#modal-cancel-button {
+	margin-right: .5em;
+	border-radius: 10px;
+	background: rgba(128, 0, 128, 0.596);
+}
+
+#modal-complete-button {
+	border-radius: 10px;
+	background: rgba(128, 0, 128, 0.596);
+}
+
 /*
 #profilePic{
     width:200px;

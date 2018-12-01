@@ -4,11 +4,12 @@ import "./AddTraining.css";
 import API from '../../../../../../../utils/API';
 
 import TrainingsForm from '../../../../../components/TrainingsForm';
+import MessageModal from '../../../../../components/MessageModal';
 
 // Materialize Imports
 import { Row, Input } from "react-materialize";
 import TrainingsSubHeader from "../../TrainingsSubHeader/TrainingsSubHeader";
-import UploadDocAddTrain from "../../../../../components/Upload/Upload"
+import UploadDocAddTrain from "../../../../../components/UploadDocAddTrain/UploadDocAddTrain"
 
 
 class AddTraining extends React.Component {
@@ -97,6 +98,10 @@ class AddTraining extends React.Component {
 		});
 	};
 
+	closeMessageModal = () => {
+		this.setState({ message: '' })
+	};
+
 	render() {
 		const { training, addTrainingToExistingUsers } = this.state
 		return (
@@ -112,7 +117,7 @@ class AddTraining extends React.Component {
 					      <h3>Add Training</h3>
 						  {
 							this.state.message !== '' &&
-							<div>{this.state.message}</div>
+							<MessageModal message={this.state.message} closeMessageModal={this.closeMessageModal} />
 						  }
 					   </span>
 					   </div>

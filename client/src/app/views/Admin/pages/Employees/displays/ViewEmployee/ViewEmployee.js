@@ -1,10 +1,12 @@
 import React from "react";
-import { Link } from 'react-router-dom';
+// import { Link } from 'react-router-dom';
 import "./ViewEmployee.css";
 import API from '../../../../../../../utils/API';
 import EmployeesSubHeader from '../../EmployeesSubHeader';
 import moment from 'moment';
-import EmployeeImage from "./AvatarPlaceholder.png"
+import MessageModal from '../../../../../components/MessageModal';
+import UploadProfilePic from "../../../../../components/UploadProfilePic/UploadProfilePic"
+
 
 // import { Modal, ModalHeader, ModalBody, ModalFooter } from 'elemental';
 import { Input } from 'react-materialize';
@@ -358,6 +360,10 @@ class ViewEmployee extends React.Component {
 		return data;
 	};
 
+	closeMessageModal = () => {
+		this.setState({ message: '' })
+	};
+
 	render() {
 		const { message, employee, editEmployee, dropdown, trainings, showModal, filters } = this.state;
 		
@@ -381,7 +387,7 @@ class ViewEmployee extends React.Component {
 				<EmployeesSubHeader organization={this.props.organization} search={false} addEmployee={true} />
 				{
 					message !== '' &&
-					<div>{message}</div>
+					<MessageModal message={this.state.message} closeMessageModal={this.closeMessageModal} />
 				}
 				{ showModal &&
 					<div className='modalBackground'>
@@ -390,8 +396,12 @@ class ViewEmployee extends React.Component {
 								<h5>What day was this training completed?</h5>
 								<form>
 									<Input type='date' name='dateCompleted' label='Completion Date' defaultValue={moment().format('YYYY-MM-DD')} onChange={e => this.changeCompletionDate(e) } />
-									<button onClick={this.cancelModal}>Cancel</button>
-									<button type='submit' onClick={this.finalizeCompletion}>Complete Training</button>
+									{/* <button onClick={this.cancelModal}>Cancel</button> */}
+									<div id="modal-cancel-button" className="waves-effect waves-light white-text btn-flat" onClick={this.cancelModal}>Cancel</div>
+
+									{/* <button type='submit' onClick={this.finalizeCompletion}>Complete Training</button> */}
+									<div id="modal-complete-button" className="waves-effect waves-light white-text btn-flat" onClick={this.finalizeCompletion}>Complete Training</div>
+
 								</form>
 							</div>
 						</div>
@@ -402,7 +412,8 @@ class ViewEmployee extends React.Component {
 			  <div id = "employeeCard" class="card  ">
 				<div id='topProfile-wrapper' className = "row">
 				  <div id='profileImg-wrapper' className = "col s2 card-image waves-effect waves-block waves-light">
-					<img id ="profilePic" src = "https://res.cloudinary.com/blnicholson/image/fetch/https://res.cloudinary.com/blnicholson/image/upload/v1543535341/rfuasfmw16zbzpjfyrez.jpg" alt="ironMan"/>
+				    <UploadProfilePic />
+					{/* <img id ="profilePic" src = {EmployeeImage} alt="defaultImage"/> */}
     		  </div>
 				  <div id = "profileInfo-wrapper" className="col s7">
 				     <h5 id = "employeeView"><strong>{ employee.fname } { employee.lname }</strong></h5>
@@ -482,7 +493,7 @@ class ViewEmployee extends React.Component {
 							<h6>Username: {employee.username}
 							<span onClick={() => this.setState({ editUsername: true })}><i id="editIcon" className = "material-icons left">edit</i></span>
 						
-							<i id="statusIcon" className = "material-icons right">lock</i>
+							
 							</h6>
 						
 						</div>
@@ -528,9 +539,9 @@ class ViewEmployee extends React.Component {
 				  </div>
 
 
-				  {/* Permissions */}
+				  {/* Password Change */}
 				  <div className = "col s4">
-				    <h6>Permissions: {this.employeeRole()}<i id="Icon" className = "material-icons left">supervisor_account</i></h6>
+				    <h6>Change Password<i id="Icon" className = "material-icons left">lock</i></h6>
 				  </div>
 				</div>
 
