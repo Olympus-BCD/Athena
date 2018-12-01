@@ -203,6 +203,13 @@
 	width: 80%;
 }
 
+.snapshot-action {
+	cursor: pointer;
+}
+.snapshot-action:hover {
+	color: blueviolet;
+}
+
 #modal-cancel-button {
 	margin-right: .5em;
 	border-radius: 10px;

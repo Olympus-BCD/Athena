@@ -201,14 +201,15 @@ module.exports = {
 	findById: (req, res) => {
 		User
 			.findById(req.query.id)
-			.populate('trainingInstances')
+			.populate({ path: 'trainingInstances', options: { sort: { completed: 1, dateCompleted: 1, dueDate: 1 }}})
 			.then(user => res.json({ success: true, user: user }))
 			.catch(err => res.status(422).json({ success: false, msg: 'Failed to find user' }));
 	},
 	findOneAndUpdate: (req, res) => {
 		User
 			.findOneAndUpdate({ _id: req.body._id }, req.body, { new: true })
-			.populate('trainingInstances')
+// 			.populate({ path: 'trainingInstances', options: { sort: {"hours": "descending"}}})
+			.populate({ path: 'trainingInstances', options: { sort: { hours: -1 }}})
 			.then(user => res.json({ success: true, user: user }))
 			.catch(err => res.status(422).json({ success: false, msg: 'Failed to update user' }));
 	},

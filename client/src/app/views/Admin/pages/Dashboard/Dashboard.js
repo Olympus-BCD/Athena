@@ -26,11 +26,12 @@ class DashboardPage extends React.Component {
 	state = {
 		message: '',
 		trainings: [],
-		newsfeedItems: []
+		newsfeedItems: [],
+		employees: []
 	};
 	
 	componentDidMount() {
-		this.getNewsfeedItems();
+		this.getEmployees();
 	}
 	
 	getNewsfeedItems = () => {
@@ -54,22 +55,30 @@ class DashboardPage extends React.Component {
 		});
 	};
 	
+	getEmployees = () => {
+		const query = {
+			__organization: this.props.organization._id
+		};
+		API.auth.getUsers(query).then(res => {
+			if(res.data.success) {
+				this.setState({ employees: res.data.users });
+				this.getNewsfeedItems();
+			} else {
+				this.setState({ message: res.data.msg });
+			}
+		}).catch(err => {
+			console.log(err);
+			
+			this.setState({ message: 'Uh Oh! Something went wrong!' });
+			
+		});
+	};
+	
 	renderNewsfeedItem = item => {
 		const { activityType } = item;
-		console.log(activityType, item);
+// 		console.log(activityType, item);
 		let header;
-		let body;
-/*
-		if (activityType == 'newUser') { console.log('aioejfoajwofaew'); return (
-			<CollapsibleItem header = {`Welcome, ${item.userFirstName}!`} icon = 'announcement'>
-      			<div className='white-text'>
-					<h4>{`${item.userFirstName} ${item.userLastName}`}</h4>
-					<p>Has joined {this.props.organization.name}!</p>
-					<p>{moment(item.date).format('MMMM DD, YYYY')}</p>
-				</div>
-			</CollapsibleItem>
-		); }
-*/
+
 		switch(activityType) {
 			case 'newUser':
 				header = `Welcome, ${item.userFirstName}!`;
@@ -84,16 +93,6 @@ class DashboardPage extends React.Component {
 						</div>
 					</CollapsibleItem>
 				);
-				
-/*
-				body = (
-					<div className='white-text'>
-						<h5>{`${item.userFirstName} ${item.userLastName}`}</h5>
-						<p>Has joined {this.props.organization.name}!</p>
-						<p>{moment(item.date, 'X').format('MMMM DD, YYYY')}</p>
-					</div>
-				);
-*/
 				break;
 			case 'hybrid':
 				header = `Welcome, ${item.userFirstName}!`;
@@ -108,18 +107,19 @@ class DashboardPage extends React.Component {
 						</div>
 					</CollapsibleItem>
 				);
-/*
-				body = (
-					<div className='white-text'>
-						<h4>{`${item.userFirstName} ${item.userLastName}`}</h4>
-						<p>Has joined {this.props.organization.name} and has completed {item.numberOfCompletedTrainings} trainings!</p>
-						<p>{moment(item.date).format('MMMM DD, YYYY')}</p>
-					</div>
-				);
-*/
 				break;
-			case 'traningCompleted':
-			
+			case 'trainingCompleted':
+				return(
+					<CollapsibleItem header = {`Congrats, ${item.userFirstName}!`} icon = 'assignment_turned_in'>
+		      			<div className='white-text'>
+		      				<Link className='white-text' to={`/${this.props.organization.name.replace(/\s/g, '')}/employees?id=${item.__user}`}>
+								<h5>{`${item.userFirstName} ${item.userLastName}`}</h5>
+							</Link>
+							<p>completed <b>{item.trainingName}!</b>!</p>
+							<p>{moment(item.date).format('MMMM DD, YYYY')}</p>
+						</div>
+					</CollapsibleItem>
+				);
 				break;
 			case 'newOrganization':
 				header = `${item.organizationName}`;
@@ -139,7 +139,6 @@ class DashboardPage extends React.Component {
 			
 				break;
 		}
-		console.log(header, body);
 		return (
 			<CollapsibleItem header = {header} className="border-bottom z-depth-0" icon = 'announcement'>
 	      		
@@ -147,14 +146,51 @@ class DashboardPage extends React.Component {
 		);
 	};
 	
+	getSnapshot = (days = 30) => {
+		const { employees } = this.state;
+		
+		const cutOff = moment().add(days, 'days').format('X');
+		let data = {
+			upcomingCount: 0,
+			upcomingEmployees: [],
+			overdueCount: 0,
+			overdueEmployees: [],
+			completed: 0,
+			completedEmployees: []
+		};
+
+		employees.forEach(employee => {
+			if(employee.active) {
+				employee.trainingInstances.forEach(training => {
+					
+					if(training.dueDate < cutOff && !training.completed) {
+						data.upcomingCount++;
+						data.upcomingEmployees.push(employee);
+					} else if(training.dueDate < moment().format('X') && !training.completed) {
+						data.overdueCount++;
+						data.overdueEmployees.push(employee);
+					} else if(training.completed) {
+						data.completed++;
+						data.completedEmployees.push(employee);
+					}
+					
+				});
+			}
+		});
+		
+		return data;
+	};
+	
   render() {
 	  
-    const { newsfeedItems } = this.state;
+    const { newsfeedItems, employees } = this.state;
   
+	const filteredNewsfeedItems = newsfeedItems.slice(0, 5);
+	
+	const snapshot = this.getSnapshot(); console.log('Snapshot:', snapshot);
 	  
-	  const filteredNewsfeedItems = newsfeedItems.slice(0, 5);
-	  
-	  console.log(filteredNewsfeedItems);
+	console.log(filteredNewsfeedItems);
+	console.log('Employees:', employees);
 	  
     return (
       <div>
