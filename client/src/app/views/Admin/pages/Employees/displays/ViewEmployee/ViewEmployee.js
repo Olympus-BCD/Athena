@@ -17,6 +17,7 @@ class ViewEmployee extends React.Component {
 		message: '',
 		employee: { trainings: [], trainingInstances: [] },
 		trainings: [],
+		completedTraining: { dateCompleted: moment().format('X') },
 		dropdown: false,
 		showModal: false,
 		editEmployee: {},
@@ -24,7 +25,13 @@ class ViewEmployee extends React.Component {
 		editUsername: false,
 		editEmployeeID: false,
 		editTitle: false,
-		editRole: false
+		editRole: false,
+		filters: {
+			upcoming: false,
+			overdue: false,
+			completed: false,
+			none: true
+		}
 	};
 	
 	componentDidMount() {
@@ -148,6 +155,7 @@ class ViewEmployee extends React.Component {
 	completeTraining = training => {
 		const completedTraining = Object.assign({}, training);
 		completedTraining.completed = true;
+		completedTraining.dateCompleted = moment().format('X');
 // 		this.toggleModal();
 		this.setState({ completedTraining: completedTraining, showModal: true });
 	};
@@ -171,7 +179,122 @@ class ViewEmployee extends React.Component {
 	
 	finalizeCompletion = e => {
 		e.preventDefault();
-		console.log(this.state.completedTraining);
+		const { employee, completedTraining } = this.state;
+		console.log('Training to be completed:', completedTraining);
+		API.trainingInstance.update(completedTraining).then(res => {
+			if(res.data.success) {
+				console.log('Created training 1 :', res.data.trainingInstance);
+				const instance = Object.assign({}, res.data.trainingInstance);
+				console.log('Training completed (copy):', instance);
+				
+				const recreateInstance = instanceToRecreate => {
+					console.log('Instance to be recreated 1/2', instanceToRecreate);
+					console.log(`moment(${completedTraining.dateCompleted}, 'X').add(${instance.frequencyNumber}, ${instance.frequencyPeriod})`);
+					console.log('Completed training', completedTraining);
+					instance.dueDate = moment(completedTraining.dateCompleted, 'X').add(instanceToRecreate.frequencyNumber, instanceToRecreate.frequencyPeriod).startOf('day').format('X');
+					delete instanceToRecreate._id;
+					delete instanceToRecreate.dateCompleted;
+					instanceToRecreate.completed = false;
+					console.log('Instance to be recreated 2/2', instanceToRecreate);
+					
+					API.trainingInstance.create(instanceToRecreate).then(res => {
+						if(res.data.success) {
+							console.log('Instance recreated:', res.data.trainingInstance);
+							const trainingInstanceName = res.data.trainingInstance.name;
+							
+							API.auth.addTrainingInstances(employee._id, [ res.data.trainingInstance ]).then(res => {
+								if(res.data.success) {
+									console.log('Training instance added to user:', res.data.user);
+									const newsfeedItem = {
+										__user: employee._id,
+										__organization: this.props.organization._id,
+										__trainingInstance: instance._id,
+										trainingName: trainingInstanceName,
+										organizationName: this.props.organization.name,
+										userFirstName: employee.fname,
+										userLastName: employee.lname,
+										activityType: 'trainingCompleted',
+										completedTrainings: [ instance._id ],
+										numberOfCompletedTrainings: 1
+									};
+									addNewsfeedItem(newsfeedItem);
+								} else {
+									console.log('Error adding training instance to user:', res.data.error);
+									this.setState({ message: res.data.msg, showModal: false, completedTraining: { dateCompleted: moment().format('X') }});
+								}
+							}).catch(err => {
+								console.log('Error adding training instance to user:', err);
+								this.setState({ message: 'Uh Oh! Something went wrong!', showModal: false, completedTraining: { dateCompleted: moment().format('X') }});
+							});
+							
+						} else {
+							console.log('Error recreating instance:', res.data.error);
+							this.setState({ message: res.data.msg, showModal: false, completedTraining: {} });
+						}
+					}).catch(err => {
+						console.log('Error recreating instance:', err);
+						this.setState({ message: 'Uh oh! Something went wrong!', showModal: false, completedTraining: { dateCompleted: moment().format('X') }});
+					});
+				};
+				
+				const addNewsfeedItem = () => {
+					const newsfeedItem = {
+						__user: employee._id,
+						__organization: this.props.organization._id,
+						__trainingInstance: instance._id,
+						trainingName: instance.name,
+						organizationName: this.props.organization.name,
+						userFirstName: employee.fname,
+						userLastName: employee.lname,
+						activityType: 'trainingCompleted',
+						completedTrainings: [ instance._id ],
+						numberOfCompletedTrainings: 1
+					};
+					API.newsfeed.create(newsfeedItem).then(res => {
+						if(res.data.success) {
+							console.log('Newsfeed Item created:', res.data.newsfeedItem);
+							this.getEmployee();
+							this.setState({ message: '', showModal: false, completedTraining: { dateCompleted: moment().format('X') } });
+						} else {
+							console.log('Error creating newsfeedItem:', res.data.error);
+							this.setState({ message: res.data.msg, showModal: false, completedTraining: { dateCompleted: moment().format('X') }});
+						}
+					}).catch(err => {
+						console.log('Error creating newsfeed Item:', err);
+						this.setState({ message: 'Uh Oh! Something went wrong!', showModal: false, completedTraining: { dateCompleted: moment().format('X') }});
+					});
+				};
+				
+				if(instance.hours > 0 && this.state.employee.trackHours) {
+					API.auth.addTrainingHours({ userID: employee._id, hours: instance.hours}).then(res => {
+						if(res.data.success) {
+							if(instance.recurring) {
+								recreateInstance(instance);
+							} else {
+								addNewsfeedItem();
+							}
+						} else {
+							console.log('Error adding hours to eomployee:', res.data.error);
+							this.setState({ message: res.data.msg, showModal: false, completedTraining: {} });
+						}
+					}).catch(err => {
+						console.log('Error adding hours to employee:', err);
+						this.setState({ message: 'Uh Oh! Something went wrong!', showModal: false, completedTraining: { dateCompleted: moment().format('X') } });
+					});
+				} else if(instance.recurring) {
+					recreateInstance(instance);
+				} else {
+					addNewsfeedItem();
+				}
+								
+			} else {
+				console.log('Error updating training instance:', res.data.error);
+				this.setState({ message: res.data.msg, showModal: false, completedTraining: { dateCompleted: moment().format('X') } });
+			}
+		}).catch(err => {
+			console.log('Error updating training instance:', err);
+			this.setState({ message: 'Uh Oh! Something went wrong!', showModal: false, completedTraining: { dateCompleted: moment().format('X') } });
+		});
 	};
 	
 	employeeRole = () => {
@@ -198,20 +321,66 @@ class ViewEmployee extends React.Component {
 	
 	onBlur = e => {
 		alert(this.state.test);
-	}
+	};
+	
+	changeFilter = filter => {
+		const { filters } = this.state;
+		filters.overdue = filters.upcoming = filters.completed = filters.none = false;
+		filters[filter] = true;
+		this.setState({ filters: filters });
+	};
+	
+	getSnapshot = (days = 30) => {
+		const { employee } = this.state;
+		
+		const cutOff = moment().add(days, 'days').format('X');
+		let data = {
+			upcomingCount: 0,
+			upcomingTrainings: [],
+			overdueCount: 0,
+			overdueTrainings: [],
+			completed: 0,
+			completedTrainings: []
+		};
+		
+		employee.trainingInstances.forEach(training => {
+			
+			if(training.dueDate < cutOff && !training.completed) {
+				data.upcomingCount++;
+				data.upcomingTrainings.push(training);
+			} else if(training.dueDate < moment().format('X') && !training.completed) {
+				data.overdueCount++;
+				data.overdueTrainings.push(training);
+			} else if(training.completed) {
+				data.completed++;
+				data.completedTrainings.push(training);
+			}
+		});
+		
+		return data;
+	};
 
 	closeMessageModal = () => {
 		this.setState({ message: '' })
 	};
 
 	render() {
-		const { message, employee, editEmployee, dropdown, trainings, showModal } = this.state;
+		const { message, employee, editEmployee, dropdown, trainings, showModal, filters } = this.state;
+		
+		const snapshot = this.getSnapshot();
+		console.log('Snapshot', snapshot);
 		
 		let trainingInstancesIDs = [];
 		employee.trainingInstances.forEach(training => {
 			trainingInstancesIDs.push(training.__training);
 		});
 		let filteredTrainings = trainings.filter(training => ( trainingInstancesIDs.indexOf(training._id) < 0 || !training.recurring ));
+		
+		let filteredTrainingInstances = employee.trainingInstances;
+		if(filters.upcoming) filteredTrainingInstances = snapshot.upcomingTrainings;
+		if(filters.overdue) filteredTrainingInstances = snapshot.overdueTrainings;
+		if(filters.completed) filteredTrainingInstances = snapshot.completedTrainings;
+		if(filters.none) filteredTrainingInstances = employee.trainingInstances;
 		
 		return (
 			<div>
@@ -407,41 +576,67 @@ class ViewEmployee extends React.Component {
 
 			{/* Employee Trainings  */}
     		<div id = "revealTrainings" className ="card-reveal">
-			  <div className = "row">
-			  <div className = "col s12">
-      		   <span className ="card-title grey-text text-darken-4"><h4 id = "trainingsHeader">Trainings</h4><i id='closeIcon' onClick={() => this.setState({ dropdown: false })} className = "material-icons right">close</i></span>
-			  </div>
-			 
-			{/* Add Training Button */}
-			<div className = "col s3">
-				<h6 className = "hours"><strong>Current Hours: {employee.currentHours}</strong></h6>
-			</div>
-			{/* <div className = "col s2">
-			   <h6 className = "hours"><strong>Hours Still Needed: 4</strong></h6>
-			</div> */}
-			<div className = "col s3">
-				<h6 className="hours"><strong>Total Hours Required: {employee.totalHours}</strong><i className = "material-icons left">edit</i></h6>
-			</div>
-			<div className = "col s3">
-			  <h6 className = "hours"><strong>Hours Due: { employee.hoursResetDate > 0
-				  	? <span>{moment(employee.hoursResetDate, 'X').format('MMM DD, YYYY')}</span>
-				  	: <span>N/A</span>
-				  	}
-				  </strong>
-			  </h6>
-			</div>
-          	<div id='add-training-container' className="col s3">
-                <span id = "trainingAdd" className="waves-effect waves-light btn float-right" onClick={this.toggleTrainingsDropdown}>
-                  <i className="material-icons left">event</i>Add Training
-                </span>
-                 { dropdown &&
-				    <ul className='add-training-dropdown-wrapper'>
-				    	{filteredTrainings.map(training =>
-					    	<li key={training._id} className='training-dropdown-item' onClick={e => this.addTrainingInstance(training)}>{training.name} { training.trainingCode && <span>({training.trainingCode})</span>}</li>
-					    )}
-				    </ul>
-				}
+    		
+    			
+    		
+			  	<div className = "row center">
+			  	
+			  	<div className = "col s12">
+	      		  <span className ="card-title grey-text text-darken-4">
+	      		   	<h4 id = "trainingsHeader">Trainings</h4>
+		  		   	<i id='closeIcon' onClick={() => this.setState({ dropdown: false })} className = "material-icons right">close</i>
+	      		  </span>
+				  </div>
+				  	<div className = "col s3 snapshot-action" onClick={() => this.changeFilter('overdue')}>
+						<h6 className = "hours"><strong>Overdue Trainings: {snapshot.overdueCount}</strong>{/*<i className = "material-icons left">priority_high</i>*/}</h6>
+					</div>
+					<div className = "col s3 snapshot-action" onClick={() => this.changeFilter('upcoming')}>
+						<h6 className="hours"><strong>Upcoming Trainings: {snapshot.upcomingCount}</strong>{/*<i className = "material-icons left">notification_important</i>*/}</h6>
+					</div>
+					<div className = "col s3 snapshot-action" onClick={() => this.changeFilter('completed')}>
+					  <h6 className = "hours"><strong>Completed Trainings: {snapshot.completed}</strong>{/*<i className = "material-icons left">check</i>*/}</h6>
+					</div>
+					<div className = "col s3 snapshot-action" onClick={() => this.changeFilter('none')}>
+					  <h6 className = "hours"><strong>Total Trainings: {employee.trainingInstances.length}</strong>{/*<i className = "material-icons left">check</i>*/}</h6>
+					</div>
+			  
+				  
+	      
 		    </div>
+		    
+		    <div className = "row center">
+				 
+				{/* Add Training Button */}
+				<div className = "col s3">
+					<h6 className = "hours"><strong>Current Hours: {employee.currentHours}</strong></h6>
+				</div>
+				{/* <div className = "col s2">
+				   <h6 className = "hours"><strong>Hours Still Needed: 4</strong></h6>
+				</div> */}
+				<div className = "col s3">
+					<h6 className="hours"><strong>Total Hours Required: {employee.totalHours}</strong>{/*<i className = "material-icons left">edit</i>*/}</h6>
+				</div>
+				<div className = "col s3">
+				  <h6 className = "hours"><strong>Hours Due: { employee.hoursResetDate > 0
+					  	? <span>{moment(employee.hoursResetDate, 'X').format('MMM DD, YYYY')}</span>
+					  	: <span>N/A</span>
+					  	}
+					  </strong>
+				  </h6>
+				</div>
+				
+	          	<div id='add-training-container' className="col s3">
+	                <span id = "trainingAdd" className="waves-effect waves-light btn float-right" onClick={this.toggleTrainingsDropdown}>
+	                  <i className="material-icons left">event</i>Add Training
+	                </span>
+	                 { dropdown &&
+					    <ul className='add-training-dropdown-wrapper'>
+					    	{filteredTrainings.map(training =>
+						    	<li key={training._id} className='training-dropdown-item' onClick={e => this.addTrainingInstance(training)}>{training.name} { training.trainingCode && <span>({training.trainingCode})</span>}</li>
+						    )}
+					    </ul>
+					}
+			    </div>
 		    </div>
 
 				
@@ -472,7 +667,7 @@ class ViewEmployee extends React.Component {
 				</div>
 			  </li>*/}
 				{
-					employee.trainingInstances.map(training => 
+					filteredTrainingInstances.map(training => 
 						<li key={training._id} className='collection-item avatar row valign-wrapper employeeCollectionItem'>
 							<div className='avatar-wrapper flex-center'>
 								<i className='material-icons'>event_note</i>
@@ -512,10 +707,17 @@ class ViewEmployee extends React.Component {
 					)
 				}
 				{
-					employee.trainingInstances.length === 0 &&
-						<li className='collection-item avatar row valign-wrapper employeeCollectionItem'>
-							<div id='noTrainings'>No trainings have been assigned to this user.  Click the button above to add trainings!</div>
-						</li>
+					employee.trainingInstances.length === 0
+						? (
+							<li className='collection-item avatar row valign-wrapper employeeCollectionItem'>
+								<div id='noTrainings'>No trainings have been assigned to this user.  Click the button above to add trainings!</div>
+							</li>
+						) : filteredTrainingInstances.length === 0
+						? (
+							<li className='collection-item avatar row valign-wrapper employeeCollectionItem'>
+								<div id='noTrainings'>No results to show!</div>
+							</li>
+						) : null
 				}
 		  </ul>
  		</div>
