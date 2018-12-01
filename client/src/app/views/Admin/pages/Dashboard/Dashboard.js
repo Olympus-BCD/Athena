@@ -155,8 +155,10 @@ class DashboardPage extends React.Component {
 			upcomingEmployees: [],
 			overdueCount: 0,
 			overdueEmployees: [],
-			completed: 0,
-			completedEmployees: []
+			completedCount: 0,
+			completedEmployees: [],
+			hoursUpcomingCount: 0,
+			hoursUpcomingEmployees: []
 		};
 
 		employees.forEach(employee => {
@@ -169,12 +171,16 @@ class DashboardPage extends React.Component {
 					} else if(training.dueDate < moment().format('X') && !training.completed) {
 						data.overdueCount++;
 						data.overdueEmployees.push(employee);
-					} else if(training.completed) {
-						data.completed++;
+					} else if(training.completed && training.dateCompleted >= moment().subtract(days, 'days').format('X')) {
+						data.completedCount++;
 						data.completedEmployees.push(employee);
 					}
 					
 				});
+			}
+			if(employee.active && employee.trackHours && employee.hoursResetDate < cutOff) {
+				data.hoursUpcomingCount++;
+				data.hoursUpcomingEmployees.push(employee);
 			}
 		});
 		
@@ -205,7 +211,7 @@ class DashboardPage extends React.Component {
                     <div className="row">
                       <div className="col s12 valign-wrapper">
                         <i className="material-icons medium transparent">warning</i>{" "}
-                        <span className="trainings-overdue-qty">2</span><span className="trainings-overdue-content"> Employees Have Trainings Overdue </span>
+                        <span className="trainings-overdue-qty">{snapshot.overdueCount}</span><span className="trainings-overdue-content"> Employees Have Trainings Overdue </span>
                       </div>                                        
                     </div>
                   </li>
@@ -213,7 +219,7 @@ class DashboardPage extends React.Component {
                   <div className="row">
                       <div className="col s12 valign-wrapper">
                         <i className="material-icons medium transparent">notification_important</i>{" "}
-                        <span className="trainings-upcoming-qty">6</span><span className="trainings-upcoming-content">Trainings Upcoming</span>
+                        <span className="trainings-upcoming-qty">{snapshot.upcomingCount}</span><span className="trainings-upcoming-content">Trainings Upcoming</span>
                       </div>                                        
                     </div>
                   </li>
@@ -221,7 +227,7 @@ class DashboardPage extends React.Component {
                   <div className="row">
                       <div className="col s12 valign-wrapper">
                         <i className="material-icons medium transparent">check</i>{" "}
-                        <span className="trainings-complete-qty">0</span><span className="trainings-complete-content">Trainings Complete</span>
+                        <span className="trainings-complete-qty">{snapshot.completedCount}</span><span className="trainings-complete-content">Trainings Complete</span>
                       </div>                    
                     </div>
                   </li>
@@ -229,7 +235,7 @@ class DashboardPage extends React.Component {
                   <div className="row">
                       <div className="col s12 valign-wrapper">
                         <i className="material-icons medium transparent">schedule</i>
-                        <span className="trainings-due-qty">3</span><span className="trainings-due-content">Employees Have Trainings Due</span>                       
+                        <span className="trainings-due-qty">{snapshot.hoursUpcomingCount}</span><span className="trainings-due-content">Employees Have Trainings Due</span>                       
                       </div>                                        
                   </div>
                   </li>
