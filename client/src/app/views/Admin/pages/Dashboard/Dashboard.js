@@ -213,7 +213,7 @@ class DashboardPage extends React.Component {
                   <li class="collection-item avatar black-text">
                   <div className="row">
                       <div className="col s4">
-                        <i class="material-icons circle yellow">schedule</i>{" "}
+                        <i class="material-icons medium transparent">schedule</i>{" "}
                       </div>
                       <div className="col s4">       
                         <span class="title">3</span>
