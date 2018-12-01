@@ -2,13 +2,12 @@
 import React from "react";
 
  // Materialize Imports
- import Modal from "react-materialize";
 
 // CSS & Local Imports
-import "./ViewEmployees.css";
 import API from '../../../../../../../utils/API';
 import EmployeeListItem from './EmployeeListItem';
 import EmployeesSubHeader from '../../EmployeesSubHeader';
+import "./ViewEmployees.css";
 
 class ViewEmployees extends React.Component {
 	
@@ -39,7 +38,9 @@ class ViewEmployees extends React.Component {
 			}
 		}).catch(err => {
 			console.log(err);
+			
 			this.setState({ message: 'Uh Oh! Something went wrong!' });
+			
 		});
 	};
 	
