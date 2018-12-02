@@ -38,6 +38,6 @@
     "build": "cd client && npm run build",
     "heroku-postbuild": "npm run build"
   },
-  "author": "Cody Thompson",
+  "author": "Cody Thompson, Brandy Nicholson, Dustin McGilvray",
   "license": "ISC"
 }
