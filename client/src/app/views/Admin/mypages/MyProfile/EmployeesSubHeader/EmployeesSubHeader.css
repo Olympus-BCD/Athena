@@ -1,0 +1,60 @@
+/* ============ Dustin's Design Notes ============*/
+
+/*Athena Font from Google Font*/
+/* font-family: 'Cinzel Decorative', cursive; */
+
+/*Header Font from Google Font*/
+/*font-family: 'Raleway', sans-serif;
+	font-weight: 500; */
+
+/*Body Font from Google Font*/
+/* font-family: 'Raleway', sans-serif; */
+
+/*Text and Icon Color*/
+/* color:white; */
+
+/*Button Styles*/
+/* background: rgba(128, 0, 128, 0.596); */
+/* border-radius: 10px; */
+
+/*Card Styles*/
+/* background: rgba(0, 0, 0, 0.322); */
+/* border-radius: 15px; */
+
+/*Components on top of Card*/
+/* background: #fafafa52 !important; */ /* NOTE: May need to adjust Opacity depending on the situation*/
+
+/*Hover Background Color*/
+/* background: rgba(110, 57, 90, 0.39); */
+
+/* =============================================*/
+
+.subheader-wrapper {
+	min-height: 75px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.subheader-wrapper .valign-wrapper {
+	margin: 0;
+	padding: 0 2em;
+	height: 100%;
+	width: 100%;
+}
+
+.float-right {
+	float: right;
+}
+
+#search-close-icon {
+	top: 0.25em;
+}
+
+#add-employee-button {
+	background: rgba(128, 0, 128, 0.596);
+	border-radius: 10px;
+}
+.back{
+	color:white;
+}

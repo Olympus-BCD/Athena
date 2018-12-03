@@ -4,7 +4,8 @@ import Dropzone from "react-dropzone";
 import API from '../../../../utils/API';
 import FileIcon from "./fileIcon.png";
 import "./UploadProfilePic.css";
-import ProfilePic from "./AvatarPlaceholder.png"
+import ProfilePic from "./AvatarPlaceholder.png";
+import loadingImage from './loading-image.gif';
 
 const zoneStyle = {
   width:"150px",
@@ -17,8 +18,20 @@ class Upload extends Component {
    
     state = {
         fileUrl:"",
-        message: ''
+        message: '',
+        uploading: false
     }
+    
+/*
+    componentDidMount() {
+	    this.setState({ uploading: false });
+    }
+*/
+    
+    upload = files => {
+	    this.setState({ uploading: true });
+	    this.handleDrop(files);
+    };
 
     handleDrop = files => {
         // Push all the axios request promise into a single array
@@ -35,7 +48,7 @@ class Upload extends Component {
             headers: { "X-Requested-With": "XMLHttpRequest" },
           }).then(response => {
             const data = response.data;
-            this.setState({fileUrl: data.secure_url})
+            this.setState({fileUrl: data.secure_url, uploading: false})
             console.log('Return data:', data);
             
           }).catch(err => {
@@ -45,7 +58,19 @@ class Upload extends Component {
 		
 		// Once all the files are uploaded 
 		axios.all(uploaders).then(() => {
-			const { training } = this.props;
+			const { employee } = this.props;
+			employee.imageURL = this.state.fileUrl;
+			API.auth.update(employee).then(res => {
+				if(res.data.success) {
+// 					this.props.history.push(this.props.redirectURL);
+					this.props.getEmployee();
+				} else {
+					console.log('Error updating user.');
+					console.log(res.data.msg, res.data.error);
+				}
+			}).catch(err => {
+				console.log('Error updating user:', err);
+			});
 			
 			// API.trainings.addDocument(this.state.fileUrl).then(res => {
 			// 	if(res.data.success) {
@@ -64,18 +89,35 @@ class Upload extends Component {
       }
     
   render() {
+	
+	const { user, employee } = this.props;
+	
+	const style = {
+		backgroundImage: `url(${employee.imageURL})`,
+		height: '100%',
+		width: '100%',
+		backgroundPosition: 'center',
+		backgroundSize: 'cover',
+		borderRadius: '50%'
+	};
+	
     return (
       <div>
+      	{ this.state.uploading &&
+	      	<div id='loading-img'>
+	      		<img src={loadingImage} alt='loading image' />
+	      	</div>
+      	}
         
         <Dropzone
-           onDrop={this.handleDrop}
+           onDrop={this.upload}
            multiple
            style={zoneStyle}
            >
-          <img src = {ProfilePic} alt="default"/>
+          <div id='profile-img' style={style}></div>
          {/* <p>Set Profile </p>
          <p id ="dropzoneText"> upload</p> */}
-         {/* <img src = {FileIcon} alt="file" /> */}
+         {/* <img src = {ProfilePic} alt="file" /> */}
         </Dropzone>
            
         </div>
@@ -84,4 +126,12 @@ class Upload extends Component {
 }
 
 //https://res.cloudinary.com/blnicholson/image/upload/v1543546473/qbswekpy1p0y1cknkkpe.png (default Avatar)
+/*
+	Loading Images:
+	https://www.twotreesny.com/images/loader.gif	// thin circle
+	https://media.giphy.com/media/3o7TKtnuHOHHUjR38Y/source.gif		// generic circle
+	https://i.gifer.com/embedded/download/DEh.gif	//	party stickers
+	https://gifimage.net/wp-content/uploads/2018/04/loading-animated-gif-transparent-background-4.gif	// twister
+	http://sfdcmonkey.com/wp-content/uploads/2016/12/slds_spinner_brand.gif	// bouncing balls
+*/
 export default Upload;

@@ -56,7 +56,8 @@ let UserSchema = new Schema({
 		type: String
 	},
 	imageURL: {
-		type: String
+		type: String,
+		default: 'https://res.cloudinary.com/blnicholson/image/upload/v1543546473/qbswekpy1p0y1cknkkpe.png'
 	},
 	hireDate: {
 		type: Number,

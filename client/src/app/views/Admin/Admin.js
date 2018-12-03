@@ -5,6 +5,7 @@ import { BrowserRouter as Router, Route, Link, Switch } from 'react-router-dom';
 import MainNav from '../components/MainNav';
 
 import { DashboardPage, EmployeesPage, TrainingsPage, ReportsPage, NetworkPage } from './pages';
+import { MyDashboardPage, MyProfilePage } from './mypages';
 /*
 import EmployeesPage from './pages/Employees/Employeess';
 import TrainingsPage from './pages/Trainings/Trainingss';
@@ -33,6 +34,8 @@ class AdminView extends React.Component {
 						<Route path='/:org/employees' render={(props) => <EmployeesPage {...props} organization={this.props.organization} user={this.props.user} />} />
 						<Route path='/:org/reports' component={ReportsPage} />
 						<Route path='/:org/network' component={NetworkPage} />
+						<Route path='/:org/mydashboard' render={(props) => <MyDashboardPage {...props} organization={this.props.organization} user={this.props.user} />} />
+						<Route path='/:org/myprofile' render={(props) => <MyProfilePage {...props} organization={this.props.organization} user={this.props.user} />} />
 						<Route render={(props) => <DashboardPage {...props} organization={this.props.organization} user={this.props.user} />} />
 					</Switch>
 				</div>

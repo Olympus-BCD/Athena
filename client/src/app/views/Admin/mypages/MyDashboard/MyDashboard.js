@@ -17,7 +17,7 @@ import { Icon } from "react-materialize";
 import PageHeader from "./../../../components/PageHeader/PageHeader";
 import Calendar from "../../../components/Calendar/Calendar";
 import Clock from "./Clock";
-import "./Dashboard.css";
+import "./MyDashboard.css";
 
 import API from '../../../../../utils/API';
 
@@ -27,12 +27,7 @@ class DashboardPage extends React.Component {
 		message: '',
 		trainings: [],
 		newsfeedItems: [],
-		employees: [],
-		timeframe: {
-			weekly: false,
-			thirtyDays: true
-		},
-		currentTimeframe: 'thirtyDays'
+		employees: []
 	};
 	
 	componentDidMount() {
@@ -79,35 +74,6 @@ class DashboardPage extends React.Component {
 		});
 	};
 	
-	addAnnouncement = () => {
-		const newsfeedItem = {
-			__user: this.props.user._id,
-			__organization: this.props.organization._id,
-			title: this.state.title,
-			body: this.state.body,
-			activityType: 'announcement'
-		};
-		API.newsfeed.create(newsfeedItem).then(res => {
-			if(res.data.success) {
-				this.setState({ title: '', body: '' });
-				this.getNewsfeedItems();
-			} else {
-				console.log('Error creating newsfeed item:', res.data.error);
-				this.setState({ message: res.data.msg });
-			}
-		}).catch(err => {
-			console.log('Error creating newsfeed item:', err);
-			this.setState({ message: 'Uh Oh! Something went wrong!' });
-		});
-	};
-	
-	onChange = e => {
-		const { name, value } = e.target;
-		const state = this.state;
-		state[name] = value;
-		this.setState(state);
-	};
-	
 	renderNewsfeedItem = item => {
 		const { activityType } = item;
 // 		console.log(activityType, item);
@@ -120,11 +86,10 @@ class DashboardPage extends React.Component {
 					<CollapsibleItem header = {header} className="border-bottom z-depth-0" icon = 'person_pin'>
 		      			<div className='white-text'>
 		      				<Link className='white-text' to={`/${this.props.organization.name.replace(/\s/g, '')}/employees?id=${item.__user}`}>
-		      					<div className='newsfeed-img' style={{ backgroundImage: `url(${item.__user.imageURL})` }}></div>
 								<h5>{`${item.userFirstName} ${item.userLastName}`}</h5>
 							</Link>
-							<p className='clear'>Has joined <b>{this.props.organization.name}</b>!</p>
-							<p className='newsfeed-date'>- {moment(item.date).format('MMMM DD, YYYY')} -</p>
+							<p>Has joined <b>{this.props.organization.name}</b>!</p>
+							<p>{moment(item.date).format('MMMM DD, YYYY')}</p>
 						</div>
 					</CollapsibleItem>
 				);
@@ -135,25 +100,23 @@ class DashboardPage extends React.Component {
 					<CollapsibleItem header = {header} className="border-bottom z-depth-0" icon = 'how_to_reg'>
 		      			<div className='white-text'>
 							<Link className='white-text' to={`/${this.props.organization.name.replace(/\s/g, '')}/employees?id=${item.__user}`}>
-								<div className='newsfeed-img' style={{ backgroundImage: `url(${item.__user.imageURL})` }}></div>
 								<h5>{`${item.userFirstName} ${item.userLastName}`}</h5>
 							</Link>
-							<p className='clear'>Has joined <b>{this.props.organization.name}</b> and has completed {item.numberOfCompletedTrainings} trainings!</p>
-							<p className='newsfeed-date'>- {moment(item.date).format('MMMM DD, YYYY')} -</p>
+							<p>Has joined <b>{this.props.organization.name}</b> and has completed {item.numberOfCompletedTrainings} trainings!</p>
+							<p>{moment(item.date).format('MMMM DD, YYYY')}</p>
 						</div>
 					</CollapsibleItem>
 				);
 				break;
 			case 'trainingCompleted':
 				return(
-					<CollapsibleItem header = {`Congrats, ${item.__user.fname}!`} icon = 'assignment_turned_in'>
+					<CollapsibleItem header = {`Congrats, ${item.userFirstName}!`} icon = 'assignment_turned_in'>
 		      			<div className='white-text'>
-		      				<Link className='white-text' to={`/${this.props.organization.name.replace(/\s/g, '')}/employees?id=${item.__user._id}`}>
-		      					<div className='newsfeed-img' style={{ backgroundImage: `url(${item.__user.imageURL})` }}></div>
-								<h5>{`${item.__user.fname} ${item.__user.lname}`}</h5>
+		      				<Link className='white-text' to={`/${this.props.organization.name.replace(/\s/g, '')}/employees?id=${item.__user}`}>
+								<h5>{`${item.userFirstName} ${item.userLastName}`}</h5>
 							</Link>
-							<p className='clear'>completed <b>{item.trainingName}!</b></p>
-							<p className='newsfeed-date'>- {moment(item.date).format('MMMM DD, YYYY')} -</p>
+							<p>completed <b>{item.trainingName}!</b>!</p>
+							<p>{moment(item.date).format('MMMM DD, YYYY')}</p>
 						</div>
 					</CollapsibleItem>
 				);
@@ -166,18 +129,8 @@ class DashboardPage extends React.Component {
 		      				<Link className='white-text' to={`/${this.props.organization.name.replace(/\s/g, '')}/employees?id=${item.__user}`}>
 								<h5>{`${item.userFirstName} ${item.userLastName}`}</h5>
 							</Link>
-							<p className='clear'>created <b>{this.props.organization.name}!</b></p>
-							<p className='newsfeed-date'>- {moment(item.date).format('MMMM DD, YYYY')} -</p>
-						</div>
-					</CollapsibleItem>
-				);
-				break;
-			case 'announcement':
-				return (
-					<CollapsibleItem header={item.title} className='' icon='event_note'>
-						<div className='white-text'>
-							<p>{item.body}</p>
-							<p className='newsfeed-date'>- {moment(item.date).format('MMMM DD, YYYY')} -</p>
+							<p>created <b>{this.props.organization.name}!</b></p>
+							<p>{moment(item.date).format('MMMM DD, YYYY')}</p>
 						</div>
 					</CollapsibleItem>
 				);
@@ -196,8 +149,7 @@ class DashboardPage extends React.Component {
 	getSnapshot = (days = 30) => {
 		const { employees } = this.state;
 		
-		const cutOff = moment().add(days, 'days').endOf('day').format('X');
-		const completedCutOff = days < 8 ? moment().startOf('isoWeek').format('X') : days;
+		const cutOff = moment().add(days, 'days').format('X');
 		let data = {
 			upcomingCount: 0,
 			upcomingEmployees: [],
@@ -213,14 +165,13 @@ class DashboardPage extends React.Component {
 			if(employee.active) {
 				employee.trainingInstances.forEach(training => {
 					
-					if(training.dueDate < moment().startOf('day').format('X') && !training.completed) {
+					if(training.dueDate < moment().format('X') && !training.completed) {
 						data.overdueCount++;
 						data.overdueEmployees.push(employee);
 					} else if(training.dueDate < cutOff && !training.completed) {
 						data.upcomingCount++;
 						data.upcomingEmployees.push(employee);
-// 					} else if(training.completed && training.dateCompleted >= moment().subtract(days, 'days').format('X')) {
-					} else if(training.completed && training.dateCompleted >= completedCutOff) {
+					} else if(training.completed && training.dateCompleted >= moment().subtract(days, 'days').format('X')) {
 						data.completedCount++;
 						data.completedEmployees.push(employee);
 					}
@@ -236,25 +187,17 @@ class DashboardPage extends React.Component {
 		return data;
 	};
 	
-	changeTimeframe = e => {
-		const { timeframe } = this.state;
-		timeframe.weekly = timeframe.thirtyDays = false;
-		timeframe[e.target.id] = true;
-		this.setState({ timeframe: timeframe, currentTimeframe: e.target.id });
-	};
-	
   render() {
 	  
-    const { newsfeedItems, employees, timeframe, title, body } = this.state;
+    const { newsfeedItems, employees } = this.state;
   
-	const filteredNewsfeedItems = newsfeedItems.slice(0, 10);
+	const filteredNewsfeedItems = newsfeedItems.slice(0, 5);
 	
-	const startOfNextWorkWeek = moment().startOf('isoWeek').add(7, 'days');
-	const endOfWorkWeek = moment().endOf('isoWeek');
-	const now = moment();
-	const days = timeframe.weekly ? endOfWorkWeek.diff(now, 'days') : 30;
-	const snapshot = this.getSnapshot(days);
-		  
+	const snapshot = this.getSnapshot(); console.log('Snapshot:', snapshot);
+	  
+	console.log(filteredNewsfeedItems);
+	console.log('Employees:', employees);
+	  
     return (
       <div>
         <PageHeader organization={this.props.organization} />
@@ -262,53 +205,47 @@ class DashboardPage extends React.Component {
           <div className="snapshot-wrapper">
             <div id="snapshot-card" className="card z-depth-0 dashboard-card">
               <div id='snapshot-content' className="card-content white-text">
-                <span id='snapshot-card-title' className="card-title center-align white-text"> 
-                	<span className='timeframeLink-wrapper'>
-                		<span className={timeframe.weekly ? 'timeframeLink timeframeLink-selected' : 'timeframeLink'} id='weekly' onClick={this.changeTimeframe}>This Week </span>
-                		<span className='bar'> | </span>
-                		<span className={timeframe.thirtyDays ? 'timeframeLink timeframeLink-selected' : 'timeframeLink'} id='thirtyDays' onClick={this.changeTimeframe}>Within 30 Days</span>
-                	</span>
-                </span>                 
+                <span id='snapshot-card-title' className="card-title center-align white-text">Monthly Snapshot</span>                 
                 <ul id='snapshot-collection' className="collection">
-                  <Link to={`/${this.props.organization.name.replace(/\s/g, '')}/employees?filter=overdue&timeframe=${this.state.currentTimeframe}`}>
+                  <Link to={`/${this.props.organization.name.replace(/\s/g, '')}/employees?filter=overdue`}>
                   	<li className="collection-item avatar white-text">
 	                    <div className="row">
 	                      <div className="col s12 valign-wrapper">
 	                        <i className="material-icons medium transparent">warning</i>{" "}
-	                        <span id="trainings-overdue-qty">{snapshot.overdueCount}</span>
+	                        <span className="trainings-overdue-qty">{snapshot.overdueCount}</span>
 	                        <span className="trainings-overdue-content">Training{snapshot.overdueCount !== 1 ? 's' : null} Overdue </span>
 	                      </div>                                        
 	                    </div>
 					</li>
                   </Link>
-                  <Link to={`/${this.props.organization.name.replace(/\s/g, '')}/employees?filter=upcoming&timeframe=${this.state.currentTimeframe}`}>
+                  <Link to={`/${this.props.organization.name.replace(/\s/g, '')}/employees?filter=upcoming`}>
 	                  <li class="collection-item avatar white-text">
 	                  <div className="row">
 	                      <div className="col s12 valign-wrapper">
 	                        <i className="material-icons medium transparent">notification_important</i>{" "}
-	                        <span id="trainings-upcoming-qty">{snapshot.upcomingCount}</span>
+	                        <span className="trainings-upcoming-qty">{snapshot.upcomingCount}</span>
 	                        <span className="trainings-upcoming-content">Training{snapshot.upcomingCount !== 1 ? 's' : null} Upcoming</span>
 	                      </div>                                        
 	                    </div>
 	                  </li>
 	              </Link>
-	              <Link to={`/${this.props.organization.name.replace(/\s/g, '')}/employees?filter=completed&timeframe=${this.state.currentTimeframe}`}>
+	              <Link to={`/${this.props.organization.name.replace(/\s/g, '')}/employees?filter=completed`}>
 	                  <li className="collection-item avatar white-text">
 	                  <div className="row">
 	                      <div className="col s12 valign-wrapper">
 	                        <i className="material-icons medium transparent">check</i>{" "}
-	                        <span id="trainings-complete-qty">{snapshot.completedCount}</span>
+	                        <span className="trainings-complete-qty">{snapshot.completedCount}</span>
 	                        <span className="trainings-complete-content">Training{snapshot.completedCount !== 1 ? 's' : null} Complete</span>
 	                      </div>                    
 	                    </div>
 	                  </li>
 	              </Link>
-	              <Link to={`/${this.props.organization.name.replace(/\s/g, '')}/employees?filter=expiring&timeframe=${this.state.currentTimeframe}`}>
+	              <Link to={`/${this.props.organization.name.replace(/\s/g, '')}/employees?filter=expiring`}>
 	                  <li className="collection-item avatar white-text">
 	                  <div className="row">
 	                      <div className="col s12 valign-wrapper">
 	                        <i className="material-icons medium transparent">schedule</i>
-	                        <span id="trainings-due-qty">{snapshot.hoursUpcomingCount}</span>
+	                        <span className="trainings-due-qty">{snapshot.hoursUpcomingCount}</span>
 	                        <span className="trainings-due-content">Employee{snapshot.hoursUpcomingCount !== 1 ? 's' : null} With Expiring Hours</span>                       
 	                      </div>                                        
 	                  </div>
@@ -335,9 +272,9 @@ class DashboardPage extends React.Component {
 
                 <Collapsible id="announcement-collection"  className="z-depth-0" popout defaultActiveKey={1} >
                   <CollapsibleItem id='add-announcement' header="Add Announcement" icon="add_comment" className="z-depth-0">
-                    <Input onChange={this.onChange} name='title' value={title} s={6} label="Title" id="announcement-title-input" className="white-text z-depth-0"/>
-                    <Input onChange={this.onChange} name='body' value={body} type="textarea" className="white-text" label="Announcement" />
-                    <Button onClick={this.addAnnouncement} id="announcement-button" waves="purple" >
+                    <Input s={6} label="Title" id="announcement-title-input" className="white-text z-depth-0"/>
+                    <Input type="textarea" className="white-text" label="Announcement" />
+                    <Button id="announcement-button" waves="purple" >
                       Save<Icon right>save</Icon>
                     </Button>
                   </CollapsibleItem>
