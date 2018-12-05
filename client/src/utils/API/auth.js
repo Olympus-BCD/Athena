@@ -28,6 +28,14 @@ export default {
 	addTrainingHours: data => {
 		return axios.put('/api/auth/addhours', data);
 	},
+	search: (organizationID, queryString) => {
+		const query = { organizationID: organizationID, queryString: queryString };
+		return axios.post('/api/auth/search',  query );
+	},
+	wildcardSearch: (organizationID, queryString) => {
+		const query = { organizationID: organizationID, queryString: queryString };
+		return axios.post('/api/auth/wildcard', query );
+	},
 	test: (newEmployee, cb) => {
 		cb(newEmployee);
 	}

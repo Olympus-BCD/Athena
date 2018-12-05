@@ -9,6 +9,7 @@ module.exports = {
 			.populate('__training')
 			.populate('__user')
 */
+			.populate('__user')
 			.sort({ date: -1 })
 			.then(newsfeedItems => res.json({ success: true, newsfeedItems: newsfeedItems }))
 			.catch(err => res.status(422).json({ success: false, msg: 'Failed to find newsfeed items', error: err }));

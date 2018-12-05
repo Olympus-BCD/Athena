@@ -8,6 +8,7 @@ import { SideNav, SideNavItem } from "react-materialize";
 // CSS Imports
 import "./MainNav.css";
 import AvatarPlaceholder from "./AvatarPlaceholder.png";
+import UploadProfilePic from '../UploadProfilePic';
 
 class MainNav extends React.Component {
 	
@@ -19,7 +20,8 @@ class MainNav extends React.Component {
 	                className="mainNav-bg white-text"
                 >
                 	<div className='userprofile-organization-header white-text'>{this.props.organization.name}</div>
-                    <SideNavItem
+                	<UploadProfilePic organization={this.props.organization} isOrg={true} user={this.props.user} />
+                    {/*<SideNavItem
                         userView 
                         id='userProfile'
                         user={{
@@ -36,7 +38,7 @@ class MainNav extends React.Component {
 			                    </span>,
 	                        email: <span className='blk'>{this.props.user.username}</span>
                         }}
-                    />
+                    />*/}
 					<span className="logout-wrapper">
                     	<div id="logout-button" className="btn-flat center white-text" onClick={this.props.logout}>Logout</div>
                     </span>
@@ -61,12 +63,15 @@ class MainNav extends React.Component {
 					</Link>
 					
                     <SideNavItem divider />
-                    <SideNavItem subheader className="mainNav-header">{this.props.user.username.toUpperCase()}</SideNavItem>
-                    <SideNavItem href='#!icon' icon='dashboard'>My Dashboard</SideNavItem>
-                    <SideNavItem href='#!second' icon='person'>My Profile</SideNavItem> 
+                    <SideNavItem subheader className="mainNav-header">{this.props.user.fname}</SideNavItem>
+                    {/*<Link className='no-padding mainNav-link' to={`/${this.props.organization.name.replace(' ', '')}/mydashboard`}>
+                    	<SideNavItem icon='dashboard'>My Dashboard</SideNavItem>
+                    </Link>*/}
+                    <Link className='no-padding mainNav-link' to={`/${this.props.organization.name.replace(' ', '')}/myprofile`}>
+                    	<SideNavItem icon='person'>My Profile</SideNavItem> 
+                    </Link>
                     <SideNavItem href='#!second' icon='event_note'>My Trainings</SideNavItem>
                     <SideNavItem href='#!second' icon='folder'>My Documents</SideNavItem>
-                    <SideNavItem divider />
                     <SideNavItem copyrights= "Athena" id='side-nav-footer' className="mainNav-footer"><Link to='/' target='_blank' >Athena</Link></SideNavItem>
                </SideNav>
 		);

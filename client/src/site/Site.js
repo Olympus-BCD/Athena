@@ -112,10 +112,7 @@ class Site extends Component {
                   <h5 className="center">Easy to work with</h5>
 
                   <p className="light">
-                    We have provided detailed documentation as well as specific
-                    code examples to help new users get started. We are also
-                    always open to feedback and can answer any questions a user
-                    may have about Materialize.
+                   Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam congue gravida magna, non venenatis ligula interdum in. Duis ut libero lorem. Duis id pulvinar quam, id auctor ex. Cras ut urna non lorem scelerisque congue. Cras quis ex lacus.
                   </p>
                 </div>
               </div>
@@ -207,9 +204,7 @@ class Site extends Component {
                 <h5 className="white-text">Company Bio</h5>
                 <p className="grey-text text-lighten-4">
                   We are a team of college students working on this project like
-                  it's our full time job. Any amount would help support and
-                  continue development on this project and is greatly
-                  appreciated.
+                  it's our full time job.
                 </p>
               </div>
             </div>

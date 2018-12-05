@@ -50,6 +50,14 @@ module.exports = {
 			.catch(err => {
 				res.json({ success: false, msg: 'Uh Oh! Something went wrong! Unable to validate organization.', error: err });
 			});
+	},
+	update: (req, res) => {
+		console.log('Org:', req.body);
+		Organization
+// 			.findOneAndUpdate({ _id: req.body._id }, { $set: { imageURL: req.body.imageURL }}, { new: true })
+			.findOneAndUpdate({ _id: req.body._id }, req.body, { new: true })
+			.then(user => res.json({ success: true, organization: organization }))
+			.catch(err => res.status(422).json({ success: false, msg: 'Failed to update organization.', error: err }));
 	}
 };
 
