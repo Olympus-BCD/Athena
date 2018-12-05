@@ -243,6 +243,39 @@ class DashboardPage extends React.Component {
 						});
 					}
 				});
+				
+				events.push({
+					title: `Hours due for ${employee.fname} ${employee.lname}`,
+					type: 'employee-hours-due',
+					start: moment(employee.hoursResetDate, 'X').format('MMMM DD, YYYY'),
+					end: moment(employee.hoursResetDate, 'X').format('MMMM DD, YYYY'),
+					allDay: false,
+					className: 'calendar-event event-hours-due'
+				});
+				
+				if(moment(employee.hireDate, 'X').year() != moment().year() && employee.hireDate != 0) {
+					const mmmmdd = moment(employee.hireDate, 'X').format('MMMM DD');
+					const yyyy = moment().year();
+					const anniversary = `${mmmmdd}, ${yyyy}`;
+					const diff = moment(anniversary, 'MMMM DD, YYYY').diff(moment(), 'years');
+					events.push({
+						title: `${diff} Year Anniversary: ${employee.fname} ${employee.lname}`,
+						type: 'employee-anniversary',
+						start: anniversary,
+						end: anniversary,
+						allDay: false,
+						className: 'calendar-event event-employee-anniversary'
+					});
+				} else if(employee.hireDate != 0) {
+					events.push({
+						title: `Hired ${employee.fname} ${employee.lname}`,
+						type: 'employee-hired',
+						start: moment(employee.hireDate, 'X').format('MMMM DD, YYYY'),
+						end: moment(employee.hireDate, 'X').format('MMMM DD, YYYY'),
+						allDay: false,
+						className: 'calendar-event event-employee-hired'
+					});
+				}
 			}
 		});
 		
@@ -312,7 +345,7 @@ class DashboardPage extends React.Component {
 	const snapshot = this.getSnapshot(days);
 	
 	const events = this.getCalendarEvents();
-	console.log(events);
+	console.log('Events:', events);
 		  
     return (
       <div>

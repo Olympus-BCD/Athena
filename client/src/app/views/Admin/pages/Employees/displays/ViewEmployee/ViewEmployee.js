@@ -447,39 +447,39 @@ class ViewEmployee extends React.Component {
 				<div id = "cardInfo" className = "card">
 				  <div id = "infoContainer" className = "container">
 			      	<div className = "row">
-				  		<div className = "col s4">
+				  		<div className = "col s4 employee-form-container">
 				   	{
 					 this.state.editName
-					 ?	<form onSubmit={this.onSubmit}>
+					 ?	<form className='employee-form' onSubmit={this.onSubmit}>
 						  <div id = "fname" className = "input-field col s5">
 							<input type='text' name='fname' value={editEmployee.fname} onChange={this.onChange} />
-							<span onClick={this.cancel}><i class="material-icons">clear</i> </span>
-							<button className = "save" type='submit'>Save</button>
 						  </div>
 						  <div id="lname" className="input-field col s5">
 							<input type='text' name='lname' value={editEmployee.lname} onChange={this.onChange} />
 						  </div>
+						  <span className='close-btn' onClick={this.cancel}><i class="material-icons">clear</i> </span>
+						  <button className = "save" type='submit'>Save</button>
 						</form>
-					:	<div>
+					:	<div onClick={() => this.setState({ editName: true })}>
 							<h6>{/*(employee.fname && employee.lname) ? `${employee.fname} ${employee.lname}` : 'unknown'*/}{employee.fname} {employee.lname}
-							<span onClick={() => this.setState({ editName: true })}><i id="editIcon" className = "material-icons left">edit</i></span>
+							<span ><i id="editIcon" className = "material-icons left">edit</i></span>
 							</h6>
 						</div>
 					}
 				</div>
 
 				{/*Employee Position*/}
-				<div className = "col s4">
+				<div className = "col s4 employee-form-container">
 				{
 					this.state.editTitle
-					?  <form onSubmit={this.onSubmit}>
+					?  <form className='employee-form' onSubmit={this.onSubmit}>
 							<div id = "position" className = "input-field col s5">
-							<input type='text' name='title' value={editEmployee.title} onChange={this.onChange} />
-							<span onClick={this.cancel}><i class="material-icons">clear</i> </span>
-							<button className = "save" type='submit'>Save</button>
+								<input type='text' name='title' value={editEmployee.title} onChange={this.onChange} />
 							</div>
+								<span className='close-btn' onClick={this.cancel}><i class="material-icons">clear</i> </span>
+								<button className = "save" type='submit'>Save</button>
 						</form>
-					:   <div>
+					:   <div onClick={() => this.setState({ editTitle: true })}>
 							<h6>Position: 
 								<span>  { employee.title
 											? <span>{employee.title}</span>
@@ -487,26 +487,26 @@ class ViewEmployee extends React.Component {
 										}
 								</span>
 							{/*<h6>Position: <span value='hey' contenteditable="true" onBlur={this.onBlur} onInput={this.holla}>{employee.title}</span>*/}
-							<span onClick={() => this.setState({ editTitle: true })}><i id="editIcon" className = "material-icons left">edit</i></span>
+							<span ><i id="editIcon" className = "material-icons left">edit</i></span>
 							</h6>
 						</div>	
 				}
 				</div>
 
 				{/* Username */}
-				<div className = "col s4">
+				<div className = "col s4 employee-form-container">
 				{
 					this.state.editUsername
-					?	<form onSubmit={this.onSubmit}>
-					    <div id = "userName" className = "input-field col s5">
-							<input type='text' name='username' value={editEmployee.username} onChange={this.onChange} />
-							<span onClick={this.cancel}><i class="material-icons">clear</i> </span>
-							<button className = "save" type='submit'>Save</button>
+					?	<form className='employee-form' onSubmit={this.onSubmit}>
+					    	<div id = "userName" className = "input-field col s5">
+								<input type='text' name='username' value={editEmployee.username} onChange={this.onChange} />
 							</div>
+							<span className='close-btn' onClick={this.cancel}><i class="material-icons">clear</i> </span>
+							<button className = "save" type='submit'>Save</button>
 						</form>
-					:	<div>
+					:	<div onClick={() => this.setState({ editUsername: true })}>
 							<h6>Username: {employee.username}
-								<span onClick={() => this.setState({ editUsername: true })}><i id="editIcon" className = "material-icons left">edit</i></span>
+								<span><i id="editIcon" className = "material-icons left">edit</i></span>
 							</h6>
 						
 						</div>
@@ -517,23 +517,23 @@ class ViewEmployee extends React.Component {
 
 				{/* Employee ID */}
 				<div className = "row">
-				  <div className = "col s4">
+				  <div className = "col s4 employee-form-container">
 				 {
 					this.state.editEmployeeID
-					?	<form onSubmit={this.onSubmit}>
+					?	<form className='employee-form' onSubmit={this.onSubmit}>
 						  <div id = "id" className = "input-field col s5">
 							<input type='text' name='employeeID' value={editEmployee.employeeID} onChange={this.onChange} />
-							<span onClick={this.cancel}><i class="material-icons">clear</i> </span>
-							<button className = "save" type='submit'>Save</button>
 						  </div>
+						  <span className='close-btn' onClick={this.cancel}><i class="material-icons">clear</i> </span>
+						  <button className = "save" type='submit'>Save</button>
 						</form>
-					:	<div>
+					:	<div onClick={() => this.setState({ editEmployeeID: true })}>
 							<h6>Employee ID: 	<span>	{ employee.employeeID
 															? <span>{employee.employeeID}</span>
 															: <span>Not on file</span>
 														}
 												</span>
-							<span onClick={() => this.setState({ editEmployeeID: true })}><i id="editIcon" className = "material-icons left">edit</i></span>
+							<span><i id="editIcon" className = "material-icons left">edit</i></span>
 							</h6>
 						</div>	
 				  }
@@ -581,9 +581,9 @@ class ViewEmployee extends React.Component {
 			</div>
 			</div>
 			</div>
-			<div className = "deleteEmployee">
+			{/*<div className = "deleteEmployee">
 				<button id = "employeeDelete" className = "waves-effect waves-light btn">Delete Employee</button>
-			</div>
+			</div>*/}
 			</div>
 			</div>
 
