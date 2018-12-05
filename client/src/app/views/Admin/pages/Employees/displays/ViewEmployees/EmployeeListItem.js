@@ -21,7 +21,7 @@ class EmployeeListItem extends React.Component {
 		};
 		
 		return ( <div>
-			{ this.props.employee
+			{ employee
 			
 			?
 				<Link key={employee._id} to={`/${organization.name.replace(/\s/g, '')}/employees?id=${employee._id}`}>

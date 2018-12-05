@@ -18,3 +18,9 @@
 	max-width: 35vw;
 /* 	max-width: 75vw; */
 }
+
+.profile-img-container {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}

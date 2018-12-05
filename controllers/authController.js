@@ -38,7 +38,7 @@ module.exports = {
 						});
 					}
 				}).catch(err => {
-					if(err) return res.json({ success: false, msg: err._message });
+					if(err) return res.json({ success: false, msg: err._message, error: err });
 				});	
 			}
 			
@@ -246,5 +246,32 @@ module.exports = {
 				console.log('Error adding training hours:', err);
 				res.json({ success: false, msg: 'Failed to update user\'s hours' })
 			});
+	},
+	search: (req, res) => {
+		User
+			.find({ __organization: req.body.organizationID, $text: { $search: req.body.queryString }})
+			.populate('trainingInstances')
+// 			.sort({ role: -1, employeeActive: 1, lname: 1, fname: 1})
+			.then(users => res.json({ success: true, users: users }))
+			.catch(err => res.status(422).json({ success: false, msg: 'Failed to search for users', error: err }));
+	},
+	wildcardSearch: (req, res) => {
+		User
+			.find({
+				$and: [
+					{ __organization: req.body.organizationID },
+					{ $or: [
+						{ fname: { $regex: req.body.queryString, $options: 'i' } },
+						{ lname: { $regex: req.body.queryString, $options: 'i' } },
+						{ username: { $regex: req.body.queryString, $options: 'i' } },
+						{ employeeID: { $regex: req.body.queryString, $options: 'i' } },
+						{ title: { $regex: req.body.queryString, $options: 'i' } },
+						{ department: { $regex: req.body.queryString, $options: 'i' } }
+					]}
+				]
+			})
+			.populate('trainingInstances')
+			.then(users => res.json({ success: true, users: users }))
+			.catch(err => res.json({ success: false, msg: 'Failed to search for users.', error: err }));
 	}
 };

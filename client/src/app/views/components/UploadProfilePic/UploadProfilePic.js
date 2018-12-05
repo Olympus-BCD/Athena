@@ -7,6 +7,8 @@ import "./UploadProfilePic.css";
 import ProfilePic from "./AvatarPlaceholder.png";
 import loadingImage from './loading-image.gif';
 
+import { SideNavItem } from "react-materialize";
+
 const zoneStyle = {
   width:"150px",
   height:"150px", 
@@ -57,43 +59,63 @@ class Upload extends Component {
         });
 		
 		// Once all the files are uploaded 
-		axios.all(uploaders).then(() => {
-			const { employee } = this.props;
-			employee.imageURL = this.state.fileUrl;
-			API.auth.update(employee).then(res => {
-				if(res.data.success) {
-// 					this.props.history.push(this.props.redirectURL);
-					this.props.getEmployee();
-				} else {
-					console.log('Error updating user.');
-					console.log(res.data.msg, res.data.error);
-				}
-			}).catch(err => {
-				console.log('Error updating user:', err);
+		if(this.props.isOrg) {
+			axios.all(uploaders).then(() => {
+				const { organization } = this.props;
+				organization.imageURL = this.state.fileUrl;
+				API.organization.update(organization).then(res => {
+					if(res.data.success) {
+						console.log('SUCCESS!!', res.data.organization);
+	// 					this.props.history.push(this.props.redirectURL);
+						window.location.reload();
+					} else {
+						console.log('Error updating organization.');
+						console.log(res.data.msg, res.data.error);
+						window.location.reload();
+					}
+				}).catch(err => {
+					console.log('Error updating organization:', err);
+					window.location.reload();
+				});
 			});
+		} else {
+			axios.all(uploaders).then(() => {
+				const { employee } = this.props;
+				employee.imageURL = this.state.fileUrl;
+				API.auth.update(employee).then(res => {
+					if(res.data.success) {
+	// 					this.props.history.push(this.props.redirectURL);
+						this.props.getEmployee();
+					} else {
+						console.log('Error updating user.');
+						console.log(res.data.msg, res.data.error);
+					}
+				}).catch(err => {
+					console.log('Error updating user:', err);
+				});
 			
-			// API.trainings.addDocument(this.state.fileUrl).then(res => {
-			// 	if(res.data.success) {
-			// 		console.log('API Response:', res.data);
-			// 		console.log('File saved to DB:', res.data.training);
-			// 		this.props.getTraining();
-			// 	} else {
-			// 		console.log('Error saving document.', res.data.error);
-			// 		this.setState({ message: res.data.msg });
-			// 	}
-			// }).catch(err => {
-			// 	console.log('Error saving document to database:', err);
-			// 	this.setState({ message: 'Uh Oh! Something went wrong!' });
-			// });
-		});
-      }
+				// API.trainings.addDocument(this.state.fileUrl).then(res => {
+				// 	if(res.data.success) {
+				// 		console.log('API Response:', res.data);
+				// 		console.log('File saved to DB:', res.data.training);
+				// 		this.props.getTraining();
+				// 	} else {
+				// 		console.log('Error saving document.', res.data.error);
+				// 		this.setState({ message: res.data.msg });
+				// 	}
+				// }).catch(err => {
+				// 	console.log('Error saving document to database:', err);
+				// 	this.setState({ message: 'Uh Oh! Something went wrong!' });
+				// });
+			});
+		}
+    }
     
   render() {
 	
-	const { user, employee } = this.props;
+	const { user, employee, organization, isOrg } = this.props;
 	
 	const style = {
-		backgroundImage: `url(${employee.imageURL})`,
 		height: '100%',
 		width: '100%',
 		backgroundPosition: 'center',
@@ -101,8 +123,14 @@ class Upload extends Component {
 		borderRadius: '50%'
 	};
 	
+	if(isOrg) {
+		style.backgroundImage = `url(${organization.imageURL})`;
+	} else {
+		style.backgroundImage = `url(${employee.imageURL})`;
+	}
+	
     return (
-      <div>
+      <div className='profile-img-container'>
       	{ this.state.uploading &&
 	      	<div id='loading-img'>
 	      		<img src={loadingImage} alt='loading image' />
@@ -114,7 +142,31 @@ class Upload extends Component {
            multiple
            style={zoneStyle}
            >
-          <div id='profile-img' style={style}></div>
+           { isOrg
+	           ? (
+		           <SideNavItem
+                        userView 
+                        id='userProfile'
+                        user={{
+	                        background: '',
+	                        image: organization.imageURL,
+	                        name: <span className='wht'>
+	                        	{ user.fname
+			                        ? user.fname.toUpperCase()
+			                        : null}
+			                    &nbsp;
+		                        { user.lname
+			                        ? user.lname.toUpperCase()
+			                        : null}
+			                    </span>,
+	                        email: <span className='blk'>{user.username}</span>
+                        }}
+                    />
+	           ) : (
+		           <div id='profile-img' style={style}></div>
+	           )
+           }
+          
          {/* <p>Set Profile </p>
          <p id ="dropzoneText"> upload</p> */}
          {/* <img src = {ProfilePic} alt="file" /> */}

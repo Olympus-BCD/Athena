@@ -426,6 +426,7 @@ class ViewEmployee extends React.Component {
 				    	employee={employee}
 				    	getEmployee={this.getEmployee}
 				    	redirect={`/${this.props.organization.name.replace(/\s/g, '')}/employees?id=${this.props.user._id}`}
+				    	isOrg={false}
 				    />
 					{/* <img id ="profilePic" src = {EmployeeImage} alt="defaultImage"/> */}
     		  </div>

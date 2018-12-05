@@ -23,8 +23,9 @@ let OrganizationSchema = new Schema({
 		type: String,
 		default: null
 	},
-	image: {
+	imageURL: {
 		type: String,
+		default: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSZyNbZmbnxtSYFGtUdvy9rq4Nowo0GLbyGPbJXGMr4S5fx_r4o'
 	},
 	date: {
 		type: Date,

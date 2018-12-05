@@ -29,7 +29,9 @@ class ViewEmployees extends React.Component {
 		timeframe: {
 			weekly: false,
 			thirtyDays: true
-		}
+		},
+		searchResults: [],
+		searchString: ''
 	};
 	
 	componentDidMount() {
@@ -76,7 +78,7 @@ class ViewEmployees extends React.Component {
 		filters.all = filters.active = filters.inactive = filters.upcoming = filters.overdue = filters.completed = filters.expiring = false;
 // 		const filter = override ? override : e.target.id;
 		filters[override] = true;
-		this.setState({ filters: filters, message: '' });
+		this.setState({ filters: filters, message: '', searchResults: [], searchString: '' });
 	};
 	
 	switchTimeframe = (e, override = false) => {
@@ -91,7 +93,32 @@ class ViewEmployees extends React.Component {
 	
 	searchEmployees = e => {
 		e.preventDefault();
-		console.log(e.target);
+		const { name, value } = e.target;
+		const state = this.state;
+		state[name] = value;
+		this.setState(state);
+		const query = e.target.value;
+		
+		if(value.length > 2) {
+			API.auth.wildcardSearch(this.props.organization._id, query).then(res => {
+				if(res.data.success) {
+					this.setState({ searchResults: res.data.users });
+				} else {
+					console.log('Error performing search:', res.data.error);
+					this.setState({ message: res.data.msg });
+				}
+			}).catch(err => {
+				console.log('Error performing search:', err);
+				this.setState({ message: 'Uh Oh! Something went wrong!' });
+			});
+		} else {
+			this.setState({ searchResults: [] });
+		}
+	};
+	
+	clearSearch = e => {
+		e.preventDefault();
+		this.setState({ searchResults: [], searchString: '' });
 	};
 	
 	changeRole = (e, employee) => {
@@ -164,7 +191,8 @@ class ViewEmployees extends React.Component {
 	};
 	
 	getSnapshot = (days = 30) => {
-		const { employees } = this.state;
+		const { employees, searchResults } = this.state;
+		const snapshotEmployees = searchResults.length > 0 ? searchResults : employees;
 		
 // 		const cutOff = moment().add(days, 'days').format('X');
 		const cutOff = moment().add(days, 'days').endOf('day').format('X');
@@ -179,7 +207,7 @@ class ViewEmployees extends React.Component {
 			hoursUpcomingCount: 0
 		};
 
-		employees.forEach(employee => {
+		snapshotEmployees.forEach(employee => {
 			
 			employee.overdueTrainings = [];
 			employee.upcomingTrainings = [];
@@ -222,7 +250,7 @@ class ViewEmployees extends React.Component {
 	
 	render() {
 		
-		const { employees, message, filters, timeframe } = this.state;
+		const { employees, message, filters, timeframe, searchResults, searchString } = this.state;
 		
 		const endOfWorkWeek = moment().endOf('isoWeek');
 		const now = moment();
@@ -237,11 +265,20 @@ class ViewEmployees extends React.Component {
 		if(filters.upcoming) filteredEmployees = snapshot.upcomingEmployees;
 		if(filters.completed) filteredEmployees = snapshot.completedEmployees;
 		if(filters.expiring) filteredEmployees = snapshot.allEmployees.filter(employee => employee.hoursExpiring);
+		if(searchResults.length > 0) filteredEmployees = searchResults;
 		console.log('Filtered Employees:', filteredEmployees);
 		
 		return (
 			<div>
-				<EmployeesSubHeader search={true} searchEmployees={this.searchEmployees} addEmployee={true} organization={this.props.organization} user={this.props.user} />
+				<EmployeesSubHeader
+					search={true}
+					searchString={searchString}
+					searchEmployees={this.searchEmployees}
+					clearSearch={this.clearSearch}
+					addEmployee={true}
+					organization={this.props.organization}
+					user={this.props.user}
+				/>
 				{ message !== '' &&
 					<MessageModal message={message} closeMessageModal={this.closeMessageModal} />
 				}

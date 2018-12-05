@@ -96,6 +96,8 @@ let UserSchema = new Schema({
 	}
 });
 
+UserSchema.index({ username: 'text', fname: 'text', lname: 'text', employeeID: 'text', title: 'text', department: 'text' });
+
 UserSchema.pre('save', function(next) {
 	const user = this;
 	if(this.isModified('password') || this.isNew) {

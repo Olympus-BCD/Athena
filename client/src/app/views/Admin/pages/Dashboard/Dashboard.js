@@ -193,6 +193,62 @@ class DashboardPage extends React.Component {
 		);
 	};
 	
+	getCalendarEvents = () => {
+		const { employees, timeframe } = this.state;
+		let events = [];
+		
+		const days = timeframe.weekly ? moment().endOf('isoWeek').diff(moment(), 'days') : 30;
+		const timeframeCutOff = moment().add(days, 'days').endOf('day').format('X');
+		
+		const oneWeekCutOff = moment().add(7, days).endOf('day').format('X');
+		
+		employees.forEach(employee => {
+			if(employee.active) {
+				employee.trainingInstances.forEach(training => {
+					if(training.completed) {
+						events.push({
+							title: `${employee.fname} completed ${training.name}`,
+							type: 'training-completed',
+							start: moment(training.dateCompleted, 'X').format('MMMM DD, YYYY'),
+							end: moment(training.dateCompleted, 'X').format('MMMM DD, YYYY'),
+							allDay: false,
+							className: 'calendar-event event-training-completed'
+						});
+					} else if(training.dueDate < moment().startOf('day').format('X')) {
+						events.push({
+							title: `OVERDUE: ${employee.fname} requires ${training.name}`,
+							type: 'training-overdue',
+							start: moment(training.dueDate, 'X').format('MMMM DD, YYYY'),
+							end: moment(training.dueDate, 'X').format('MMMM DD, YYYY'),
+							allDay: false,
+							className: 'calendar-event event-training-overdue'
+						});
+					} else if(training.dueDate < oneWeekCutOff) {
+						events.push({
+							title: `${employee.fname} requires ${training.name}`,
+							type: 'training-urgent',
+							start: moment(training.dueDate, 'X').format('MMMM DD, YYYY'),
+							end: moment(training.dueDate, 'X').format('MMMM DD, YYYY'),
+							allDay: false,
+							className: 'calendar-event event-training-urgent'
+						});
+					} else {
+						events.push({
+							title: `${employee.fname} requires ${training.name}`,
+							type: 'training-future',
+							start: moment(training.dueDate, 'X').format('MMMM DD, YYYY'),
+							end: moment(training.dueDate, 'X').format('MMMM DD, YYYY'),
+							allDay: false,
+							className: 'calendar-event event-training-future'
+						});
+					}
+				});
+			}
+		});
+		
+		return events;
+	};
+	
 	getSnapshot = (days = 30) => {
 		const { employees } = this.state;
 		
@@ -254,6 +310,9 @@ class DashboardPage extends React.Component {
 	const now = moment();
 	const days = timeframe.weekly ? endOfWorkWeek.diff(now, 'days') : 30;
 	const snapshot = this.getSnapshot(days);
+	
+	const events = this.getCalendarEvents();
+	console.log(events);
 		  
     return (
       <div>
@@ -323,7 +382,7 @@ class DashboardPage extends React.Component {
               <div id="cardContent" className="card-content white-text">
                 <span id="cardTitle" className="card-title center-align">Calendar</span>
                 <p className='calendar-wrap'>
-                    <Calendar/>
+                    <Calendar events={events} />
                 </p>
               </div>
             </div>
