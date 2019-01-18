@@ -1,0 +1,22 @@
+/* ============ Dustin's Design Notes ============*/
+
+/*Header Font from Google Font*/
+/* font-family: 'Cinzel Decorative', cursive; */
+/*Body Font from Google Font*/
+/* font-family: 'Raleway', sans-serif; */
+
+/* =============================================*/
+
+.employeesPage {
+	max-height: 100vh;
+	height: 100vh;
+	margin: 0;
+	padding: 0;
+	position: relative;
+}
+
+.employeesDisplay-wrapper {
+	height: 100%;
+	padding: 0;
+	margin: 0;
+}

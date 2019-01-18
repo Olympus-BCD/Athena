@@ -32,6 +32,7 @@ class ViewTrainings extends React.Component {
 	};
 	
 	render() {
+		const { trainings } = this.state;
 		return (
 			<div>
 				<TrainingsSubHeader search={true} addTraining={true} organization={this.props.organization} />
@@ -42,13 +43,16 @@ class ViewTrainings extends React.Component {
 				<div className="row viewEmployees-wrapper">
 					<div className="col s12 m12 employee-padding">
 							<ul className="collection z-depth-3">
-				{this.state.trainings.map(training =>
+				{trainings.map(training =>
 					// <div key={training._id}><Link to={`/${this.props.organization.name.replace(/\s/g, '')}/trainings?id=${training._id}`}>{training.name}</Link></div>
 					<TrainingListItem 
 						training={training}
 						organization={this.props.organization}
 					/>
 				)}
+				{ trainings.length < 1 &&
+					<TrainingListItem training={false} />
+				}
 				</ul>
 				</div>
 			</div>

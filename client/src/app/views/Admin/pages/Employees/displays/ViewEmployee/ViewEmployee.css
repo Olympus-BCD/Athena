@@ -196,7 +196,7 @@
 	justify-content: center;
 	align-items: center;
 	flex-wrap: wrap;
-	background: rgba(0, 0, 0, 0.322);
+	background: rgba(0, 0, 0, 0.75);
 	color: white;
 }
 .modalContainer form {
@@ -219,6 +219,41 @@
 #modal-complete-button {
 	border-radius: 10px;
 	background: rgba(128, 0, 128, 0.596);
+}
+
+.employee-form-container {
+	max-height: 31px;
+}
+.employee-form {
+	display: flex;
+	justify-content: flex-start;
+	align-items: center;
+	max-height: 31px;
+}
+.employee-form .input-field {
+	margin: 0;
+	padding: 0;
+	width: 100% !important;
+}
+.employee-form input {
+	margin: 0;
+	text-align: center;
+	font-size: 0.85em;
+}
+#fname, #lname {
+	width: 30%;
+}
+#position {
+	margin: 0;
+	padding: 0;
+	width: 100%;
+}
+#position input {
+	margin: 0;
+}
+.close-btn {
+	margin: 0 0.5em;
+	cursor: pointer;
 }
 
 /*

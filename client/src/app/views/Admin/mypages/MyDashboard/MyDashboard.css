@@ -1,0 +1,261 @@
+/* ============ Dustin's Design Notes ============*/
+
+/*Athena Font from Google Font*/
+/* font-family: 'Cinzel Decorative', cursive; */
+
+/*Header Font from Google Font*/
+/*font-family: 'Raleway', sans-serif;
+	font-weight: 500; */
+
+/*Body Font from Google Font*/
+/* font-family: 'Raleway', sans-serif; */
+
+/*Button Styles*/
+/* background: rgba(128, 0, 128, 0.596); */
+/* border-radius: 10px; */
+
+/*Card Styles*/
+/* background: rgba(0, 0, 0, 0.322); */
+/* border-radius: 15px; */
+
+/*Components on top of Card*/
+/* background: #fafafa52 !important; */ /* NOTE: May need to adjust Opacity depending on the situation*/
+
+/* =============================================*/
+
+.dashboard-card {
+  /* background: rgba(0, 0, 0, 0.322); */
+  background: transparent;
+  border-radius: 15px;
+}
+
+.dashboard-card-container,
+#snapshot-card,
+#calendar-card {
+  /*   min-height: 50vh !important; */
+}
+
+#calendar-card,
+#cardContent {
+  height: 100% !important;
+  margin: 0;
+  padding: 0;
+}
+
+.calendar-wrapper {
+  grid-area: calendar;
+  height: 100%;
+  width: 100%;
+  padding: 0 10px;
+}
+
+.calendar-wrap {
+  height: 90%;
+  padding: 0.5em;
+}
+
+.collection {
+  border-radius: 15px;
+  font-family: "Raleway", sans-serif;
+}
+
+li.collection-item {
+  background: #fafafa52 !important;
+  font-family: "Raleway", sans-serif;
+  font-size: 1em;
+  font-weight: 300;
+  color: white;
+}
+
+li.collection-item:hover {
+  background: rgba(110, 57, 90, 0.39);
+}
+
+.dashboard-wrapper {
+  height: 100vh;
+  display: grid;
+  grid:
+    "snapshot calendar announcements" 60%
+    "newsfeed newsfeed announcements" 40%
+    / 37.5% 37.5% 25%;
+}
+
+.snapshot-wrapper {
+  grid-area: snapshot;
+  height: 100%;
+  width: 100%;
+  padding: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0;
+  padding: 0;
+}
+#snapshot-card,
+#snapshot-content {
+  height: 100% !important;
+  margin: 0;
+  padding: 0;
+}
+#snapshot-card {
+  width: 100%;
+  padding: 0 0.5em;
+}
+#snapshot-content {
+  width: 90%;
+  margin: 0 auto;
+  /* display: flex; */
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+}
+#snapshot-card-title {
+  margin: 0;
+  width: 100%;
+  padding-bottom: 10px;
+  padding-top: 25px;
+
+}
+#snapshot-collection {
+  padding: 0;
+  margin: 0;
+  /* 	height: 90%; */
+  max-height: 340px;
+  width: 100%;
+}
+#snapshot-collection li {
+  max-height: 85px;
+  padding-left: inherit;
+}
+
+.trainings-overdue-qty,
+.trainings-upcoming-qty,
+.trainings-due-qty,
+.trainings-complete-qty {
+  margin-left: 1.5em;
+  font-size: 1.25em;
+  font-family: "Raleway", sans-serif;
+}
+
+.trainings-overdue-content,
+.trainings-upcoming-content,
+.trainings-due-content,
+.trainings-complete-content {
+  margin-left: 2em;
+  font-size: 1.25em;
+  font-family: "Raleway", sans-serif;
+}
+
+.calendar-wrapper {
+  padding-top: 25px;
+}
+
+.announcements-wrapper {
+  grid-area: announcements;
+  height: 100%;
+  width: 100%;
+  padding: 0 10px;
+  padding-top: 25px;
+}
+
+#announcement-collection li:last-child div {
+  border-bottom: none;
+}
+
+#newsfeed-collection li:last-child div {
+  border-bottom: none;
+}
+
+input.label {
+  color: white;
+}
+
+.input-field label {
+  color: white;
+}
+
+.input-field input[type="text"]:focus {
+  color: white;
+}
+
+.newsfeed-wrapper {
+  grid-area: newsfeed;
+  height: 100%;
+  width: 100%;
+  padding: 10px;
+}
+
+#newsfeed-collection .collapsible-body {
+	background: purple;
+}
+
+.collapsible.popout {
+  background: #fafafa52;
+  font-family: "Raleway", sans-serif;
+  border-radius: 15px;
+}
+
+.collapsible-header {
+  background: rgba(0, 0, 0, 0);
+  color: white;
+}
+
+
+#announcement-button {
+  background: rgba(128, 0, 128, 0.596);
+  border-radius: 10px;
+}
+
+#announcement-card {
+padding:0;
+margin:0;
+}
+
+/* #company-news-card {
+  height: 25vh;
+} */
+
+/* #announcement-column {
+  height: 75vh;
+} */
+
+
+/* .card-panel {
+  height: 85vh;
+  margin: 1.5%;
+  position: relative;
+  background: linear-gradient(to right top, #cac7d77c, #a39eaf88, #7d788888, #595363, #383140),transparent;
+} */
+
+header,
+main,
+footer {
+  padding-left: 300px;
+}
+
+@media only screen and (max-width: 992px) {
+  header,
+  main,
+  footer {
+    padding-left: 0;
+  }
+}
+
+.collapsible.popout > li {
+  margin: 0 !important;
+}
+.card .card-content {
+  padding: 0;
+}
+
+#add-announcement {
+  margin-bottom: 1em !important;
+}
+
+#add-announcement .collapsible-body {
+  padding-top: 0;
+}
+
+#snapshot-collection .collection-item:hover {
+	background: rgba(110, 57, 90, 0.39) !important;
+}

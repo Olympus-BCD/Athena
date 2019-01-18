@@ -1,0 +1,232 @@
+/* ============ Dustin's Design Notes ============*/
+
+/*Athena Font from Google Font*/
+/* font-family: 'Cinzel Decorative', cursive; */
+
+/*Header Font from Google Font*/
+/*font-family: 'Raleway', sans-serif;
+	font-weight: 500; */
+
+/*Body Font from Google Font*/
+/* font-family: 'Raleway', sans-serif; */
+
+/*Button Styles*/
+/* background: rgba(128, 0, 128, 0.596); */
+/* border-radius: 10px; */
+
+/*Card Styles*/
+/* background: rgba(0, 0, 0, 0.322); */
+/* border-radius: 15px; */
+
+/*Components on top of Card*/
+/* background: #fafafa52 !important; */ /* NOTE: May need to adjust Opacity depending on the situation*/
+
+/* =============================================*/
+
+.card{
+    padding:10px; 
+    border-radius:15px;
+}
+.card-title{
+    text-align: center;
+    font-family: 'Raleway', sans-serif;
+	font-weight: 500;
+    color:white;
+}
+#employeeView{
+    margin-top:40px;
+    text-align:center;
+    font-size:35px;
+}
+#titleView{
+    text-align:center;
+    font-size:30px;
+}
+#roleView {
+    text-align: center;
+    font-size:30px;
+}
+#editIcon{
+    cursor: pointer;
+}
+#fname #lname{
+    font-size: 10px;
+}
+#text{
+    font-size:20px;
+}
+#dots-container {
+	display: flex;
+	justify-content: center;
+    align-items: center;
+    color:white !important;
+}
+#dots{
+/*     margin-left:38%; */
+    margin-right: 7.5px;
+    color: white !important;
+}
+.employee-card {
+    min-width: 85%;
+    font-family: 'Raleway', sans-serif;
+	
+}
+#infoContainer {
+	min-width: 85%;
+}
+#closeIcon {
+	position: absolute;
+	top: 2.5%;
+	right: 2.5%;
+}
+#employeeCard {
+    background: #fafafa52 !important;
+    color:white;
+}
+#cardInfo{
+    background:rgba(0, 44, 82, 0.75);
+    color:white;
+}
+#revealTrainings{
+    background:#002C52;
+    color:white;
+}
+#trainingsHeader, #closeIcon{
+    color:white;
+}
+#employeeDelete, #trainingAdd, #completeTraining, .save{
+    background:rgba(128, 0, 128, 0.596);
+    border-radius:10px;
+}
+#trainingAdd {
+	height: 2.5em;
+}
+#completeTraining {
+	font-size: 0.75em;
+}
+#topProfile-wrapper {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	padding: 0;
+}
+#profileImg-wrapper {
+	position: absolute;
+	left: 2.5%;
+	top: 8.5%;
+	width: 25%;
+	max-width: 200px;
+}
+#profileInfo-wrapper {
+	margin: 0;
+}
+#noTrainings {
+	width: 100%;
+}
+
+#add-training-container {
+	position: relative;
+}
+.add-training-dropdown-wrapper {
+	position: absolute;
+	z-index: 10;
+	top: 2.5em;
+	margin: 0;
+	width: 100%;
+	max-height: 21.1em;
+	overflow: auto;
+	background: #002C52;
+	background: rgba(128, 0, 128, 0.95);
+	border-top: 1px solid #e0e0e0;
+	border-right: 1px solid #e0e0e0;
+	border-left: 1px solid #e0e0e0;
+	border-radius: 15px;
+}
+.training-dropdown-item {
+	cursor: pointer;
+	width: 100%;
+	height: 2.1em;
+	padding: 0.25em;
+	padding-left: 1em;
+	border-bottom: 1px solid #e0e0e0;
+	background: transparent;
+/* 	background: #002C52; */
+}
+.add-training-dropdown-wrapper .training-dropdown-item:hover {
+	background: rgba(128, 0, 128, 1);
+	transform: scale(1.05);
+	border: 1px solid #e0e0e0;
+	border-right: 15px solid #e0e0e0;
+	border-radius: 5px;
+}
+.training-dropdown-item:last-child {
+	border-bottom: none;
+	padding-bottom: 0.5em;
+}
+.modalBackground {
+	height: 100%;
+	width: 100%;
+/* 	margin-left: 300px; */
+	background: rgba(0, 0, 0, 0.554);
+	position: absolute;
+	top: 0;
+	left: 0;
+	z-index: 100;
+}
+.modalContainer {
+	height: 100%;
+	width: 100%;
+
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: center;
+	align-items: center;
+	text-align: center;
+}
+.modalContainer h5 {
+	width: 100%;
+	margin: 0;
+	margin-bottom: 1em;
+}
+.modalFormContainer {
+	margin: 0 auto;
+	padding: 5%;
+	border-radius: 1em;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	flex-wrap: wrap;
+	background: rgba(0, 0, 0, 0.75);
+	color: white;
+}
+.modalContainer form {
+	width: 80%;
+}
+
+.snapshot-action {
+	cursor: pointer;
+}
+.snapshot-action:hover {
+	color: blueviolet;
+}
+
+#modal-cancel-button {
+	margin-right: .5em;
+	border-radius: 10px;
+	background: rgba(128, 0, 128, 0.596);
+}
+
+#modal-complete-button {
+	border-radius: 10px;
+	background: rgba(128, 0, 128, 0.596);
+}
+
+/*
+#profilePic{
+    width:200px;
+    height:200px;
+    margin-left:15px;
+    border-radius:100%
+}
+*/
+/* @import '../../../../../../../../../node_modules/elemental/less/elemental.less' */

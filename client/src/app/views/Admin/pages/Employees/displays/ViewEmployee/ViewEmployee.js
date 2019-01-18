@@ -93,7 +93,7 @@ class ViewEmployee extends React.Component {
 				};
 				API.trainings.getTrainings(query).then(results => {
 					if(results.data.success) {
-						this.setState({ employee: employee, editEmployee: Object.assign({}, employee), trainings: results.data.trainings, message: '' });
+						this.setState({ employee: employee, editEmployee: Object.assign({}, employee), trainings: results.data.trainings, message: '', dropdown: false });
 					} else {
 						console.log('Error retrieving trainings.');
 						this.setState({ message: results.data.msg });
@@ -118,16 +118,20 @@ class ViewEmployee extends React.Component {
 		training.__training = training._id;
 		delete training.documents;
 		delete training._id;
-		const hireDate = moment(employee.hireDate, 'X').format('YYYY-MM-DD');
-		training.dueDate = moment(hireDate).add(training.frequencyNumber, training.frequencyPeriod).format('X');
-		console.log('Hire Date:', hireDate);
-		console.log('Due Date:', moment(training.dueDate, 'X').format('YYYY-MM-DD'));
+// 		const hireDate = moment(employee.hireDate, 'X').format('YYYY-MM-DD');
+		training.dueDate = moment(employee.hireDate, 'X').add(training.frequencyNumber, training.frequencyPeriod).format('X');
 		const today = moment().startOf('day').format('X');
+/*
 		if(training.dueDate < today) {
 			const year = moment().add(1, 'year').year();
 			training.dueDate = moment(training.dueDate, 'X').format('MM-DD');
 			training.dueDate += '-' + year;
 		}
+*/
+		while(training.dueDate < moment().startOf('day').format('X')) {
+			training.dueDate = moment(training.dueDate, 'X').add(training.frequencyNumber, training.frequencyPeriod).format('X');
+		}
+		
 // 		return console.log('Creating training instance:', employee._id, [ training ]);
 		API.trainingInstance.create(training).then(res => {
 			if(res.data.success) {
@@ -330,6 +334,11 @@ class ViewEmployee extends React.Component {
 		this.setState({ filters: filters });
 	};
 	
+	possessive = (word = '') => {
+		if(word[word.length -1] == 's') return `${word}'`;
+		return `${word}'s`;
+	};
+	
 	getSnapshot = (days = 30) => {
 		const { employee } = this.state;
 		
@@ -412,7 +421,13 @@ class ViewEmployee extends React.Component {
 			  <div id = "employeeCard" class="card  ">
 				<div id='topProfile-wrapper' className = "row">
 				  <div id='profileImg-wrapper' className = "col s2 card-image waves-effect waves-block waves-light">
-				    <UploadProfilePic />
+				    <UploadProfilePic
+				    	user={this.props.user}
+				    	employee={employee}
+				    	getEmployee={this.getEmployee}
+				    	redirect={`/${this.props.organization.name.replace(/\s/g, '')}/employees?id=${this.props.user._id}`}
+				    	isOrg={false}
+				    />
 					{/* <img id ="profilePic" src = {EmployeeImage} alt="defaultImage"/> */}
     		  </div>
 				  <div id = "profileInfo-wrapper" className="col s7">
@@ -432,39 +447,39 @@ class ViewEmployee extends React.Component {
 				<div id = "cardInfo" className = "card">
 				  <div id = "infoContainer" className = "container">
 			      	<div className = "row">
-				  		<div className = "col s4">
+				  		<div className = "col s4 employee-form-container">
 				   	{
 					 this.state.editName
-					 ?	<form onSubmit={this.onSubmit}>
+					 ?	<form className='employee-form' onSubmit={this.onSubmit}>
 						  <div id = "fname" className = "input-field col s5">
 							<input type='text' name='fname' value={editEmployee.fname} onChange={this.onChange} />
-							<span onClick={this.cancel}><i class="material-icons">clear</i> </span>
-							<button className = "save" type='submit'>Save</button>
 						  </div>
 						  <div id="lname" className="input-field col s5">
 							<input type='text' name='lname' value={editEmployee.lname} onChange={this.onChange} />
 						  </div>
+						  <span className='close-btn' onClick={this.cancel}><i class="material-icons">clear</i> </span>
+						  <button className = "save" type='submit'>Save</button>
 						</form>
-					:	<div>
-							<h6>{(employee.fname && employee.lname) ? `${employee.fname} ${employee.lname}` : 'unknown'}
-							<span onClick={() => this.setState({ editName: true })}><i id="editIcon" className = "material-icons left">edit</i></span>
+					:	<div onClick={() => this.setState({ editName: true })}>
+							<h6>{/*(employee.fname && employee.lname) ? `${employee.fname} ${employee.lname}` : 'unknown'*/}{employee.fname} {employee.lname}
+							<span ><i id="editIcon" className = "material-icons left">edit</i></span>
 							</h6>
 						</div>
 					}
 				</div>
 
 				{/*Employee Position*/}
-				<div className = "col s4">
+				<div className = "col s4 employee-form-container">
 				{
 					this.state.editTitle
-					?  <form onSubmit={this.onSubmit}>
+					?  <form className='employee-form' onSubmit={this.onSubmit}>
 							<div id = "position" className = "input-field col s5">
-							<input type='text' name='title' value={editEmployee.title} onChange={this.onChange} />
-							<span onClick={this.cancel}><i class="material-icons">clear</i> </span>
-							<button className = "save" type='submit'>Save</button>
+								<input type='text' name='title' value={editEmployee.title} onChange={this.onChange} />
 							</div>
+								<span className='close-btn' onClick={this.cancel}><i class="material-icons">clear</i> </span>
+								<button className = "save" type='submit'>Save</button>
 						</form>
-					:   <div>
+					:   <div onClick={() => this.setState({ editTitle: true })}>
 							<h6>Position: 
 								<span>  { employee.title
 											? <span>{employee.title}</span>
@@ -472,28 +487,26 @@ class ViewEmployee extends React.Component {
 										}
 								</span>
 							{/*<h6>Position: <span value='hey' contenteditable="true" onBlur={this.onBlur} onInput={this.holla}>{employee.title}</span>*/}
-							<span onClick={() => this.setState({ editTitle: true })}><i id="editIcon" className = "material-icons left">edit</i></span>
+							<span ><i id="editIcon" className = "material-icons left">edit</i></span>
 							</h6>
 						</div>	
 				}
 				</div>
 
 				{/* Username */}
-				<div className = "col s4">
+				<div className = "col s4 employee-form-container">
 				{
 					this.state.editUsername
-					?	<form onSubmit={this.onSubmit}>
-					    <div id = "userName" className = "input-field col s5">
-							<input type='text' name='username' value={editEmployee.username} onChange={this.onChange} />
-							<span onClick={this.cancel}><i class="material-icons">clear</i> </span>
-							<button className = "save" type='submit'>Save</button>
+					?	<form className='employee-form' onSubmit={this.onSubmit}>
+					    	<div id = "userName" className = "input-field col s5">
+								<input type='text' name='username' value={editEmployee.username} onChange={this.onChange} />
 							</div>
+							<span className='close-btn' onClick={this.cancel}><i class="material-icons">clear</i> </span>
+							<button className = "save" type='submit'>Save</button>
 						</form>
-					:	<div>
+					:	<div onClick={() => this.setState({ editUsername: true })}>
 							<h6>Username: {employee.username}
-							<span onClick={() => this.setState({ editUsername: true })}><i id="editIcon" className = "material-icons left">edit</i></span>
-						
-							
+								<span><i id="editIcon" className = "material-icons left">edit</i></span>
 							</h6>
 						
 						</div>
@@ -504,23 +517,23 @@ class ViewEmployee extends React.Component {
 
 				{/* Employee ID */}
 				<div className = "row">
-				  <div className = "col s4">
+				  <div className = "col s4 employee-form-container">
 				 {
 					this.state.editEmployeeID
-					?	<form onSubmit={this.onSubmit}>
+					?	<form className='employee-form' onSubmit={this.onSubmit}>
 						  <div id = "id" className = "input-field col s5">
 							<input type='text' name='employeeID' value={editEmployee.employeeID} onChange={this.onChange} />
-							<span onClick={this.cancel}><i class="material-icons">clear</i> </span>
-							<button className = "save" type='submit'>Save</button>
 						  </div>
+						  <span className='close-btn' onClick={this.cancel}><i class="material-icons">clear</i> </span>
+						  <button className = "save" type='submit'>Save</button>
 						</form>
-					:	<div>
+					:	<div onClick={() => this.setState({ editEmployeeID: true })}>
 							<h6>Employee ID: 	<span>	{ employee.employeeID
 															? <span>{employee.employeeID}</span>
 															: <span>Not on file</span>
 														}
 												</span>
-							<span onClick={() => this.setState({ editEmployeeID: true })}><i id="editIcon" className = "material-icons left">edit</i></span>
+							<span><i id="editIcon" className = "material-icons left">edit</i></span>
 							</h6>
 						</div>	
 				  }
@@ -568,9 +581,9 @@ class ViewEmployee extends React.Component {
 			</div>
 			</div>
 			</div>
-			<div className = "deleteEmployee">
+			{/*<div className = "deleteEmployee">
 				<button id = "employeeDelete" className = "waves-effect waves-light btn">Delete Employee</button>
-			</div>
+			</div>*/}
 			</div>
 			</div>
 
@@ -583,7 +596,7 @@ class ViewEmployee extends React.Component {
 			  	
 			  	<div className = "col s12">
 	      		  <span className ="card-title grey-text text-darken-4">
-	      		   	<h4 id = "trainingsHeader">Trainings</h4>
+	      		   	<h4 id = "trainingsHeader">{this.possessive(employee.fname)} Trainings</h4>
 		  		   	<i id='closeIcon' onClick={() => this.setState({ dropdown: false })} className = "material-icons right">close</i>
 	      		  </span>
 				  </div>

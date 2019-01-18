@@ -114,7 +114,7 @@ li.collection-item:hover {
   width: 100%;
   padding-bottom: 10px;
   padding-top: 25px;
-
+  font-size: 1em;
 }
 #snapshot-collection {
   padding: 0;
@@ -128,12 +128,13 @@ li.collection-item:hover {
   padding-left: inherit;
 }
 
-.trainings-overdue-qty,
-.trainings-upcoming-qty,
-.trainings-due-qty,
-.trainings-complete-qty {
+#trainings-overdue-qty,
+#trainings-upcoming-qty,
+#trainings-due-qty,
+#trainings-complete-qty {
   margin-left: 1.5em;
   font-size: 1.25em;
+  font-size: 2em;
   font-family: "Raleway", sans-serif;
 }
 
@@ -143,6 +144,7 @@ li.collection-item:hover {
 .trainings-complete-content {
   margin-left: 2em;
   font-size: 1.25em;
+  font-size: 2em;
   font-family: "Raleway", sans-serif;
 }
 
@@ -183,6 +185,10 @@ input.label {
   height: 100%;
   width: 100%;
   padding: 10px;
+}
+
+#newsfeed-collection .collapsible-body {
+	background: purple;
 }
 
 .collapsible.popout {
@@ -250,4 +256,58 @@ footer {
 
 #add-announcement .collapsible-body {
   padding-top: 0;
+}
+.newsfeed-date {
+	color: #e0e0e0;
+	font-size: 0.75em;
+}
+.newsfeed-img {
+	width: 35px;
+	height: 35px;
+	border-radius: 50%;
+	background-position: center;
+	background-size: cover;
+	float: left;
+    margin-right: 1em;
+    margin-bottom: 0.5em;
+    width: 55px;
+    height: 55px;
+}
+.clear {
+	clear: both;
+}
+
+#snapshot-collection .collection-item:hover {
+	background: rgba(110, 57, 90, 0.39) !important;
+}
+
+.timeframeLink-wrapper {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+/*
+.navLink-selected,
+.navLink:hover {
+	color: white;
+	border-bottom: 2px solid white;
+}
+*/
+.timeframeLink: {
+	cursor: pointer;
+}
+.timeframeLink:hover {
+	cursor: pointer;
+	font-weight: bold;
+}
+.timeframeLink-selected:hover {
+	font-weight: normal;
+}
+.timeframeLink-selected {
+	font-size: 2em;
+}
+
+.timeframeLink-wrapper .bar {
+	margin: 0 1em;
 }
