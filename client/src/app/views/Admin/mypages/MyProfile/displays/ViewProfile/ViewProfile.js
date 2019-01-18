@@ -1,8 +1,7 @@
 import React from "react";
 // import { Link } from 'react-router-dom';
-import "./ViewEmployee.css";
+import "./ViewProfile.css";
 import API from '../../../../../../../utils/API';
-import EmployeesSubHeader from '../../EmployeesSubHeader';
 import moment from 'moment';
 import MessageModal from '../../../../../components/MessageModal';
 import UploadProfilePic from "../../../../../components/UploadProfilePic/UploadProfilePic"
@@ -11,7 +10,7 @@ import UploadProfilePic from "../../../../../components/UploadProfilePic/UploadP
 // import { Modal, ModalHeader, ModalBody, ModalFooter } from 'elemental';
 import { Input } from 'react-materialize';
 
-class ViewEmployee extends React.Component {
+class ViewProfile extends React.Component {
 	
 	state = {
 		message: '',
@@ -82,7 +81,7 @@ class ViewEmployee extends React.Component {
 	
 	getEmployee = () => {
 		const query = {
-			id: this.props.id
+			id: this.props.user._id
 		};
 		API.auth.findById(query).then(results => {
 			if(results.data.success) {
@@ -393,7 +392,6 @@ class ViewEmployee extends React.Component {
 		
 		return (
 			<div>
-				<EmployeesSubHeader organization={this.props.organization} search={false} addEmployee={true} />
 				{
 					message !== '' &&
 					<MessageModal message={this.state.message} closeMessageModal={this.closeMessageModal} />
@@ -426,7 +424,6 @@ class ViewEmployee extends React.Component {
 				    	employee={employee}
 				    	getEmployee={this.getEmployee}
 				    	redirect={`/${this.props.organization.name.replace(/\s/g, '')}/employees?id=${this.props.user._id}`}
-				    	isOrg={false}
 				    />
 					{/* <img id ="profilePic" src = {EmployeeImage} alt="defaultImage"/> */}
     		  </div>
@@ -447,39 +444,39 @@ class ViewEmployee extends React.Component {
 				<div id = "cardInfo" className = "card">
 				  <div id = "infoContainer" className = "container">
 			      	<div className = "row">
-				  		<div className = "col s4 employee-form-container">
+				  		<div className = "col s4">
 				   	{
 					 this.state.editName
-					 ?	<form className='employee-form' onSubmit={this.onSubmit}>
+					 ?	<form onSubmit={this.onSubmit}>
 						  <div id = "fname" className = "input-field col s5">
 							<input type='text' name='fname' value={editEmployee.fname} onChange={this.onChange} />
+							<span onClick={this.cancel}><i class="material-icons">clear</i> </span>
+							<button className = "save" type='submit'>Save</button>
 						  </div>
 						  <div id="lname" className="input-field col s5">
 							<input type='text' name='lname' value={editEmployee.lname} onChange={this.onChange} />
 						  </div>
-						  <span className='close-btn' onClick={this.cancel}><i class="material-icons">clear</i> </span>
-						  <button className = "save" type='submit'>Save</button>
 						</form>
-					:	<div onClick={() => this.setState({ editName: true })}>
+					:	<div>
 							<h6>{/*(employee.fname && employee.lname) ? `${employee.fname} ${employee.lname}` : 'unknown'*/}{employee.fname} {employee.lname}
-							<span ><i id="editIcon" className = "material-icons left">edit</i></span>
+							<span onClick={() => this.setState({ editName: true })}><i id="editIcon" className = "material-icons left">edit</i></span>
 							</h6>
 						</div>
 					}
 				</div>
 
 				{/*Employee Position*/}
-				<div className = "col s4 employee-form-container">
+				<div className = "col s4">
 				{
 					this.state.editTitle
-					?  <form className='employee-form' onSubmit={this.onSubmit}>
+					?  <form onSubmit={this.onSubmit}>
 							<div id = "position" className = "input-field col s5">
-								<input type='text' name='title' value={editEmployee.title} onChange={this.onChange} />
+							<input type='text' name='title' value={editEmployee.title} onChange={this.onChange} />
+							<span onClick={this.cancel}><i class="material-icons">clear</i> </span>
+							<button className = "save" type='submit'>Save</button>
 							</div>
-								<span className='close-btn' onClick={this.cancel}><i class="material-icons">clear</i> </span>
-								<button className = "save" type='submit'>Save</button>
 						</form>
-					:   <div onClick={() => this.setState({ editTitle: true })}>
+					:   <div>
 							<h6>Position: 
 								<span>  { employee.title
 											? <span>{employee.title}</span>
@@ -487,26 +484,26 @@ class ViewEmployee extends React.Component {
 										}
 								</span>
 							{/*<h6>Position: <span value='hey' contenteditable="true" onBlur={this.onBlur} onInput={this.holla}>{employee.title}</span>*/}
-							<span ><i id="editIcon" className = "material-icons left">edit</i></span>
+							<span onClick={() => this.setState({ editTitle: true })}><i id="editIcon" className = "material-icons left">edit</i></span>
 							</h6>
 						</div>	
 				}
 				</div>
 
 				{/* Username */}
-				<div className = "col s4 employee-form-container">
+				<div className = "col s4">
 				{
 					this.state.editUsername
-					?	<form className='employee-form' onSubmit={this.onSubmit}>
-					    	<div id = "userName" className = "input-field col s5">
-								<input type='text' name='username' value={editEmployee.username} onChange={this.onChange} />
-							</div>
-							<span className='close-btn' onClick={this.cancel}><i class="material-icons">clear</i> </span>
+					?	<form onSubmit={this.onSubmit}>
+					    <div id = "userName" className = "input-field col s5">
+							<input type='text' name='username' value={editEmployee.username} onChange={this.onChange} />
+							<span onClick={this.cancel}><i class="material-icons">clear</i> </span>
 							<button className = "save" type='submit'>Save</button>
+							</div>
 						</form>
-					:	<div onClick={() => this.setState({ editUsername: true })}>
+					:	<div>
 							<h6>Username: {employee.username}
-								<span><i id="editIcon" className = "material-icons left">edit</i></span>
+								<span onClick={() => this.setState({ editUsername: true })}><i id="editIcon" className = "material-icons left">edit</i></span>
 							</h6>
 						
 						</div>
@@ -517,23 +514,23 @@ class ViewEmployee extends React.Component {
 
 				{/* Employee ID */}
 				<div className = "row">
-				  <div className = "col s4 employee-form-container">
+				  <div className = "col s4">
 				 {
 					this.state.editEmployeeID
-					?	<form className='employee-form' onSubmit={this.onSubmit}>
+					?	<form onSubmit={this.onSubmit}>
 						  <div id = "id" className = "input-field col s5">
 							<input type='text' name='employeeID' value={editEmployee.employeeID} onChange={this.onChange} />
+							<span onClick={this.cancel}><i class="material-icons">clear</i> </span>
+							<button className = "save" type='submit'>Save</button>
 						  </div>
-						  <span className='close-btn' onClick={this.cancel}><i class="material-icons">clear</i> </span>
-						  <button className = "save" type='submit'>Save</button>
 						</form>
-					:	<div onClick={() => this.setState({ editEmployeeID: true })}>
+					:	<div>
 							<h6>Employee ID: 	<span>	{ employee.employeeID
 															? <span>{employee.employeeID}</span>
 															: <span>Not on file</span>
 														}
 												</span>
-							<span><i id="editIcon" className = "material-icons left">edit</i></span>
+							<span onClick={() => this.setState({ editEmployeeID: true })}><i id="editIcon" className = "material-icons left">edit</i></span>
 							</h6>
 						</div>	
 				  }
@@ -581,9 +578,9 @@ class ViewEmployee extends React.Component {
 			</div>
 			</div>
 			</div>
-			{/*<div className = "deleteEmployee">
+			<div className = "deleteEmployee">
 				<button id = "employeeDelete" className = "waves-effect waves-light btn">Delete Employee</button>
-			</div>*/}
+			</div>
 			</div>
 			</div>
 
@@ -655,30 +652,7 @@ class ViewEmployee extends React.Component {
 				
 		   {/*Collection of Employee Trainings - HardCoded*/}
 		   <ul className = "collection">
-		   {/*<li className="collection-item avatar row valign-wrapper employeeCollectionItem">
-					<div className='avatar-wrapper flex-center'>
-						<i className = "material-icons">event_note</i>
-					</div>
-				<div className = "titleTraining">
-		  		   <span className = "trainingTitle">
-				    Training Name
-				   </span>
-				</div>
-
-				<div className = "codeTraining">Training Code</div>
-
-				<div className = "hoursTraining">
-				  <p className = "">Training Hours</p>
-				</div>
-
-				<div className = "trainingFrequency">
-				  <p>Training Frequency</p>
-				</div>
-
-				<div className = "frequencyPeriod">
-				  <p>Completed</p>
-				</div>
-			  </li>*/}
+		   
 				{
 					filteredTrainingInstances.map(training => 
 						<li key={training._id} className='collection-item avatar row valign-wrapper employeeCollectionItem'>
@@ -735,75 +709,10 @@ class ViewEmployee extends React.Component {
 		  </ul>
  		</div>
     		</div>
-
-			{/* Cody's Code */}
-				{/* {
-					this.state.editName
-					?	<form onSubmit={this.onSubmit}>
-							<input type='text' name='fname' value={editEmployee.fname} onChange={this.onChange} />
-							<input type='text' name='lname' value={editEmployee.lname} onChange={this.onChange} />
-							<span onClick={this.cancel}> X </span>
-							<button type='submit'>Save</button>
-						</form>
-					:	<div>
-							<span>Name: {(employee.fname && employee.lname) ? `${employee.fname} ${employee.lname}` : 'unknown'}</span>&nbsp;
-							<span onClick={() => this.setState({ editName: true })}>( EditIcon )</span>
-						</div>
-				}
-				{
-					this.state.editUsername
-					?	<form onSubmit={this.onSubmit}>
-							<input type='text' name='username' value={editEmployee.username} onChange={this.onChange} />
-							<span onClick={this.cancel}> X </span>
-							<button type='submit'>Save</button>
-						</form>
-					:	<div>
-							<span>Username: {employee.username}</span>
-							<span onClick={() => this.setState({ editUsername: true })}>( EditIcon )</span>
-						</div>
-				}
-				{
-					this.state.editEmployeeID
-					?	<form onSubmit={this.onSubmit}>
-							<input type='text' name='employeeID' value={editEmployee.employeeID} onChange={this.onChange} />
-							<span onClick={this.cancel}> X </span>
-							<button type='submit'>Save</button>
-						</form>
-					:	<div>
-							<span>Employee ID: {employee.employeeID}</span>
-							<span onClick={() => this.setState({ editEmployeeID: true })}>( EditIcon )</span>
-						</div>	
-				}
-				{
-					this.state.editTitle
-					?	<form onSubmit={this.onSubmit}>
-							<input type='text' name='title' value={editEmployee.title} onChange={this.onChange} />
-							<span onClick={this.cancel}> X </span>
-							<button type='submit'>Save</button>
-						</form>
-					:	<div>
-							<span>Title: {employee.title}</span>
-							<span onClick={() => this.setState({ editTitle: true })}>( EditIcon )</span>
-						</div>	
-				}
-				<div>Role: {this.employeeRole()}</div> */}
-				
-				{/* {employee.trainings.length > 0
-					?
-						<ul>Trainings:
-							{employee.trainings.map((training, i) => 
-								<li>
-									<div>{training.name}</div>
-								</li>
-							)}
-						</ul>
-					:
-						<div>No Trainings Assigned :(</div>
-				} */}
 			 </div>
 		  </div>
 		);
 	}
 }
 
-export default ViewEmployee;
+export default ViewProfile;

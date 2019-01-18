@@ -24,6 +24,10 @@ const NewsfeedItemSchema = new Schema({
 	userLastName: {
 		type: String
 	},
+	imageURL: {
+		type: String,
+		default: 'https://res.cloudinary.com/blnicholson/image/upload/v1543546473/qbswekpy1p0y1cknkkpe.png'
+	},
 	organizationName: {
 		type: String
 	},
@@ -44,6 +48,12 @@ const NewsfeedItemSchema = new Schema({
 	}],
 	numberOfCompletedTrainings: {
 		type: Number
+	},
+	title: {
+		type: String
+	},
+	body: {
+		type: String
 	}
 });
 

@@ -9,5 +9,8 @@ export default {
 	},
 	addOwner: (organization, owner) => {
 		return axios.post('/api/organizations/owner', { organization, owner });
+	},
+	update: (organization) => {
+		return axios.put('/api/organizations', organization);
 	}
 };

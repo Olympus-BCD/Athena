@@ -1,0 +1,42 @@
+/* ============ Dustin's Design Notes ============*/
+
+/*Athena Font from Google Font*/
+/* font-family: 'Cinzel Decorative', cursive; */
+
+/*Header Font from Google Font*/
+/*font-family: 'Raleway', sans-serif;
+	font-weight: 500; */
+
+/*Body Font from Google Font*/
+/* font-family: 'Raleway', sans-serif; */
+
+/*Button Styles*/
+/* background: rgba(128, 0, 128, 0.596); */
+/* border-radius: 10px; */
+
+/*Card Styles*/
+/* background: rgba(0, 0, 0, 0.322); */
+/* border-radius: 15px; */
+
+/*Components on top of Card*/
+/* background: #fafafa52 !important; */ /* NOTE: May need to adjust Opacity depending on the situation*/
+
+/* =============================================*/
+
+.timeDisplay {
+    color: #fff;
+    font-size: 7rem;
+    font-weight: 700;
+  }
+  
+  .dateDisplay {
+    color: #fff;
+    font-size: 1.3rem;
+    font-weight: 500;
+  }
+
+
+
+
+
+

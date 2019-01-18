@@ -7,23 +7,16 @@
 
 /* =============================================*/
 
-.adminViewWrapper,
-.pageContainer {
-/* 	max-height: 100vh; */
-	min-height: 100vh;
+.employeesPage {
+	max-height: 100vh;
+	height: 100vh;
 	margin: 0;
-}
-.pageContainer {
 	padding: 0;
-	padding-left: 300px;
+	position: relative;
 }
 
-.admin-bg {
-background: #04030C;
-}
-
-@media only screen and (max-width : 992px) {
-	.pageContainer {
-		padding-left: 0;
-	}
+.employeesDisplay-wrapper {
+	height: 100%;
+	padding: 0;
+	margin: 0;
 }

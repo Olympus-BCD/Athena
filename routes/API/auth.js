@@ -57,6 +57,16 @@ router.route('/addtrainings')
 		requireLogin(req, res, controller.addTrainingInstances);
 	});
 	
+router.route('/search')
+	.post(passport.authenticate('jwt', { session: false }), (req, res) => {
+		requireLogin(req, res, controller.search);
+	});
+
+router.route('/wildcard')
+	.post(passport.authenticate('jwt', { session: false }), (req, res) => {
+		requireLogin(req, res, controller.wildcardSearch);
+	})
+		
 requireAdmin = (req, res, next) => {
 	const token = getToken(req.headers);
 	if(token && req.user.role > 1) {

@@ -11,7 +11,51 @@ const localizer = BigCalendar.momentLocalizer(moment);
 
 const allViews = Object
   .keys(BigCalendar.Views)
-  .map(k => BigCalendar.Views[k])
+  .map(k => BigCalendar.Views[k]);
+  
+const myViews = {
+	month: true
+};
+
+const styleGetter = (event, start, end, isSelected) => {
+    console.log('Event:', event);
+//     var backgroundColor = '#' + event.hexColor;
+
+	const Xstart = moment(start).format('X');
+	const Xend = moment(start).format('X');
+	const multiDay = moment(end).diff(moment(start), 'days') > 1 ? true : false;
+
+    let style = {
+        backgroundColor: 'purple',
+        borderRadius: '0px',
+        opacity: 0.8,
+        color: 'black',
+        border: '0px',
+        display: 'block'
+    };
+    
+    switch(event.type) {
+	    case 'training-completed':
+	    
+	    	break;
+	    case 'training-overdue':
+	    
+	    	break;
+	    case 'training-urgent':
+	    
+	    	break;
+	    case 'training-future':
+	    
+	    	break;
+    }
+    
+    return {
+        style: style,
+        className: event.className
+    };
+};
+
+// eventPropGetter={styleGetter}
 
 const calStyle = {
   width:"550px",
@@ -19,14 +63,14 @@ const calStyle = {
   fontColor:"white"
 }
 
-const Calendar = () => (
+const Calendar = props => (
   <div id='calendar'>
     <BigCalendar
       localizer = {localizer}
-      events={events}
+      events={props.events}
       step={60}
-      views={allViews}
-      defaultDate={new Date("November 5, 2018")}
+      views={myViews}
+      defaultDate={new Date()}
     />
   </div>
 );
