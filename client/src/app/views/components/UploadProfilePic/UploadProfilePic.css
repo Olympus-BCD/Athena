@@ -1,3 +1,26 @@
 #dropzoneText{
     font-family: 'Raleway', sans-serif;
 }
+#loading-img {
+	position: fixed;
+	top: 0;
+	left: 0;
+	min-height: 100vh;
+	min-width: 100vw;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	margin-left: 150px;
+/* 	background: rgba(0, 0, 0, 0.65); */
+	z-index: 10;
+}
+#loading-img img {
+	max-width: 35vw;
+/* 	max-width: 75vw; */
+}
+
+.profile-img-container {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}

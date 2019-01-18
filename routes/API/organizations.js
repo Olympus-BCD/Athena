@@ -1,6 +1,9 @@
 const router = require('express').Router();
 const controller = require('../../controllers/organizationsController');
 
+router.route('/')
+	.put(controller.update);
+
 //	('api/organizations/register')
 router.route('/register')
 	.post(controller.register);

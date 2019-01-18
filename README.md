@@ -4,7 +4,11 @@
 
 ## Overview
 
+<<<<<<< HEAD
 Athena is a Full M.E.R.N Stack Application for Training Managment.
+=======
+
+>>>>>>> 9d0ea31a3b6b47313820636dddfe806a5712285c
 
 
 ### Crafted With

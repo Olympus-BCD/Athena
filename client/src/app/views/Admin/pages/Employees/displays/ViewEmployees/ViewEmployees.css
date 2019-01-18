@@ -45,29 +45,83 @@
 	margin: 0.5em 0;
 	display: flex;
 	justify-content: flex-start;
+	align-items: center;
 	position: relative;
 }
 
 .employeesNav-wrapper span {
-	margin: 0 1em;
+/* 	margin: 0 1em; */
 	cursor: pointer;
 }
+.employeesNav-wrapper .bar,
+.timeframe-container .bar {
+	margin: 0 1em;
+}
 
-.employeesNav-selected {
+.employeesNav-selected,
+.navLink:hover {
 /* 	font-weight: bold; */
 	color: white;
 	border-bottom: 2px solid white;
+}
+.timeframe-selected {
+	font-size: 1.25em;
+	color: white;
+}
+.timeframe {
+	text-decoration: none;
+	border-bottom: none;
+	cursor: pointer;
+}
+.timeframe:hover{
+	border-bottom: none;
+	color: white;
+}
+
+.training-tabs-wrapper {
+	margin: 0;
+	margin-left: 3.5em;
+	font-size: 1em;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+.training-tabs-wrapper span {
+	margin: 0;
+/* 	margin-left: 1em; */
+}
+.training-tabs-wrapper i {
+	font-size: 1em !important;
+/* 	margin-left: 0.5em; */
+/* 	margin-right: 0.5em; */
+/* 	margin: 0 1em 0 0.5em; */
+}
+.navLink {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	cursor: pointer;
+}
+.tabz {
+/* 	width: 20%; */
 }
 
 #hover-employee:hover{
 	background: rgba(110, 57, 90, 0.39) !important; 
 }
 
+.timeframe-wrapper {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	margin-left: 2em;
+}
+
 .employeeCount {
 	position: absolute;
 /* 	float: right; */
 	right: 1.5em;
-	top: -45%;
+/* 	top: -45%; */
 	font-size: 2em;
 	color: white;
 }
@@ -136,3 +190,5 @@
 	display: flex;
 	justify-content: center;
 }
+
+

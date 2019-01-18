@@ -17,8 +17,10 @@ class App extends Component {
 			If the /api/trainings API call comes back with a 401 (unauthorized) error, "redirect" to /login
 		*/
 		if(localStorage.getItem('jwtToken')) {
+			//	replace with system status check API call (check training hours overdue)
 			API.trainings.getTrainings().then(res => {
 // 				console.log('response received, user: ', res.data.user);
+				console.log('From App...');
 				this.setState({ trainings: res.data.trainings, user: res.data.user });
 			})
 			.catch(err => {
